@@ -1,1 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  /* 🎨 Brand Colors */
+  --color-blacktape: #030706; /* Deep black for background */
+  --color-gold: #beb693; /* Luxury accent */
+  --color-olive: #646043; /* Vintage tone */
+  --color-navbar: #f2f0e9;
+  --color-navbar-active: #847847;
+
+  /* 🖋️ Typography */
+  --font-header: "GFS Didot", serif;
+  --font-text: "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-blacktape);
+  }
+}
