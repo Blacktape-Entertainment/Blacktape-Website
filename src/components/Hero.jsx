@@ -16,52 +16,54 @@ const Hero = () => {
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // ✨ Content fades in smoothly
+    // Content enters from below
     tl.fromTo(
       content,
       {
         opacity: 0,
-        y: 120,
-        z: -300,
-        rotateX: 15,
-        transformPerspective: 1000,
+        y: 200,
         visibility: "visible",
       },
       {
         opacity: 1,
         y: 0,
-        z: 0,
-        rotateX: 0,
-        duration: 2,
+        duration: 2.2,
       }
     );
 
-    // 🌿 Navbar glides in sooner and quicker
+    // Navbar drops from above
     tl.fromTo(
       navbar,
       {
-        y: -160,
+        y: -200,
         opacity: 0,
         visibility: "visible",
       },
       {
         y: 0,
         opacity: 1,
-        duration: 1.2, // faster glide
+        duration: 1.4,
         ease: "power2.out",
       },
-      "-=1.6" // overlaps earlier with content fade
+      "-=1.8"
     );
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden rounded-t-lg"
       id="home"
+      className="relative w-full h-screen overflow-hidden rounded-xl"
     >
-      <Navbar ref={navbarRef} />
+      {/* Fixed Navbar above everything */}
+      <div
+        ref={navbarRef}
+        className="fixed top-0 mt-10 left-0 w-full z-50 opacity-0"
+      >
+        <Navbar />
+      </div>
 
+      {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src={heroVideo}
@@ -70,13 +72,15 @@ const Hero = () => {
         playsInline
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 z-10" />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 z-10" />
 
+      {/* Hero content */}
       <div
         ref={contentRef}
-        className="relative z-20 flex flex-col gap-8 items-center justify-center text-center text-white h-full px-6 opacity-0"
+        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 opacity-0"
       >
-        <div className="space-y-3 mt-32">
+        <div className="space-y-3">
           <h1 className="text-4xl md:text-6xl font-header font-bold leading-tight tracking-tight">
             Beyond Entertainment.
           </h1>
@@ -85,16 +89,17 @@ const Hero = () => {
           </h1>
         </div>
 
-        <p className="max-w-2xl text-base md:text-lg font-light mb-6 font-header leading-relaxed">
+        <p className="max-w-2xl text-base md:text-lg font-light mt-6 font-header leading-relaxed">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
 
-        <button className="py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300">
+        <button className="mt-8 py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300">
           Explore Our World
         </button>
       </div>
 
+      {/* Subtle vignette */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.6))] z-[5]" />
     </section>
   );
