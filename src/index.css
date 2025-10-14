@@ -32,4 +32,29 @@
     background-color: var(--color-gold);
     color: var(--color-blacktape);
   }
+
+  html {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) transparent;
+  }
+}
+
+/* Minimal scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-gold);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-navbar-active);
 }

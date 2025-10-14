@@ -12,12 +12,11 @@ const Hero = () => {
     const content = contentRef.current;
     const navbar = navbarRef.current;
 
-    // Hide both before animating
     gsap.set([content, navbar], { opacity: 0, visibility: "hidden" });
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // 🌊 1️⃣ Content — fade in slowly from depth
+    // ✨ Content fades in smoothly
     tl.fromTo(
       content,
       {
@@ -33,25 +32,25 @@ const Hero = () => {
         y: 0,
         z: 0,
         rotateX: 0,
-        duration: 2, // 🕰️ slow and cinematic
+        duration: 2,
       }
     );
 
-    // 🌿 2️⃣ Navbar — glides in from top, overlapping slightly
+    // 🌿 Navbar glides in sooner and quicker
     tl.fromTo(
       navbar,
       {
-        y: -180,
+        y: -160,
         opacity: 0,
         visibility: "visible",
       },
       {
         y: 0,
         opacity: 1,
-        duration: 1.8,
+        duration: 1.2, // faster glide
         ease: "power2.out",
       },
-      "-=1.2" // 🪶 overlaps gracefully while content is still settling
+      "-=1.6" // overlaps earlier with content fade
     );
   }, []);
 
@@ -59,25 +58,20 @@ const Hero = () => {
     <section
       ref={sectionRef}
       className="relative w-full h-screen overflow-hidden rounded-t-lg"
+      id="home"
     >
-      {/* 🧭 Navbar — fixed near top */}
-
       <Navbar ref={navbarRef} />
 
-      {/* 🎥 Background Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src={heroVideo}
         autoPlay
         muted
         playsInline
-        loop
       />
 
-      {/* 🖤 Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 z-10" />
 
-      {/* ✨ Hero Content */}
       <div
         ref={contentRef}
         className="relative z-20 flex flex-col gap-8 items-center justify-center text-center text-white h-full px-6 opacity-0"
@@ -101,7 +95,6 @@ const Hero = () => {
         </button>
       </div>
 
-      {/* ✨ Vignette for depth */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.6))] z-[5]" />
     </section>
   );

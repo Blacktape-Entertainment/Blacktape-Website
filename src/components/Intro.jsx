@@ -11,18 +11,16 @@ const Intro = ({ onFinish }) => {
     const paths = svg.querySelectorAll("path:not(.bg-rect)");
 
     const masterTl = gsap.timeline({
-      defaults: { ease: "power3.inOut" },
-      onComplete: () => {
-        if (onFinish) onFinish();
-      },
+      defaults: { ease: "power2.out" },
+      onComplete: onFinish,
     });
 
-    paths.forEach((path) => {
-      const length = path.getTotalLength();
+    gsap.set(svg, { opacity: 0, scale: 0.92, filter: "blur(2px)" });
 
-      // Faster duration per path (0.3–0.6s) with small random variation
-      const baseDuration =
-        Math.min(0.3 + length / 2500, 0.6) + Math.random() * 0.05;
+    paths.forEach((path, index) => {
+      const length = path.getTotalLength();
+      const duration = gsap.utils.clamp(0.2, 0.4, 0.2 + length / 3500);
+      const delayOverlap = duration * 0.4;
 
       gsap.set(path, {
         opacity: 0,
@@ -32,28 +30,39 @@ const Intro = ({ onFinish }) => {
         strokeWidth: 1.1,
         fill: "#BEB693",
         fillOpacity: 0,
-        strokeLinecap: "butt",
+        strokeLinecap: "round",
       });
 
       const tl = gsap.timeline();
+
       tl.to(path, {
         opacity: 1,
         strokeDashoffset: 0,
-        fillOpacity: 1,
-        duration: baseDuration,
-        ease: "power3.inOut",
-      });
+        duration: duration * 0.7,
+        ease: "power2.out",
+      }).to(
+        path,
+        {
+          fillOpacity: 1,
+          duration: duration * 0.3,
+          ease: "power1.inOut",
+        },
+        `-=${duration * 0.15}`
+      );
 
-      // Slight overlap for continuous, natural flow
-      const overlap = baseDuration * (0.2 + Math.random() * 0.05);
-      masterTl.add(tl, `-=${overlap}`);
+      masterTl.add(tl, index === 0 ? 0 : `-=${delayOverlap}`);
     });
 
-    // Subtle pop effect for the entire SVG
-    gsap.fromTo(
-      svg,
-      { opacity: 0.85, scale: 0.995 },
-      { opacity: 1, scale: 1, duration: 0.2, ease: "power1.out" }
+    // Entrance pop (done after paths start)
+    masterTl.add(
+      gsap.to(svg, {
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.5,
+        ease: "back.out(1.25)",
+      }),
+      0
     );
   }, [onFinish]);
 
