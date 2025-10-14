@@ -19,8 +19,10 @@ const Intro = ({ onFinish }) => {
 
     paths.forEach((path) => {
       const length = path.getTotalLength();
-      const baseDuration = Math.min(0.12 + length / 4000, 0.22);
-      const overlap = 0.05;
+
+      // Faster duration per path (0.3–0.6s) with small random variation
+      const baseDuration =
+        Math.min(0.3 + length / 2500, 0.6) + Math.random() * 0.05;
 
       gsap.set(path, {
         opacity: 0,
@@ -42,13 +44,16 @@ const Intro = ({ onFinish }) => {
         ease: "power3.inOut",
       });
 
+      // Slight overlap for continuous, natural flow
+      const overlap = baseDuration * (0.2 + Math.random() * 0.05);
       masterTl.add(tl, `-=${overlap}`);
     });
 
+    // Subtle pop effect for the entire SVG
     gsap.fromTo(
       svg,
-      { opacity: 0.8, scale: 0.995 },
-      { opacity: 1, scale: 1, duration: 0.25, ease: "power1.out" }
+      { opacity: 0.85, scale: 0.995 },
+      { opacity: 1, scale: 1, duration: 0.2, ease: "power1.out" }
     );
   }, [onFinish]);
 

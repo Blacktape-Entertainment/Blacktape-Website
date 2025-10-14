@@ -26,7 +26,11 @@ function App() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div
+      className={`relative w-full h-screen overflow-hidden ${
+        showIntro ? "bg-black" : "bg-white"
+      }`}
+    >
       {/* INTRO */}
       {showIntro && (
         <div className="intro-screen absolute inset-0 z-50 bg-black">
@@ -36,7 +40,7 @@ function App() {
 
       {/* HERO */}
       {showHero && (
-        <div className="hero-section absolute inset-0">
+        <div className="hero-section absolute inset-0 m-3">
           <Hero />
         </div>
       )}

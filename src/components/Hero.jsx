@@ -58,15 +58,11 @@ const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden border-t-[12px] border-l-[12px] border-r-[12px] border-white rounded-t-2xl"
+      className="relative w-full h-screen overflow-hidden rounded-t-lg"
     >
       {/* 🧭 Navbar — fixed near top */}
-      <nav
-        ref={navbarRef}
-        className="absolute top-6 left-1/2 -translate-x-1/2 z-50 opacity-0"
-      >
-        <Navbar />
-      </nav>
+
+      <Navbar ref={navbarRef} />
 
       {/* 🎥 Background Video */}
       <video
