@@ -4,6 +4,9 @@ import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import WhoAreWe from "./components/WhoAreWe";
+import CompanyGoals from "./components/CompanyGoals";
+import DevicesMockups from "./components/DevicesMockups";
+import WhatIsIncluded from "./components/WhatIsIncluded";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -73,9 +76,23 @@ function App() {
       </div>
 
       {/* Who Are We section */}
+      {!showIntro && <WhoAreWe />}
+
       {!showIntro && (
-        <div id="whoarewe">
-          <WhoAreWe />
+        <div className="w-full pb-12 md:pb-24 flex justify-center">
+          <CompanyGoals />
+        </div>
+      )}
+
+      {!showIntro && (
+        <div className="w-full pb-12 md:pb-24 text-center flex flex-col justify-center px-4 md:px-0">
+          <DevicesMockups />
+        </div>
+      )}
+
+      {!showIntro && (
+        <div className="w-full pb-12 md:pb-24 gap-8 px-10 md:px-20">
+          <WhatIsIncluded />
         </div>
       )}
     </>
