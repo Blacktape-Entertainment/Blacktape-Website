@@ -1,52 +1,56 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import heroVideo from "../assets/videos/hero.mp4";
-import Navbar from "./Navbar";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
-  const navbarRef = useRef(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
     const content = contentRef.current;
-    const navbar = navbarRef.current;
 
-    gsap.set([content, navbar], { opacity: 0, visibility: "hidden" });
+    gsap.set(content, {
+      opacity: 0,
+      visibility: "hidden",
+      transformStyle: "preserve-3d",
+    });
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        end: "center center",
+        toggleActions: "play reverse play reverse",
+      },
+    });
 
-    // Content enters from below
     tl.fromTo(
       content,
       {
         opacity: 0,
         y: 200,
+        z: -600,
         visibility: "visible",
+        transformPerspective: 1000,
       },
       {
         opacity: 1,
         y: 0,
-        duration: 2.2,
+        z: 0,
+        duration: 2,
+        ease: "power3.out",
       }
     );
 
-    // Navbar drops from above
-    tl.fromTo(
-      navbar,
-      {
-        y: -200,
-        opacity: 0,
-        visibility: "visible",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.4,
-        ease: "power2.out",
-      },
-      "-=1.8"
-    );
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      tl.kill();
+    };
   }, []);
 
   return (
@@ -55,15 +59,7 @@ const Hero = () => {
       id="home"
       className="relative w-full h-screen overflow-hidden rounded-xl"
     >
-      {/* Fixed Navbar above everything */}
-      <div
-        ref={navbarRef}
-        className="fixed top-0 mt-10 left-0 w-full z-50 opacity-0"
-      >
-        <Navbar />
-      </div>
-
-      {/* Background video */}
+      {/* Video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src={heroVideo}
@@ -72,19 +68,18 @@ const Hero = () => {
         playsInline
       />
 
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 z-10" />
 
-      {/* Hero content */}
+      {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 opacity-0"
+        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15 opacity-0"
       >
         <div className="space-y-3">
-          <h1 className="text-4xl md:text-6xl font-header font-bold leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-header font-bold">
             Beyond Entertainment.
           </h1>
-          <h1 className="text-4xl md:text-6xl font-header font-bold leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-header font-bold">
             A Realm of Experience.
           </h1>
         </div>
@@ -98,9 +93,6 @@ const Hero = () => {
           Explore Our World
         </button>
       </div>
-
-      {/* Subtle vignette */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.6))] z-[5]" />
     </section>
   );
 };

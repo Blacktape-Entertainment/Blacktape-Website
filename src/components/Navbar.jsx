@@ -6,7 +6,7 @@ const Navbar = forwardRef((_, ref) => {
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navLinks = ["Home", "Experience", "Studio", "Work", "Contact"];
+  const navLinks = ["Home", "Who Are We", "Studio", "Work", "Contact"];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleLinkClick = (link) => {
@@ -69,7 +69,7 @@ const Navbar = forwardRef((_, ref) => {
                   : "hover:text-navbar-active/70"
               }`}
             >
-              <a href={`#${link.toLowerCase()}`}>{link}</a>
+              <a href={`#${link.toLowerCase().replace(/\s+/g, "")}`}>{link}</a>
             </li>
           ))}
         </ul>
