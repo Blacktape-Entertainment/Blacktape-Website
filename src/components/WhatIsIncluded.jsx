@@ -1,14 +1,10 @@
-import React, { useRef, useLayoutEffect } from "react";
-import { gsap } from "gsap";
-import { Draggable } from "gsap/Draggable";
+import React from "react";
 import img1 from "../assets/images/card1.png";
 import img2 from "../assets/images/card2.png";
 import img3 from "../assets/images/card3.png";
 import img4 from "../assets/images/card4.png";
 import img5 from "../assets/images/card5.png";
 import img6 from "../assets/images/card6.png";
-
-gsap.registerPlugin(Draggable);
 
 const cards = [
   {
@@ -44,42 +40,10 @@ const cards = [
 ];
 
 const WhatIsIncluded = () => {
-  const carouselWrapperRef = useRef(null);
-  const carouselRef = useRef(null);
-
-  useLayoutEffect(() => {
-    // Only run on mobile
-    if (window.innerWidth >= 768) return;
-
-    const wrapper = carouselWrapperRef.current;
-    const carousel = carouselRef.current;
-    if (!wrapper || !carousel) return;
-
-    const cards = carousel.querySelectorAll(".card-item");
-    const cardWidth = 280 + 24;
-    const totalWidth = cardWidth * cards.length;
-    gsap.set(carousel, { width: totalWidth, position: "relative" }); // ✅ position added
-
-    const maxDrag = -(totalWidth - wrapper.offsetWidth);
-
-    const draggable = Draggable.create(carousel, {
-      type: "x",
-      bounds: { minX: maxDrag, maxX: 0 },
-      edgeResistance: 0.85,
-      inertia: true, // ✅ smooth motion
-      cursor: "grab",
-      activeCursor: "grabbing",
-      dragResistance: 0.2,
-      throwProps: true, // ✅ ensures momentum
-    })[0];
-
-    return () => draggable.kill();
-  }, []);
-
   return (
-    <section className="w-full flex flex-col md:flex-row items-center justify-center gap-10 px-4 md:px-10 overflow-hidden select-none">
+    <section className="w-full flex flex-col md:flex-row items-start md:items-start justify-center gap-10 overflow-hidden select-none py-20">
       {/* Text side */}
-      <div className="flex-1 flex flex-col items-center md:items-start justify-center gap-4 text-center md:text-left max-w-md">
+      <div className="flex-1 flex flex-col items-center md:items-start justify-start gap-4 text-center md:text-left max-w-md">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-header font-bold leading-snug">
           What's included in the Blacktape experience
         </h1>
@@ -95,41 +59,8 @@ const WhatIsIncluded = () => {
 
       {/* Cards side */}
       <div className="flex-1 w-full relative">
-        {/* Fade edges for mobile */}
-        <div className="md:hidden pointer-events-none absolute left-0 top-0 w-12 h-full bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="md:hidden pointer-events-none absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-white to-transparent z-10" />
-
-        {/* Mobile Carousel */}
-        <div ref={carouselWrapperRef} className="md:hidden overflow-hidden">
-          <div
-            ref={carouselRef}
-            className="flex gap-6 px-4 pb-4 will-change-transform"
-          >
-            {cards.map((card, i) => (
-              <div
-                key={i}
-                className="card-item flex-shrink-0 w-[280px] flex flex-col items-center text-center"
-              >
-                <div className="w-full h-[200px] rounded-2xl overflow-hidden mb-3 shadow-lg">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-                <h2 className="text-lg font-semibold font-header text-black mb-1">
-                  {card.title}
-                </h2>
-                <p className="text-sm text-black/70 font-light font-text">
-                  {card.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop grid */}
-        <div className="hidden md:grid grid-cols-2 gap-10 w-full max-w-2xl mx-auto">
+        {/* Grid for all screen sizes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 w-full max-w-2xl mx-auto">
           {cards.map((card, i) => (
             <div
               key={i}

@@ -7,10 +7,16 @@ import WhoAreWe from "./components/WhoAreWe";
 import CompanyGoals from "./components/CompanyGoals";
 import DevicesMockups from "./components/DevicesMockups";
 import WhatIsIncluded from "./components/WhatIsIncluded";
+import OurTeam from "./components/OurTeam";
+import ItsYourTurn from "./components/ItsYourTurn";
+import DigitalSovereignty from "./components/DigitalSovereignty";
+import TrustedClients from "./components/TrustedClients";
+import InstantAIConnect from "./components/InstantAIConnect";
+import InstantAICalls from "./components/InstantAICalls";
+import BlacktapeFooter from "./components/BlacktapeFooter";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
-  const [showHero, setShowHero] = useState(false);
   const navbarRef = useRef(null);
 
   const handleIntroFinish = () => {
@@ -19,82 +25,93 @@ function App() {
       duration: 0.8,
       delay: 0.3,
       ease: "power2.inOut",
-      onComplete: () => {
-        setShowIntro(false);
-        setShowHero(true);
-      },
+      onComplete: () => setShowIntro(false),
     });
   };
 
   useEffect(() => {
-    if (!showHero || !navbarRef.current) return;
+    if (showIntro || !navbarRef.current) return;
 
-    const navbar = navbarRef.current;
-
-    // Set initial state - navbar off screen
-    gsap.set(navbar, { opacity: 0, y: -200, visibility: "visible" });
-
-    // Animate navbar in after intro ends - smoother animation
-    gsap.to(navbar, {
-      opacity: 1,
-      y: 0,
-      duration: 1.5,
-      ease: "power2.out",
-    });
-  }, [showHero]);
+    gsap.fromTo(
+      navbarRef.current,
+      { opacity: 0, y: -200 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power2.out" }
+    );
+  }, [showIntro]);
 
   return (
     <>
-      <div
-        className={`relative w-full h-screen ${
-          showIntro ? "bg-black" : "bg-white"
-        }`}
-      >
-        {showIntro && (
-          <div className="intro-screen absolute inset-0 z-50 bg-black">
-            <Intro onFinish={handleIntroFinish} />
-          </div>
-        )}
+      {/* Intro Screen */}
+      {showIntro && (
+        <div className="intro-screen fixed inset-0 z-50 bg-black">
+          <Intro onFinish={handleIntroFinish} />
+        </div>
+      )}
 
-        {/* NAVBAR */}
-        {showHero && (
-          <div
-            ref={navbarRef}
-            className="fixed top-0 left-0 mt-10 w-full z-50 opacity-0"
-            style={{ transform: "translateY(-200px)" }}
-          >
-            <Navbar />
-          </div>
-        )}
+      {/* Main Content */}
+      <div className={showIntro ? "bg-black h-screen" : "bg-white"}>
+        {/* Navbar */}
+        <nav
+          ref={navbarRef}
+          className="fixed top-0 left-0 mt-10 w-full z-50 opacity-0"
+        >
+          <Navbar />
+        </nav>
 
-        {/* HERO */}
-        {showHero && (
-          <div className="hero-section absolute inset-0 m-2.5">
-            <Hero />
-          </div>
-        )}
-      </div>
+        {/* Hero Section */}
+        <div className="relative w-full h-screen px-2.5 pt-1.5 pb-6 md:pb-2.5">
+          <Hero />
+        </div>
 
-      {/* Who Are We section */}
-      {!showIntro && <WhoAreWe />}
+        {/* Who Are We */}
+        <section className="w-full flex justify-center pt-16 pb-7 md:pb-24">
+          <WhoAreWe />
+        </section>
 
-      {!showIntro && (
-        <div className="w-full pb-12 md:pb-24 flex justify-center">
+        {/* Company Goals */}
+        <section className="w-full hidden md:flex items-center justify-center pb-5 md:pb-20">
           <CompanyGoals />
-        </div>
-      )}
+        </section>
 
-      {!showIntro && (
-        <div className="w-full pb-12 md:pb-24 text-center flex flex-col justify-center px-4 md:px-0">
+        {/* Devices Mockups */}
+        <section className="w-full text-center flex flex-col justify-center pb-6 md:pb-20">
           <DevicesMockups />
-        </div>
-      )}
+        </section>
 
-      {!showIntro && (
-        <div className="w-full pb-12 md:pb-24 gap-8 px-10 md:px-20">
+        {/* What Is Included */}
+        <section className="w-full gap-8 md:pb-24 md:px-20 px-2.5 pb-12">
           <WhatIsIncluded />
-        </div>
-      )}
+        </section>
+
+        {/* Our Team */}
+        <section className="w-full">
+          <OurTeam />
+        </section>
+
+        {/* It's Your Turn */}
+        <section className="w-full h-full px-4 pt-10">
+          <ItsYourTurn />
+        </section>
+
+        {/* Digital Sovereignty */}
+        <section className="w-full">
+          <DigitalSovereignty />
+        </section>
+        <TrustedClients />
+
+        {/* Instant AI Connect (big title + phone) */}
+        <section className="w-full">
+          <InstantAIConnect />
+        </section>
+
+        {/* Instant AI Calls (left text + phone) */}
+        <section className="w-full">
+          <InstantAICalls />
+        </section>
+
+        {/* Footer */}
+        {/* <BlacktapeFooter /> */}
+      </div>
     </>
   );
 }

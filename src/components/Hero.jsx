@@ -1,57 +1,10 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useRef } from "react";
 import heroVideo from "../assets/videos/hero.mp4";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const content = contentRef.current;
-
-    gsap.set(content, {
-      opacity: 0,
-      visibility: "hidden",
-      transformStyle: "preserve-3d",
-    });
-
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      scrollTrigger: {
-        trigger: section,
-        start: "top 80%",
-        end: "center center",
-        toggleActions: "play reverse play reverse",
-      },
-    });
-
-    tl.fromTo(
-      content,
-      {
-        opacity: 0,
-        y: 200,
-        z: -600,
-        visibility: "visible",
-        transformPerspective: 1000,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        z: 0,
-        duration: 2,
-        ease: "power3.out",
-      }
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-      tl.kill();
-    };
-  }, []);
+  const videoRef = useRef(null);
 
   return (
     <section
@@ -61,11 +14,14 @@ const Hero = () => {
     >
       {/* Video */}
       <video
+        ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         src={heroVideo}
         autoPlay
+        loop
         muted
         playsInline
+        preload="auto"
       />
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 z-10" />
@@ -73,7 +29,7 @@ const Hero = () => {
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15 opacity-0"
+        className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15"
       >
         <div className="space-y-3">
           <h1 className="text-4xl md:text-6xl font-header font-bold">

@@ -1,6 +1,5 @@
-import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import select from "../assets/images/select.png";
 import radio from "../assets/images/radio.png";
@@ -10,15 +9,9 @@ import logo2 from "../assets/images/Logo2.svg";
 import logo3 from "../assets/images/Logo3.svg";
 import logo4 from "../assets/images/Logo4.svg";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const WhoAreWe = () => {
   const [activeValue, setActiveValue] = useState("value1");
-  const sectionRef = useRef(null);
-  const headerRef = useRef(null);
-  const radioRef = useRef(null);
-  const dynamicTextRef = useRef(null);
-  const dynamicContentRef = useRef(null); // New ref for inner content
+  const dynamicContentRef = useRef(null);
   const valueBtnRef = useRef(null);
   const selectBtnRef = useRef(null);
   const isFirstChoiceRef = useRef(true);
@@ -52,58 +45,7 @@ const WhoAreWe = () => {
 
   const current = values.find((item) => item.id === activeValue);
 
-  useEffect(() => {
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
-    return () => window.removeEventListener("load", onLoad);
-  }, []);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set(headerRef.current, { scale: 1.5, transformOrigin: "center" });
-      gsap.set(radioRef.current, { autoAlpha: 0, y: 80 });
-      gsap.set(dynamicTextRef.current, { autoAlpha: 0, y: 30 });
-
-      gsap.to(headerRef.current, {
-        scale: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(radioRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          end: "top 45%",
-          scrub: true,
-        },
-      });
-
-      // Animate the container, not the content
-      gsap.to(dynamicTextRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 50%",
-          toggleActions: "play none none reverse",
-        },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
+  // Button rotation animation on value change
   useEffect(() => {
     if (isFirstChoiceRef.current) {
       isFirstChoiceRef.current = false;
@@ -116,10 +58,9 @@ const WhoAreWe = () => {
     });
   }, [activeValue]);
 
-  // Fixed: Animate the inner content, not the container
+  // Content fade transition on value change
   useEffect(() => {
     if (!dynamicContentRef.current) return;
-
     const tl = gsap.timeline();
     tl.to(dynamicContentRef.current, {
       opacity: 0,
@@ -138,29 +79,22 @@ const WhoAreWe = () => {
 
   return (
     <section
-      ref={sectionRef}
       id="whoarewe"
-      className="relative pt-20 pb-16 md:pt-24 md:pb-20 text-center flex flex-col gap-12 overflow-hidden "
+      className="relative min-h-screen flex flex-col items-center justify-center gap-6 sm:gap-8 md:gap-12 overflow-hidden bg-white "
     >
       {/* Header */}
-      <div
-        ref={headerRef}
-        className="flex flex-col gap-3 items-center px-4 sm:px-6 md:px-10"
-      >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-header font-bold">
+      <div className="flex flex-col gap-2 sm:gap-3 items-center text-center max-w-4xl">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-header font-bold leading-tight">
           So, Who Are We
         </h1>
-        <p className="max-w-2xl text-sm sm:text-base md:text-lg font-light font-header">
+        <p className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl text-xs sm:text-sm md:text-base lg:text-lg font-light font-header px-2">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
       </div>
 
       {/* Radio Section */}
-      <div
-        ref={radioRef}
-        className="relative w-full flex items-center justify-center overflow-visible"
-      >
+      <div className="relative w-full flex items-center justify-center mt-4 sm:mt-6 md:mt-10">
         <img src={radio} alt="Radio" className="w-full h-auto object-contain" />
 
         <img
@@ -187,39 +121,35 @@ const WhoAreWe = () => {
                 <img
                   src={item.logo}
                   alt={item.id}
-                  className={`w-16 md:w-20 transition-all duration-300 ${
+                  className={`w-8 sm:w-12 md:w-16 lg:w-20 transition-all duration-300 ${
                     activeValue === item.id
                       ? "opacity-100 brightness-150 scale-105"
                       : "opacity-70 brightness-90"
                   }`}
                 />
                 {activeValue === item.id && (
-                  <span className="absolute -bottom-2 h-2 w-1 bg-orange-500 rounded-sm"></span>
+                  <span className="absolute -bottom-1 sm:-bottom-2 h-1 sm:h-2 w-0.5 sm:w-1 bg-orange-500 rounded-sm"></span>
                 )}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="absolute bottom-[23%] right-[30%] w-[39%] h-[22%] bg-[#DCD9BA] font-header rounded-sm flex items-center justify-center text-black text-lg md:text-xl tracking-wide cursor-pointer hover:bg-[#e6e3c8] transition">
+        <div className="absolute bottom-[23%] right-[30%] w-[39%] h-[22%] bg-[#DCD9BA] font-header rounded-sm flex items-center justify-center text-black text-[10px] sm:text-sm md:text-base lg:text-xl tracking-wide cursor-pointer hover:bg-[#e6e3c8] transition">
           Know More
         </div>
       </div>
 
-      {/* Dynamic Text */}
-      <div
-        ref={dynamicTextRef}
-        className="flex flex-col gap-3 items-center px-4 sm:px-6 md:px-10"
-      >
-        {/* Inner content that fades independently */}
+      {/* Dynamic Text - Now below radio */}
+      <div className="flex flex-col gap-2 sm:gap-3 items-center text-center mt-4 sm:mt-6 md:mt-10 max-w-4xl">
         <div ref={dynamicContentRef}>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-header font-bold">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold">
             Blacktape{" "}
-            <span className="font-light text-lg sm:text-xl md:text-2xl">
+            <span className="font-light text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
               {current?.span}
             </span>
           </h1>
-          <p className="max-w-2xl text-sm sm:text-base md:text-lg font-light font-header px-2 sm:px-4 mt-3">
+          <p className="max-w-xs sm:max-w-md md:max-w-xl lg:max-w-2xl text-xs sm:text-sm md:text-base lg:text-lg font-light font-header px-2 sm:px-4 mt-2 sm:mt-3">
             {current?.text}
           </p>
         </div>

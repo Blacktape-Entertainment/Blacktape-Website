@@ -11,7 +11,7 @@ const Intro = ({ onFinish }) => {
     const paths = svg.querySelectorAll("path:not(.bg-rect)");
 
     const masterTl = gsap.timeline({
-      defaults: { ease: "power2.out" },
+      defaults: { ease: "power1.inOut" }, // Smoother default easing
       onComplete: onFinish,
     });
 
@@ -19,8 +19,9 @@ const Intro = ({ onFinish }) => {
 
     paths.forEach((path, index) => {
       const length = path.getTotalLength();
-      const duration = gsap.utils.clamp(0.2, 0.4, 0.2 + length / 3500);
-      const delayOverlap = duration * 0.4;
+      // Slightly faster: reduced duration range
+      const duration = gsap.utils.clamp(0.4, 0.8, 0.4 + length / 3000);
+      const delayOverlap = duration * 0.5;
 
       gsap.set(path, {
         opacity: 0,
@@ -35,32 +36,26 @@ const Intro = ({ onFinish }) => {
 
       const tl = gsap.timeline();
 
+      // Fill and stroke draw at the same time with smoother easing
       tl.to(path, {
         opacity: 1,
         strokeDashoffset: 0,
-        duration: duration * 0.7,
-        ease: "power2.out",
-      }).to(
-        path,
-        {
-          fillOpacity: 1,
-          duration: duration * 0.3,
-          ease: "power1.inOut",
-        },
-        `-=${duration * 0.15}`
-      );
+        fillOpacity: 1,
+        duration: duration,
+        ease: "power1.inOut", // Smoother easing
+      });
 
       masterTl.add(tl, index === 0 ? 0 : `-=${delayOverlap}`);
     });
 
-    // Entrance pop (done after paths start)
+    // Entrance pop (done after paths start) - faster
     masterTl.add(
       gsap.to(svg, {
         opacity: 1,
         scale: 1,
         filter: "blur(0px)",
-        duration: 0.5,
-        ease: "back.out(1.25)",
+        duration: 0.6, // Reduced from 0.8
+        ease: "power2.out", // Smoother entrance
       }),
       0
     );

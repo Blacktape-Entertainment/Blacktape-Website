@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Mockups from "../assets/images/Mockups.png";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const DevicesMockups = () => {
+  const imageRef = useRef(null);
+
   return (
-    <section className="w-full flex flex-col items-center text-center px-4 sm:px-8 overflow-hidden">
+    <section className="w-full flex flex-col items-center text-center overflow-hidden">
       {/* Text Content */}
       <div className="max-w-3xl flex flex-col items-center gap-4 mb-10 md:mb-14">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-header font-semibold leading-tight">
@@ -20,7 +26,7 @@ const DevicesMockups = () => {
       </div>
 
       {/* Mockup Image */}
-      <div className="relative w-full flex justify-center">
+      <div ref={imageRef} className="relative w-full flex justify-center">
         <img
           src={Mockups}
           alt="Device Mockups"
