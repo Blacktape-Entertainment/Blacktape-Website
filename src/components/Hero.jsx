@@ -140,7 +140,11 @@ const Hero = ({ navbarRef }) => {
       <div
         ref={contentRef}
         className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15"
-        style={{ perspective: "1000px" }}
+        style={{
+          perspective: "1000px",
+          opacity: 0,
+          transform: "translateZ(-2000px) scale(0.3)",
+        }}
       >
         <div className="space-y-3">
           <h1 className="text-4xl md:text-6xl font-header font-bold">

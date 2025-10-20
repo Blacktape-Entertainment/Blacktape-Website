@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
@@ -12,6 +13,8 @@ import DigitalSovereignty from "./components/DigitalSovereignty";
 import TrustedClients from "./components/TrustedClients";
 import InstantAIConnect from "./components/InstantAIConnect";
 import BlacktapeFooter from "./components/BlacktapeFooter";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -29,6 +32,70 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    if (showIntro || !navbarRef.current) return;
+
+    // Sections where navbar should be visible
+    const visibleSections = [
+      "hero-wrapper",
+      "whatisincluded",
+      "ourteam",
+      "trustedclients",
+      "instantaiconnect",
+      "footer",
+    ];
+
+    let isNavbarVisible = false;
+
+    const checkSection = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      let shouldShowNavbar = false;
+
+      for (const sectionId of visibleSections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          const sectionTop = rect.top + window.scrollY;
+          const sectionBottom = sectionTop + rect.height;
+
+          if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+            shouldShowNavbar = true;
+            break;
+          }
+        }
+      }
+
+      // Animate navbar in/out
+      if (shouldShowNavbar && !isNavbarVisible) {
+        isNavbarVisible = true;
+        gsap.to(navbarRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+        });
+      } else if (!shouldShowNavbar && isNavbarVisible) {
+        isNavbarVisible = false;
+        gsap.to(navbarRef.current, {
+          opacity: 0,
+          y: -100,
+          duration: 0.6,
+          ease: "power3.in",
+        });
+      }
+    };
+
+    // Check on scroll
+    window.addEventListener("scroll", checkSection);
+
+    // Initial check
+    checkSection();
+
+    return () => {
+      window.removeEventListener("scroll", checkSection);
+    };
+  }, [showIntro]);
+
   return (
     <>
       {/* Intro Screen */}
@@ -44,7 +111,8 @@ function App() {
           {/* Navbar */}
           <nav
             ref={navbarRef}
-            className="fixed top-0 left-0 mt-10 w-full z-50 opacity-0"
+            className="fixed top-0 left-0 mt-10 w-full z-50"
+            style={{ opacity: 0, transform: "translateY(-100px)" }}
           >
             <Navbar />
           </nav>
