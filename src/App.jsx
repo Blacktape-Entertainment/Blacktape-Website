@@ -4,7 +4,6 @@ import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import WhoAreWe from "./components/WhoAreWe";
-import CompanyGoals from "./components/CompanyGoals";
 import DevicesMockups from "./components/DevicesMockups";
 import WhatIsIncluded from "./components/WhatIsIncluded";
 import OurTeam from "./components/OurTeam";
@@ -12,7 +11,6 @@ import ItsYourTurn from "./components/ItsYourTurn";
 import DigitalSovereignty from "./components/DigitalSovereignty";
 import TrustedClients from "./components/TrustedClients";
 import InstantAIConnect from "./components/InstantAIConnect";
-import InstantAICalls from "./components/InstantAICalls";
 import BlacktapeFooter from "./components/BlacktapeFooter";
 
 function App() {
@@ -42,7 +40,7 @@ function App() {
 
       {/* Main Content - Only render after intro */}
       {!showIntro && (
-        <div className="bg-white">
+        <div className="bg-white overflow-x-hidden">
           {/* Navbar */}
           <nav
             ref={navbarRef}
@@ -54,59 +52,60 @@ function App() {
           {/* Hero Section */}
           <section
             id="hero-wrapper"
-            className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-2.5"
+            className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-2.5 overflow-x-hidden"
           >
             <Hero navbarRef={navbarRef} />
           </section>
 
           {/* Who Are We */}
-          <section className="w-full flex justify-center pt-16 pb-7 md:pb-24">
+          <section id="whoarewe-wrapper" className="w-full">
             <WhoAreWe />
           </section>
 
-          {/* Company Goals */}
-          <section className="w-full hidden md:flex items-center justify-center pb-5 md:pb-20">
-            <CompanyGoals />
-          </section>
-
-          {/* Devices Mockups */}
-          <section className="w-full text-center flex flex-col justify-center pb-6 md:pb-20">
+          {/* Company Goals & Studio */}
+          <section
+            id="devicesmockups"
+            className="w-full h-screen flex flex-col items-center justify-center py-10"
+          >
             <DevicesMockups />
           </section>
 
           {/* What Is Included */}
-          <section className="w-full gap-8 md:pb-24 md:px-20 px-2.5 pb-12">
+          <section
+            id="whatisincluded"
+            className="w-full gap-8 md:pb-24 md:px-20 px-2.5 pb-12 pt-20"
+          >
             <WhatIsIncluded />
           </section>
 
           {/* Our Team */}
-          <section className="w-full">
+          <section id="ourteam" className="w-full">
             <OurTeam />
           </section>
 
           {/* It's Your Turn */}
-          <section className="w-full h-full px-4 pt-10">
+          <section id="itsyourturn" className="w-full h-full px-4">
             <ItsYourTurn />
           </section>
 
           {/* Digital Sovereignty */}
-          <section className="w-full">
+          <section id="digitalsovereignty" className="w-full">
             <DigitalSovereignty />
           </section>
-          <TrustedClients />
 
-          {/* Instant AI Connect (big title + phone) */}
-          <section className="w-full">
+          <section id="trustedclients" className="w-full">
+            <TrustedClients />
+          </section>
+
+          {/* Instant AI Connect - Merged component with scroll animation */}
+          <section id="instantaiconnect" className="w-full">
             <InstantAIConnect />
           </section>
 
-          {/* Instant AI Calls (left text + phone) */}
-          <section className="w-full">
-            <InstantAICalls />
-          </section>
-
           {/* Footer */}
-          <BlacktapeFooter />
+          <footer id="footer">
+            <BlacktapeFooter />
+          </footer>
         </div>
       )}
     </>

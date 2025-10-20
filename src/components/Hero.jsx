@@ -17,105 +17,103 @@ const Hero = ({ navbarRef }) => {
 
     if (!section || !content || !video) return;
 
-    // Pause video initially
     video.pause();
 
-    // Set initial state for content (deep in z-space, below viewport)
+    // Initial states: text hidden deep inside, navbar hidden above
     gsap.set(content, {
       opacity: 0,
-      y: "100vh",
-      z: -1000,
-      scale: 0.5,
+      z: -2000,
+      scale: 0.3,
     });
 
-    // Set initial state for navbar
-    if (navbarRef && navbarRef.current) {
+    if (navbarRef?.current) {
       gsap.set(navbarRef.current, {
         opacity: 0,
         y: -300,
       });
     }
 
-    // Create a master timeline that will be controlled by scroll
+    // Auto-scroll flag
+    let hasScrolled = false;
+
     const masterTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: "#hero-wrapper",
         start: "top top",
-        end: "+=300%", // Extended for entry + scroll animations
+        end: "+=200%",
         pin: "#hero-wrapper",
         pinSpacing: true,
         scrub: 1,
         onUpdate: (self) => {
-          // Scrub video playback based on scroll progress
+          const progress = self.progress;
+
+          // Sync video with scroll
           if (video.duration) {
-            const progress = self.progress;
-            // Video plays during middle section (0.2 to 0.7 of total timeline)
-            if (progress >= 0.2 && progress <= 0.7) {
-              const videoProgress = (progress - 0.2) / 0.5;
-              video.currentTime = videoProgress * video.duration;
+            video.currentTime = progress * video.duration;
+          }
+
+          // Auto-scroll to next section at end
+          if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
+            hasScrolled = true;
+            const nextSection = document.querySelector("#whoarewe");
+
+            if (nextSection) {
+              setTimeout(() => {
+                const targetY =
+                  nextSection.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({ top: targetY, behavior: "smooth" });
+              }, 300);
             }
+          }
+
+          if (progress < 0.99) {
+            hasScrolled = false;
           }
         },
       },
     });
 
-    // Phase 1: Entry animations (0-20% of scroll)
-    // Animate content from bottom with z-depth
+    // Phase 1: Entry animations (text from inside, navbar from top)
     masterTimeline.to(
       content,
       {
         opacity: 1,
-        y: 0,
         z: 0,
         scale: 1,
         ease: "power3.out",
+        duration: 0.3,
       },
       0
     );
 
-    // Animate navbar from top (synchronized with content)
-    if (navbarRef && navbarRef.current) {
+    if (navbarRef?.current) {
       masterTimeline.to(
         navbarRef.current,
         {
           opacity: 1,
           y: 0,
           ease: "power3.out",
+          duration: 0.3,
         },
-        0 // Start at the same time as content
+        0
       );
     }
 
-    // Phase 2: Hold position while video plays (20-70% of scroll)
-    // Add a pause/hold by adding a label
-    masterTimeline.addLabel("videoPlaying", ">");
+    // Phase 2: Hold while video plays
+    masterTimeline.addLabel("hold", ">");
 
-    // Phase 3: Exit animations (70-100% of scroll)
-    // Animate text in reverse (back into z-space and down)
+    // Phase 3: Exit animation (text back inside, navbar stays)
     masterTimeline.to(
       content,
       {
         opacity: 0,
-        y: "100vh",
-        z: -1000,
-        scale: 0.5,
+        z: -2000,
+        scale: 0.3,
         ease: "power3.in",
+        duration: 0.3,
       },
-      ">"
+      0.7
     );
-
-    // Animate navbar in reverse (back up) at the same time
-    if (navbarRef && navbarRef.current) {
-      masterTimeline.to(
-        navbarRef.current,
-        {
-          opacity: 0,
-          y: -300,
-          ease: "power3.in",
-        },
-        "<" // Start at the same time as content exit
-      );
-    }
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -128,7 +126,6 @@ const Hero = ({ navbarRef }) => {
       id="home"
       className="relative w-full h-screen overflow-hidden rounded-xl"
     >
-      {/* Video */}
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
@@ -140,7 +137,6 @@ const Hero = ({ navbarRef }) => {
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 z-10" />
 
-      {/* Content */}
       <div
         ref={contentRef}
         className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15"
