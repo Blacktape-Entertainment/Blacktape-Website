@@ -62,7 +62,7 @@ const Intro = ({ onFinish }) => {
   }, [onFinish]);
 
   return (
-    <section className="w-full min-h-screen bg-black flex items-center justify-center p-4">
+    <>
       <svg
         ref={svgRef}
         viewBox="0 0 394 141"
@@ -108,7 +108,7 @@ const Intro = ({ onFinish }) => {
           fill="#BEB693"
         />
       </svg>
-    </section>
+    </>
   );
 };
 

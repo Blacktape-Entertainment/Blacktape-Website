@@ -1,10 +1,9 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useState } from "react";
 import logo from "../assets/images/logo.svg";
 
-const Navbar = forwardRef((_, ref) => {
+const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = ["Home", "Who Are We", "Studio", "Work", "Contact"];
 
@@ -14,30 +13,13 @@ const Navbar = forwardRef((_, ref) => {
     setIsMenuOpen(false);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const homeSection = document.querySelector("#home");
-      if (!homeSection) return;
-      const homeBottom = homeSection.offsetTop + homeSection.offsetHeight;
-      setIsScrolled(window.scrollY > homeBottom - 80);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <nav
+    <div
       ref={ref}
-      className="fixed top-0 left-0 w-full flex justify-between lg:justify-center px-8 lg:px-12 z-50 gap-3 transition-all duration-700 "
+      className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3"
     >
       {/* Logo */}
-      <div
-        className={`flex items-center justify-center w-10 h-10 rounded-full shadow-md hover:scale-105 transition-transform duration-300 ${
-          isScrolled ? "bg-black" : "bg-navbar"
-        }`}
-      >
+      <div className="flex items-center justify-center w-10 h-10 rounded-full shadow-md hover:scale-105 transition-transform duration-300 bg-navbar">
         <img
           src={logo}
           alt="Logo"
@@ -47,16 +29,8 @@ const Navbar = forwardRef((_, ref) => {
 
       {/* Desktop Menu */}
       <div className="relative hidden lg:flex items-center rounded shadow-md backdrop-blur-sm">
-        <div
-          className={`absolute inset-0 rounded transition-colors duration-700 ${
-            isScrolled ? "bg-black/90" : "bg-navbar"
-          }`}
-        />
-        <ul
-          className={`relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-10 transition-colors duration-500 ${
-            isScrolled ? "text-white" : "text-gold"
-          }`}
-        >
+        <div className="absolute inset-0 rounded transition-colors duration-700 bg-navbar" />
+        <ul className="relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-10 transition-colors duration-500 text-gold">
           {navLinks.map((link) => (
             <li
               key={link}
@@ -64,8 +38,6 @@ const Navbar = forwardRef((_, ref) => {
               className={`cursor-pointer transition-all duration-300 ${
                 activeLink === link
                   ? "text-navbar-active font-semibold"
-                  : isScrolled
-                  ? "hover:text-gray-300"
                   : "hover:text-navbar-active/70"
               }`}
             >
@@ -79,9 +51,7 @@ const Navbar = forwardRef((_, ref) => {
       <div className="lg:hidden relative">
         <button
           onClick={toggleMenu}
-          className={`flex items-center gap-2 ${
-            isScrolled ? "text-black" : "text-white"
-          } py-2 px-2 font-header text-xl tracking-wide transition-colors duration-300`}
+          className="flex items-center gap-2 text-white py-2 px-2 font-header text-xl tracking-wide transition-colors duration-300"
         >
           Menu
           <span
@@ -94,11 +64,11 @@ const Navbar = forwardRef((_, ref) => {
         </button>
 
         <div
-          className={`absolute right-0 mt-2 w-56 rounded shadow-lg backdrop-blur-sm overflow-hidden transition-all duration-300 ease-out ${
+          className={`absolute right-0 mt-2 w-56 rounded shadow-lg backdrop-blur-sm overflow-hidden transition-all duration-300 ease-out bg-navbar text-gold ${
             isMenuOpen
               ? "opacity-100 translate-y-0 scale-100 z-40"
               : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
-          } ${isScrolled ? "bg-black text-white" : "bg-navbar text-gold"}`}
+          }`}
         >
           <ul className="py-2">
             {navLinks.map((link) => (
@@ -117,7 +87,7 @@ const Navbar = forwardRef((_, ref) => {
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
   );
 });
 
