@@ -151,7 +151,10 @@ const InstantAIConnect = () => {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (timeline.scrollTrigger) {
+        timeline.scrollTrigger.kill(true);
+      }
+      timeline.kill();
     };
   }, []);
 

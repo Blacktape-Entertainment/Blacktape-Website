@@ -1,26 +1,24 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import logo from "../assets/images/logo.svg";
+
+const NAV_LINKS = [
+  { name: "Home", id: "hero-wrapper" },
+  { name: "About", id: "whoarewe-wrapper" },
+  { name: "Services", id: "devicesmockups" },
+  { name: "Team", id: "ourteam" },
+  { name: "Contact", id: "footer" },
+];
 
 const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const navLinks = [
-    { name: "Home", id: "hero-wrapper" },
-    { name: "About", id: "whoarewe-wrapper" },
-    { name: "Services", id: "devicesmockups" },
-    { name: "Team", id: "ourteam" },
-    { name: "Contact", id: "footer" },
-  ];
-
   useEffect(() => {
     const handleScroll = () => {
-      const heroSection = document.querySelector("#hero-wrapper");
-
+      const heroSection = document.getElementById("hero-wrapper");
       if (heroSection) {
-        const heroRect = heroSection.getBoundingClientRect();
-        setIsScrolled(heroRect.bottom <= 0);
+        setIsScrolled(heroSection.getBoundingClientRect().bottom <= 0);
       }
     };
 
@@ -30,18 +28,20 @@ const Navbar = forwardRef((props, ref) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const handleLinkClick = (linkName) => {
-    setActiveLink(linkName);
-    setIsMenuOpen(false);
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      window.scrollTo({
+        top: section.getBoundingClientRect().top + window.scrollY,
+        behavior: "smooth",
+      });
+    }
   };
 
-  const scrollToSection = (sectionId) => {
-    const section = document.querySelector(`#${sectionId}`);
-    if (section) {
-      const targetY = section.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-    }
+  const handleLinkClick = (linkName, sectionId) => {
+    setActiveLink(linkName);
+    setIsMenuOpen(false);
+    scrollToSection(sectionId);
   };
 
   return (
@@ -49,9 +49,8 @@ const Navbar = forwardRef((props, ref) => {
       ref={ref}
       className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3"
     >
-      {/* Logo */}
       <div
-        className={`flex items-center justify-center w-10 h-10 rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
+        className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
           isScrolled ? "bg-black" : "bg-navbar"
         }`}
       >
@@ -74,13 +73,10 @@ const Navbar = forwardRef((props, ref) => {
             isScrolled ? "text-white" : "text-gold"
           }`}
         >
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <li
               key={link.name}
-              onClick={() => {
-                setActiveLink(link.name);
-                scrollToSection(link.id);
-              }}
+              onClick={() => handleLinkClick(link.name, link.id)}
               className={`cursor-pointer transition-all duration-300 ${
                 activeLink === link.name
                   ? "text-navbar-active font-semibold"
@@ -96,10 +92,10 @@ const Navbar = forwardRef((props, ref) => {
       {/* Mobile Menu */}
       <div className="lg:hidden relative">
         <button
-          onClick={toggleMenu}
-          className={`flex items-center gap-2 py-2 px-2 font-header text-xl tracking-wide transition-colors duration-300 ${
-            isScrolled ? "text-white" : "text-white"
-          }`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className={`flex items-center gap-2 py-2 px-2 font-header text-xl tracking-wide ${
+            isScrolled ? "text-black" : "text-white"
+          } transition-colors duration-300`}
         >
           Menu
           <span
@@ -121,13 +117,10 @@ const Navbar = forwardRef((props, ref) => {
           }`}
         >
           <ul className="py-2">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <li
                 key={link.name}
-                onClick={() => {
-                  handleLinkClick(link.name);
-                  scrollToSection(link.id);
-                }}
+                onClick={() => handleLinkClick(link.name, link.id)}
                 className={`px-6 py-3 cursor-pointer whitespace-nowrap transition-all duration-200 font-header text-[15px] tracking-wide ${
                   activeLink === link.name
                     ? "text-navbar-active font-semibold bg-navbar-active/10"

@@ -47,83 +47,129 @@ const WhatIsIncluded = () => {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const cardsRef = useRef(null);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const text = textRef.current;
     const cards = cardsRef.current;
 
-    if (!section || !text || !cards) return;
-
-    const cardRows = cards.querySelectorAll(".card-row");
-    if (cardRows.length === 0) return;
+    if (!section || !cards) return;
 
     let hasScrolled = false;
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#whatisincluded",
-        start: "top top",
-        end: "+=300%",
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
+    if (isMobile) {
+      // Mobile: Manual drag carousel with scroll-to-next on wheel scroll
+      const handleWheel = (e) => {
+        const sectionRect = section.getBoundingClientRect();
+        // Check if section is currently in viewport
+        const isInView = sectionRect.top <= 100 && sectionRect.bottom > 100;
 
-          // Auto-scroll to next section
-          if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
-            hasScrolled = true;
-            const nextSection = document.querySelector("#ourteam");
+        // If scrolling down while section is in view
+        if (isInView && e.deltaY > 0 && !hasScrolled) {
+          e.preventDefault();
+          hasScrolled = true;
+          const nextSection = document.querySelector("#ourteam");
 
-            if (nextSection) {
-              setTimeout(() => {
-                const targetY =
-                  nextSection.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({ top: targetY, behavior: "smooth" });
-              }, 300);
+          if (nextSection) {
+            const targetY =
+              nextSection.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+            // Reset after scroll completes
+            setTimeout(() => {
+              hasScrolled = false;
+            }, 1000);
+          }
+        }
+      };
+
+      window.addEventListener("wheel", handleWheel, { passive: false });
+
+      return () => {
+        window.removeEventListener("wheel", handleWheel);
+      };
+    } else {
+      // Desktop: Vertical card rows animation
+      const cardRows = cards.querySelectorAll(".card-row");
+      if (cardRows.length === 0) return;
+
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#whatisincluded",
+          start: "top top",
+          end: "+=300%",
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+
+            // Auto-scroll to next section
+            if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
+              hasScrolled = true;
+              const nextSection = document.querySelector("#ourteam");
+
+              if (nextSection) {
+                setTimeout(() => {
+                  const targetY =
+                    nextSection.getBoundingClientRect().top + window.scrollY;
+                  window.scrollTo({ top: targetY, behavior: "smooth" });
+                }, 300);
+              }
             }
-          }
 
-          if (progress < 0.99) {
-            hasScrolled = false;
-          }
+            if (progress < 0.99) {
+              hasScrolled = false;
+            }
+          },
         },
-      },
-    });
+      });
 
-    // Calculate row height for alignment
-    const rowHeight = cardRows[0].offsetHeight;
+      // Calculate row height for alignment
+      const rowHeight = cardRows[0].offsetHeight;
 
-    // Phase 1: Text aligns with first row (0-33%)
-    // Text is already at top, cards at initial position
+      // Phase 2: Scroll to align text with second row (33-66%)
+      timeline.to(
+        cards,
+        {
+          y: -rowHeight - 40, // Move up by one row + gap
+          ease: "none",
+          duration: 0.33,
+        },
+        0.33
+      );
 
-    // Phase 2: Scroll to align text with second row (33-66%)
-    timeline.to(
-      cards,
-      {
-        y: -rowHeight - 40, // Move up by one row + gap
-        ease: "none",
-        duration: 0.33,
-      },
-      0.33
-    );
+      // Phase 3: Scroll to align text with third row (66-100%)
+      timeline.to(
+        cards,
+        {
+          y: -(rowHeight * 2 + 80), // Move up by two rows + gaps
+          ease: "none",
+          duration: 0.34,
+        },
+        0.66
+      );
 
-    // Phase 3: Scroll to align text with third row (66-100%)
-    timeline.to(
-      cards,
-      {
-        y: -(rowHeight * 2 + 80), // Move up by two rows + gaps
-        ease: "none",
-        duration: 0.34,
-      },
-      0.66
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+      return () => {
+        if (timeline.scrollTrigger) {
+          timeline.scrollTrigger.kill(true);
+        }
+        timeline.kill();
+      };
+    }
+  }, [isMobile]);
 
   return (
     <div
@@ -150,80 +196,109 @@ const WhatIsIncluded = () => {
 
       {/* Cards side */}
       <div ref={cardsRef} className="flex-1 w-full relative">
-        {/* Grid for all screen sizes - Split into rows */}
-        <div className="flex flex-col gap-10 w-full max-w-2xl mx-auto">
-          {/* Row 1 */}
-          <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {cards.slice(0, 2).map((card, i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center md:items-start text-center md:text-left"
-              >
-                <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
+        {/* Mobile: Horizontal scroll carousel */}
+        {isMobile && (
+          <div className="carousel-container w-full overflow-x-auto overflow-y-hidden pb-4 snap-x snap-mandatory scrollbar-hide">
+            <div className="flex gap-4 px-4">
+              {cards.map((card, i) => (
+                <div key={i} className="flex-shrink-0 w-[280px] snap-center">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold font-header text-black mb-1">
+                      {card.title}
+                    </h2>
+                    <p className="text-sm text-black/70 font-light font-text">
+                      {card.text}
+                    </p>
+                  </div>
                 </div>
-                <h2 className="text-lg font-semibold font-header text-black mb-1">
-                  {card.title}
-                </h2>
-                <p className="text-sm text-black/70 font-light font-text">
-                  {card.text}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        )}
 
-          {/* Row 2 */}
-          <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {cards.slice(2, 4).map((card, i) => (
-              <div
-                key={i + 2}
-                className="flex flex-col items-center md:items-start text-center md:text-left"
-              >
-                <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
+        {/* Desktop: Grid layout with rows */}
+        {!isMobile && (
+          <div className="flex flex-col gap-10 w-full max-w-2xl mx-auto">
+            {/* Row 1 */}
+            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
+              {cards.slice(0, 2).map((card, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center md:items-start text-center md:text-left"
+                >
+                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <h2 className="text-lg font-semibold font-header text-black mb-1">
+                    {card.title}
+                  </h2>
+                  <p className="text-sm text-black/70 font-light font-text">
+                    {card.text}
+                  </p>
                 </div>
-                <h2 className="text-lg font-semibold font-header text-black mb-1">
-                  {card.title}
-                </h2>
-                <p className="text-sm text-black/70 font-light font-text">
-                  {card.text}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Row 3 */}
-          <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-            {cards.slice(4, 6).map((card, i) => (
-              <div
-                key={i + 4}
-                className="flex flex-col items-center md:items-start text-center md:text-left"
-              >
-                <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
+            {/* Row 2 */}
+            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
+              {cards.slice(2, 4).map((card, i) => (
+                <div
+                  key={i + 2}
+                  className="flex flex-col items-center md:items-start text-center md:text-left"
+                >
+                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <h2 className="text-lg font-semibold font-header text-black mb-1">
+                    {card.title}
+                  </h2>
+                  <p className="text-sm text-black/70 font-light font-text">
+                    {card.text}
+                  </p>
                 </div>
-                <h2 className="text-lg font-semibold font-header text-black mb-1">
-                  {card.title}
-                </h2>
-                <p className="text-sm text-black/70 font-light font-text">
-                  {card.text}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Row 3 */}
+            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
+              {cards.slice(4, 6).map((card, i) => (
+                <div
+                  key={i + 4}
+                  className="flex flex-col items-center md:items-start text-center md:text-left"
+                >
+                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                  <h2 className="text-lg font-semibold font-header text-black mb-1">
+                    {card.title}
+                  </h2>
+                  <p className="text-sm text-black/70 font-light font-text">
+                    {card.text}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

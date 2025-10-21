@@ -125,14 +125,17 @@ const DevicesMockups = () => {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (timeline.scrollTrigger) {
+        timeline.scrollTrigger.kill(true);
+      }
+      timeline.kill();
     };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="w-full h-full flex flex-col items-center text-center overflow-visible gap-4 md:gap-6"
+      className="w-full h-full flex flex-col items-center max-sm:justify-center text-center overflow-visible gap-20 md:gap-6"
     >
       {/* Company Goals */}
       <div
@@ -178,7 +181,7 @@ const DevicesMockups = () => {
       {/* Mockup Image */}
       <div
         ref={imageRef}
-        className="relative w-full flex justify-center flex-1"
+        className="relative w-full flex  justify-center md:flex-1"
       >
         <img
           src={Mockups}

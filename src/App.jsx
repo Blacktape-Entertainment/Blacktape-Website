@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
-import WhoAreWe from "./components/WhoAreWe";
+import WhoAreWe from "./components/WhoAreWe/WhoAreWe";
 import DevicesMockups from "./components/DevicesMockups";
 import WhatIsIncluded from "./components/WhatIsIncluded";
 import OurTeam from "./components/OurTeam";
@@ -20,11 +20,9 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
   const navbarRef = useRef(null);
 
+  // Fade out intro screen and show main content
   const handleIntroFinish = () => {
-    // Set showIntro to false immediately so content renders behind the fading intro
     setShowIntro(false);
-
-    // Fade out the intro screen
     gsap.to(".intro-screen", {
       opacity: 0,
       duration: 0.8,
@@ -32,14 +30,18 @@ function App() {
     });
   };
 
+  // Navbar visibility control based on scroll position
   useEffect(() => {
     if (showIntro || !navbarRef.current) return;
 
-    // Sections where navbar should be visible
+    // Check if mobile
+    const isMobile = window.innerWidth < 768;
+
+    // Sections where navbar should be visible (Hero controls itself)
+    // On mobile, exclude "ourteam" from visible sections
     const visibleSections = [
-      "hero-wrapper",
       "whatisincluded",
-      "ourteam",
+      ...(isMobile ? [] : ["ourteam"]), // Hide navbar in ourteam section on mobile
       "trustedclients",
       "instantaiconnect",
       "footer",
@@ -48,67 +50,58 @@ function App() {
     let isNavbarVisible = false;
 
     const checkSection = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      let shouldShowNavbar = false;
+      const scrollY = window.scrollY + window.innerHeight / 2;
 
-      for (const sectionId of visibleSections) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          const sectionTop = rect.top + window.scrollY;
-          const sectionBottom = sectionTop + rect.height;
-
-          if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
-            shouldShowNavbar = true;
-            break;
-          }
-        }
+      // Let Hero component control navbar when in hero section
+      const heroSection = document.getElementById("hero-wrapper");
+      if (heroSection) {
+        const { top, height } = heroSection.getBoundingClientRect();
+        const heroTop = top + window.scrollY;
+        if (scrollY >= heroTop && scrollY <= heroTop + height) return;
       }
 
-      // Animate navbar in/out
-      if (shouldShowNavbar && !isNavbarVisible) {
-        isNavbarVisible = true;
+      // Check if current scroll position is in any visible section
+      const shouldShow = visibleSections.some((id) => {
+        const section = document.getElementById(id);
+        if (!section) return false;
+
+        const { top, height } = section.getBoundingClientRect();
+        const sectionTop = top + window.scrollY;
+        return scrollY >= sectionTop && scrollY <= sectionTop + height;
+      });
+
+      // Animate navbar only if visibility state changed
+      if (shouldShow !== isNavbarVisible) {
+        isNavbarVisible = shouldShow;
         gsap.to(navbarRef.current, {
-          opacity: 1,
-          y: 0,
+          opacity: shouldShow ? 1 : 0,
+          y: shouldShow ? 0 : -100,
           duration: 0.6,
-          ease: "power3.out",
-        });
-      } else if (!shouldShowNavbar && isNavbarVisible) {
-        isNavbarVisible = false;
-        gsap.to(navbarRef.current, {
-          opacity: 0,
-          y: -100,
-          duration: 0.6,
-          ease: "power3.in",
+          ease: shouldShow ? "power3.out" : "power3.in",
         });
       }
     };
 
-    // Check on scroll
     window.addEventListener("scroll", checkSection);
-
-    // Initial check
+    window.addEventListener("resize", checkSection);
     checkSection();
 
     return () => {
       window.removeEventListener("scroll", checkSection);
+      window.removeEventListener("resize", checkSection);
     };
   }, [showIntro]);
 
   return (
     <>
-      {/* Intro Screen */}
       {showIntro && (
         <section className="intro-screen fixed inset-0 z-[100] w-full h-screen bg-black flex items-center justify-center p-4">
           <Intro onFinish={handleIntroFinish} />
         </section>
       )}
 
-      {/* Main Content - Only render after intro */}
       {!showIntro && (
         <div className="bg-white overflow-x-hidden">
-          {/* Navbar */}
           <nav
             ref={navbarRef}
             className="fixed top-0 left-0 mt-10 w-full z-50"
@@ -117,7 +110,6 @@ function App() {
             <Navbar />
           </nav>
 
-          {/* Hero Section */}
           <section
             id="hero-wrapper"
             className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-2.5 overflow-x-hidden"
@@ -125,12 +117,10 @@ function App() {
             <Hero navbarRef={navbarRef} />
           </section>
 
-          {/* Who Are We */}
           <section id="whoarewe-wrapper" className="w-full">
             <WhoAreWe />
           </section>
 
-          {/* Company Goals & Studio */}
           <section
             id="devicesmockups"
             className="w-full h-screen flex flex-col items-center justify-center py-10"
@@ -138,25 +128,21 @@ function App() {
             <DevicesMockups />
           </section>
 
-          {/* What Is Included */}
           <section
             id="whatisincluded"
-            className="w-full gap-8 md:pb-24 md:px-20 px-2.5 pb-12 pt-20"
+            className="w-full gap-8 md:pb-24 md:px-20 px-2.5 pb-12 h-screen pt-20"
           >
             <WhatIsIncluded />
           </section>
 
-          {/* Our Team */}
           <section id="ourteam" className="w-full">
             <OurTeam />
           </section>
 
-          {/* It's Your Turn */}
           <section id="itsyourturn" className="w-full h-full px-4">
             <ItsYourTurn />
           </section>
 
-          {/* Digital Sovereignty */}
           <section id="digitalsovereignty" className="w-full">
             <DigitalSovereignty />
           </section>
@@ -165,12 +151,10 @@ function App() {
             <TrustedClients />
           </section>
 
-          {/* Instant AI Connect - Merged component with scroll animation */}
           <section id="instantaiconnect" className="w-full">
             <InstantAIConnect />
           </section>
 
-          {/* Footer */}
           <footer id="footer">
             <BlacktapeFooter />
           </footer>

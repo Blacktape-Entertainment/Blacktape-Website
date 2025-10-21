@@ -1,9 +1,15 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import heroVideo from "../assets/videos/hero.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const ANIMATION_CONFIG = {
+  entry: { opacity: 1, z: 0, scale: 1, ease: "power3.out", duration: 0.5 },
+  exit: { opacity: 0, z: -2000, scale: 0.3, ease: "power3.in", duration: 0.5 },
+  navbarHide: { opacity: 0, y: -100, ease: "power3.in", duration: 0.5 },
+};
 
 const Hero = ({ navbarRef }) => {
   const sectionRef = useRef(null);
@@ -11,32 +17,21 @@ const Hero = ({ navbarRef }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
     const content = contentRef.current;
     const video = videoRef.current;
 
-    if (!section || !content || !video) return;
+    if (!content || !video) return;
 
     video.pause();
 
-    // Initial states: text hidden deep inside, navbar hidden above
-    gsap.set(content, {
-      opacity: 0,
-      z: -2000,
-      scale: 0.3,
-    });
-
+    gsap.set(content, { opacity: 0, z: -2000, scale: 0.3 });
     if (navbarRef?.current) {
-      gsap.set(navbarRef.current, {
-        opacity: 0,
-        y: -300,
-      });
+      gsap.set(navbarRef.current, { opacity: 0, y: -300 });
     }
 
-    // Auto-scroll flag
     let hasScrolled = false;
 
-    const masterTimeline = gsap.timeline({
+    const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: "#hero-wrapper",
         start: "top top",
@@ -45,78 +40,49 @@ const Hero = ({ navbarRef }) => {
         pinSpacing: true,
         scrub: 1,
         onUpdate: (self) => {
-          const progress = self.progress;
+          const { progress, direction } = self;
 
-          // Sync video with scroll
           if (video.duration) {
             video.currentTime = progress * video.duration;
           }
 
-          // Auto-scroll to next section at end
-          if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
+          if (progress >= 0.99 && direction === 1 && !hasScrolled) {
             hasScrolled = true;
-            const nextSection = document.querySelector("#whoarewe");
+            const nextSection = document.getElementById("whoarewe");
 
             if (nextSection) {
               setTimeout(() => {
-                const targetY =
-                  nextSection.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({ top: targetY, behavior: "smooth" });
+                window.scrollTo({
+                  top: nextSection.getBoundingClientRect().top + window.scrollY,
+                  behavior: "smooth",
+                });
               }, 300);
             }
           }
 
-          if (progress < 0.99) {
-            hasScrolled = false;
-          }
+          if (progress < 0.99) hasScrolled = false;
         },
       },
     });
 
-    // Phase 1: Entry animations (text from inside, navbar from top)
-    masterTimeline.to(
-      content,
-      {
-        opacity: 1,
-        z: 0,
-        scale: 1,
-        ease: "power3.out",
-        duration: 0.3,
-      },
-      0
-    );
+    timeline.to(content, ANIMATION_CONFIG.entry, 0);
 
     if (navbarRef?.current) {
-      masterTimeline.to(
-        navbarRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          ease: "power3.out",
-          duration: 0.3,
-        },
-        0
-      );
+      timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
     }
 
-    // Phase 2: Hold while video plays
-    masterTimeline.addLabel("hold", ">");
+    timeline.addLabel("hold", ">");
+    timeline.to(content, ANIMATION_CONFIG.exit, 0.7);
 
-    // Phase 3: Exit animation (text back inside, navbar stays)
-    masterTimeline.to(
-      content,
-      {
-        opacity: 0,
-        z: -2000,
-        scale: 0.3,
-        ease: "power3.in",
-        duration: 0.3,
-      },
-      0.7
-    );
+    if (navbarRef?.current) {
+      timeline.to(navbarRef.current, ANIMATION_CONFIG.navbarHide, 0.7);
+    }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (timeline.scrollTrigger) {
+        timeline.scrollTrigger.kill(true);
+      }
+      timeline.kill();
     };
   }, [navbarRef]);
 
