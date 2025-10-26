@@ -1,65 +1,64 @@
-import { useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { useRef } from "react";
 
 const Intro = ({ onFinish }) => {
   const svgRef = useRef(null);
 
-  useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
+  useGSAP(
+    () => {
+      const svg = svgRef.current;
+      if (!svg) return;
 
-    const paths = svg.querySelectorAll("path:not(.bg-rect)");
+      const paths = svg.querySelectorAll("path:not(.bg-rect)");
 
-    const masterTl = gsap.timeline({
-      defaults: { ease: "power1.inOut" }, // Smoother default easing
-      onComplete: onFinish,
-    });
-
-    gsap.set(svg, { opacity: 0, scale: 0.92, filter: "blur(2px)" });
-
-    paths.forEach((path, index) => {
-      const length = path.getTotalLength();
-      // Slightly faster: reduced duration range
-      const duration = gsap.utils.clamp(0.4, 0.8, 0.4 + length / 3000);
-      const delayOverlap = duration * 0.5;
-
-      gsap.set(path, {
-        opacity: 0,
-        strokeDasharray: length,
-        strokeDashoffset: length,
-        stroke: "#BEB693",
-        strokeWidth: 1.1,
-        fill: "#BEB693",
-        fillOpacity: 0,
-        strokeLinecap: "round",
+      const masterTl = gsap.timeline({
+        defaults: { ease: "power1.inOut" },
+        onComplete: onFinish,
       });
 
-      const tl = gsap.timeline();
+      gsap.set(svg, { opacity: 0, scale: 0.92, filter: "blur(2px)" });
 
-      // Fill and stroke draw at the same time with smoother easing
-      tl.to(path, {
-        opacity: 1,
-        strokeDashoffset: 0,
-        fillOpacity: 1,
-        duration: duration,
-        ease: "power1.inOut", // Smoother easing
+      paths.forEach((path, index) => {
+        const length = path.getTotalLength();
+        const duration = gsap.utils.clamp(0.4, 0.8, 0.4 + length / 3000);
+        const delayOverlap = duration * 0.5;
+
+        gsap.set(path, {
+          opacity: 0,
+          strokeDasharray: length,
+          strokeDashoffset: length,
+          stroke: "#BEB693",
+          strokeWidth: 1.1,
+          fill: "#BEB693",
+          fillOpacity: 0,
+          strokeLinecap: "round",
+        });
+
+        const tl = gsap.timeline();
+        tl.to(path, {
+          opacity: 1,
+          strokeDashoffset: 0,
+          fillOpacity: 1,
+          duration: duration,
+          ease: "power1.inOut",
+        });
+        masterTl.add(tl, index === 0 ? 0 : `-=${delayOverlap}`);
       });
 
-      masterTl.add(tl, index === 0 ? 0 : `-=${delayOverlap}`);
-    });
-
-    // Entrance pop (done after paths start) - faster
-    masterTl.add(
-      gsap.to(svg, {
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-        duration: 0.6, // Reduced from 0.8
-        ease: "power2.out", // Smoother entrance
-      }),
-      0
-    );
-  }, [onFinish]);
+      masterTl.add(
+        gsap.to(svg, {
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.6,
+          ease: "power2.out",
+        }),
+        0
+      );
+    },
+    { scope: svgRef, dependencies: [onFinish] }
+  );
 
   return (
     <>

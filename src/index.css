@@ -1,18 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap");
 
 @import "tailwindcss";
 
 @theme {
   /* 🎨 Brand Colors */
-  --color-blacktape: #030706; /* Deep black for background */
-  --color-gold: #beb693; /* Luxury accent */
-  --color-olive: #646043; /* Vintage tone */
+  --color-blacktape: #030706;
+  --color-gold: #beb693;
+  --color-olive: #646043;
   --color-navbar: #f2f0e9;
   --color-navbar-active: #847847;
 
   /* 🖋️ Typography */
-  --font-header: "GFS Didot", serif;
-  --font-text: "Helvetica Neue", Arial, sans-serif;
+  --font-header: "Playfair Display", serif;
+  --font-text: "Playfair Display", serif;
 }
 
 @layer base {

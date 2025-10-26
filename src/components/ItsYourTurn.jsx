@@ -98,38 +98,46 @@ const ItsYourTurn = () => {
       window.addEventListener("wheel", handleWheel, { passive: false });
 
       // Mobile animations - stagger in cards
-      gsap.set(header, { opacity: 0, y: 50 });
-      gsap.set([leftCard, centerCard, rightCard], { opacity: 0, y: 30 });
+      let tl;
+      if (leftCard && centerCard && rightCard) {
+        gsap.set(header, { opacity: 0, y: 50 });
+        gsap.set([leftCard, centerCard, rightCard], { opacity: 0, y: 30 });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          end: "top 20%",
-          toggleActions: "play none none reverse",
-        },
-      });
+        tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            end: "top 20%",
+            toggleActions: "play none none reverse",
+          },
+        });
 
-      tl.to(header, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
-        .to(
-          leftCard,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-          "-=0.3"
-        )
-        .to(
-          centerCard,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-          "-=0.4"
-        )
-        .to(
-          rightCard,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-          "-=0.4"
-        );
+        tl.to(header, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
+          .to(
+            leftCard,
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+            "-=0.3"
+          )
+          .to(
+            centerCard,
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+            "-=0.4"
+          )
+          .to(
+            rightCard,
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+            "-=0.4"
+          );
+      }
 
       return () => {
         window.removeEventListener("wheel", handleWheel);
-        tl.kill();
+        if (tl) {
+          if (tl.scrollTrigger) {
+            tl.scrollTrigger.kill(true);
+          }
+          tl.kill();
+        }
       };
     } else {
       // Desktop: Original card spreading animation

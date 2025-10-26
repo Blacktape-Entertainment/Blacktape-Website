@@ -1,4 +1,6 @@
-import { forwardRef, useState, useEffect } from "react";
+import { forwardRef, useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 import logo from "../assets/images/logo.svg";
 
 const NAV_LINKS = [
@@ -13,40 +15,49 @@ const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
+  const navContainer = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(navContainer.current, {
+      opacity: 0,
+      y: -40,
+      duration: 0.8,
+      ease: "power3.out",
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const heroSection = document.getElementById("hero-wrapper");
-      if (heroSection) {
+      if (heroSection)
         setIsScrolled(heroSection.getBoundingClientRect().bottom <= 0);
-      }
     };
-
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section)
       window.scrollTo({
         top: section.getBoundingClientRect().top + window.scrollY,
         behavior: "smooth",
       });
-    }
   };
 
-  const handleLinkClick = (linkName, sectionId) => {
-    setActiveLink(linkName);
+  const handleLinkClick = (name, id) => {
+    setActiveLink(name);
     setIsMenuOpen(false);
-    scrollToSection(sectionId);
+    scrollToSection(id);
   };
 
   return (
     <div
-      ref={ref}
+      ref={(node) => {
+        navContainer.current = node;
+        if (ref) ref.current = node;
+      }}
       className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3"
     >
       <div

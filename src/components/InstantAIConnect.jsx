@@ -161,7 +161,6 @@ const InstantAIConnect = () => {
   return (
     <section
       ref={sectionRef}
-      id="instantaiconnect"
       className="w-full h-screen bg-white flex items-center justify-center relative overflow-hidden"
     >
       {/* Header and Subtitle - Phase 1 */}
