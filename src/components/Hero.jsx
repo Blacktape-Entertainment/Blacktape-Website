@@ -23,39 +23,40 @@ const Hero = ({ navbarRef }) => {
   const videoRef = useRef(null);
   const videoTimelineRef = useRef(null);
 
-  useGSAP(() => {
-    gsap.set(navbarRef?.current, { y: -100, opacity: 0 });
+  useGSAP(
+    () => {
+      gsap.set(navbarRef?.current, { y: -100, opacity: 0 });
 
-    // Hero scroll-based animation
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "+=90%",
-        pin: sectionRef.current,
-        scrub: true,
-        markers: true,
-      },
-    });
+      // Hero scroll-based animation
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=90%",
+          pin: sectionRef.current,
+          scrub: true,
+        },
+      });
 
-    // Video scroll-based animation
-    videoTimelineRef.current = gsap.timeline({
-      scrollTrigger: {
-        trigger: videoRef.current,
-        start: "top top",
-        end: "+=90%",
-        scrub: true,
-      },
-    });
+      // Video scroll-based animation
+      videoTimelineRef.current = gsap.timeline({
+        scrollTrigger: {
+          trigger: videoRef.current,
+          start: "top top",
+          end: "+=90%",
+          scrub: true,
+        },
+      });
 
-    // Wait until video metadata is loaded (so we know duration)
-    videoRef.current.onloadedmetadata = () => {
-      if (videoTimelineRef.current && videoRef.current) {
-        videoTimelineRef.current.to(videoRef.current, {
-          currentTime: videoRef.current.duration,
-          ease: "none",
-        });
-      }
+      // Wait until video metadata is loaded (so we know duration)
+      videoRef.current.onloadedmetadata = () => {
+        if (videoTimelineRef.current && videoRef.current) {
+          videoTimelineRef.current.to(videoRef.current, {
+            currentTime: videoRef.current.duration,
+            ease: "none",
+          });
+        }
+      };
 
       // Animate hero content
       timeline.to(contentRef.current, ANIMATION_CONFIG.entry, 0);
@@ -79,8 +80,9 @@ const Hero = ({ navbarRef }) => {
           "hold+=0.3"
         );
       }
-    };
-  }, [navbarRef]);
+    },
+    { scope: sectionRef, dependencies: [] }
+  );
 
   return (
     <section
