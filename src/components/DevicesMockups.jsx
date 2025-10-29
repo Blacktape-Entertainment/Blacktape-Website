@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Mockups from "../assets/images/Mockups.png";
-import bookIcon from "../assets/images/Book Icon.svg";
-import eyeIcon from "../assets/images/Eye Icon.svg";
-import statusIcon from "../assets/images/Statue Icon.svg";
+import Mockups from "/images/Mockups.png";
+import bookIcon from "/images/Book Icon.svg";
+import eyeIcon from "/images/Eye Icon.svg";
+import statusIcon from "/images/Statue Icon.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -135,7 +135,8 @@ const DevicesMockups = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full h-full flex flex-col items-center max-sm:justify-center text-center overflow-visible gap-20 md:gap-6"
+      id="devicesmockups"
+      className="w-full h-screen flex flex-col items-center justify-center py-10max-sm:justify-center text-center overflow-visible gap-20 md:gap-6"
     >
       {/* Company Goals */}
       <div

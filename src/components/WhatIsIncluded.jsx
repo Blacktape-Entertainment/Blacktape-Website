@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import img1 from "../assets/images/card1.png";
-import img2 from "../assets/images/card2.png";
-import img3 from "../assets/images/card3.png";
-import img4 from "../assets/images/card4.png";
-import img5 from "../assets/images/card5.png";
-import img6 from "../assets/images/card6.png";
+import img1 from "/images/card1.png";
+import img2 from "/images/card2.png";
+import img3 from "/images/card3.png";
+import img4 from "/images/card4.png";
+import img5 from "/images/card5.png";
+import img6 from "/images/card6.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -172,9 +172,10 @@ const WhatIsIncluded = () => {
   }, [isMobile]);
 
   return (
-    <div
+    <section
       ref={sectionRef}
-      className="w-full flex flex-col md:flex-row items-start md:items-start justify-center gap-10 overflow-hidden select-none"
+      id="whatisincluded"
+      className="w-full md:pb-24 md:px-20 px-2.5 pb-12 h-screen pt-20 flex flex-col md:flex-row items-start md:items-start justify-center gap-10 overflow-hidden select-none"
     >
       {/* Text side */}
       <div
@@ -300,7 +301,7 @@ const WhatIsIncluded = () => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

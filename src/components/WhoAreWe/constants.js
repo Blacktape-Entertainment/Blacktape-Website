@@ -1,7 +1,7 @@
-import logo1 from "../../assets/images/Logo1.svg";
-import logo2 from "../../assets/images/Logo2.svg";
-import logo3 from "../../assets/images/Logo3.svg";
-import logo4 from "../../assets/images/Logo4.svg";
+import logo1 from "/images/Logo1.svg";
+import logo2 from "/images/Logo2.svg";
+import logo3 from "/images/Logo3.svg";
+import logo4 from "/images/Logo4.svg";
 
 export const VALUES = [
   {

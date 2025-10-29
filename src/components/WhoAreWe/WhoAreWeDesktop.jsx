@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import select from "../../assets/images/select.png";
-import radio from "../../assets/images/radio.png";
-import value from "../../assets/images/value.png";
+import select from "/images/select.png";
+import radio from "/images/radio.png";
+import value from "/images/value.png";
 import { VALUES } from "./constants";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -35,7 +35,7 @@ const WhoAreWeDesktop = () => {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        trigger: "#whoarewe-wrapper",
+        trigger: "#whoarewe",
         start: "top top",
         end: "+=500%",
         pin: "#whoarewe",

@@ -1,11 +1,9 @@
-import { forwardRef, useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import logo from "../assets/images/logo.svg";
+import { useState, useEffect, forwardRef } from "react";
+import logo from "/images/logo.svg";
 
 const NAV_LINKS = [
-  { name: "Home", id: "hero-wrapper" },
-  { name: "About", id: "whoarewe-wrapper" },
+  { name: "Home", id: "hero" },
+  { name: "About", id: "whoarewe" },
   { name: "Services", id: "devicesmockups" },
   { name: "Team", id: "ourteam" },
   { name: "Contact", id: "footer" },
@@ -15,20 +13,10 @@ const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
-  const navContainer = useRef(null);
-
-  useGSAP(() => {
-    gsap.from(navContainer.current, {
-      opacity: 0,
-      y: -40,
-      duration: 0.8,
-      ease: "power3.out",
-    });
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroSection = document.getElementById("hero-wrapper");
+      const heroSection = document.getElementById("hero");
       if (heroSection)
         setIsScrolled(heroSection.getBoundingClientRect().bottom <= 0);
     };
@@ -37,114 +25,99 @@ const Navbar = forwardRef((props, ref) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section)
-      window.scrollTo({
-        top: section.getBoundingClientRect().top + window.scrollY,
-        behavior: "smooth",
-      });
-  };
-
-  const handleLinkClick = (name, id) => {
+  const handleLinkClick = (name) => {
     setActiveLink(name);
     setIsMenuOpen(false);
-    scrollToSection(id);
   };
 
   return (
-    <div
-      ref={(node) => {
-        navContainer.current = node;
-        if (ref) ref.current = node;
-      }}
-      className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3"
-    >
-      <div
-        className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
-          isScrolled ? "bg-black" : "bg-navbar"
-        }`}
-      >
-        <img
-          src={logo}
-          alt="Logo"
-          className="w-5 h-5 object-contain opacity-80"
-        />
-      </div>
-
-      {/* Desktop Menu */}
-      <div className="relative hidden lg:flex items-center rounded shadow-md backdrop-blur-sm">
+    <nav className="fixed top-0 left-0 mt-7 w-full z-50" ref={ref}>
+      <div className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3">
         <div
-          className={`absolute inset-0 rounded transition-colors duration-700 ${
+          className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
             isScrolled ? "bg-black" : "bg-navbar"
           }`}
-        />
-        <ul
-          className={`relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-10 transition-colors duration-500 ${
-            isScrolled ? "text-white" : "text-gold"
-          }`}
         >
-          {NAV_LINKS.map((link) => (
-            <li
-              key={link.name}
-              onClick={() => handleLinkClick(link.name, link.id)}
-              className={`cursor-pointer transition-all duration-300 ${
-                activeLink === link.name
-                  ? "text-navbar-active font-semibold"
-                  : "hover:text-navbar-active/70"
-              }`}
-            >
-              {link.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-5 h-5 object-contain opacity-80"
+          />
+        </div>
 
-      {/* Mobile Menu */}
-      <div className="lg:hidden relative">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`flex items-center gap-2 py-2 px-2 font-header text-xl tracking-wide ${
-            isScrolled ? "text-black" : "text-white"
-          } transition-colors duration-300`}
-        >
-          Menu
-          <span
-            className={`transition-transform duration-300 ${
-              isMenuOpen ? "rotate-45" : ""
+        {/* Desktop Menu */}
+        <div className="relative hidden lg:flex items-center rounded shadow-md backdrop-blur-sm">
+          <div
+            className={`absolute inset-0 rounded transition-colors duration-700 ${
+              isScrolled ? "bg-black" : "bg-navbar"
+            }`}
+          />
+          <ul
+            className={`relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-10 transition-colors duration-500 ${
+              isScrolled ? "text-white" : "text-gold"
             }`}
           >
-            +
-          </span>
-        </button>
-
-        <div
-          className={`absolute right-0 mt-2 w-56 rounded shadow-lg backdrop-blur-sm overflow-hidden transition-all duration-300 ease-out ${
-            isScrolled ? "bg-black text-white" : "bg-navbar text-gold"
-          } ${
-            isMenuOpen
-              ? "opacity-100 translate-y-0 scale-100 z-40"
-              : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
-          }`}
-        >
-          <ul className="py-2">
             {NAV_LINKS.map((link) => (
               <li
                 key={link.name}
                 onClick={() => handleLinkClick(link.name, link.id)}
-                className={`px-6 py-3 cursor-pointer whitespace-nowrap transition-all duration-200 font-header text-[15px] tracking-wide ${
+                className={`cursor-pointer transition-all duration-300 ${
                   activeLink === link.name
-                    ? "text-navbar-active font-semibold bg-navbar-active/10"
-                    : "hover:text-navbar-active/70 hover:bg-navbar-active/5"
+                    ? "text-navbar-active font-semibold"
+                    : "hover:text-navbar-active/70"
                 }`}
               >
-                {link.name}
+                <a href={`#${link.id}`}>{link.name}</a>
               </li>
             ))}
           </ul>
         </div>
+
+        {/* Mobile Menu */}
+        <div className="lg:hidden relative">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`flex items-center gap-2 py-2 px-2 font-header text-xl tracking-wide ${
+              isScrolled ? "text-black" : "text-white"
+            } transition-colors duration-300`}
+          >
+            Menu
+            <span
+              className={`transition-transform duration-300 ${
+                isMenuOpen ? "rotate-45" : ""
+              }`}
+            >
+              +
+            </span>
+          </button>
+
+          <div
+            className={`absolute right-0 mt-2 w-56 rounded shadow-lg backdrop-blur-sm overflow-hidden transition-all duration-300 ease-out ${
+              isScrolled ? "bg-black text-white" : "bg-navbar text-gold"
+            } ${
+              isMenuOpen
+                ? "opacity-100 translate-y-0 scale-100 z-40"
+                : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+            }`}
+          >
+            <ul className="py-2">
+              {NAV_LINKS.map((link) => (
+                <li
+                  key={link.name}
+                  className={`px-6 py-3 cursor-pointer whitespace-nowrap transition-all duration-200 font-header text-[15px] tracking-wide ${
+                    activeLink === link.name
+                      ? "text-navbar-active font-semibold bg-navbar-active/10"
+                      : "hover:text-navbar-active/70 hover:bg-navbar-active/5"
+                  }`}
+                >
+                  <a href={`#${link.id}`}>{link.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 });
 

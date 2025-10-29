@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import radioMobile from "../../assets/images/radio-mobile.png";
+import radioMobile from "/images/radio-mobile.png";
 import { VALUES } from "./constants";
-import tuner from "../../assets/images/tuner.png";
+import tuner from "/images/tuner.png";
 gsap.registerPlugin(ScrollTrigger);
 
 const WhoAreWeMobile = () => {
@@ -32,7 +32,7 @@ const WhoAreWeMobile = () => {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        trigger: "#whoarewe-wrapper",
+        trigger: "#whoarewe",
         start: "top top",
         end: "+=500%",
         pin: "#whoarewe",

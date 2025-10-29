@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import antennaSmall from "../assets/images/ai-antenna-1.png";
-import antennaLarge from "../assets/images/ai-antenna-2.png";
+import antennaSmall from "/images/ai-antenna-1.png";
+import antennaLarge from "/images/ai-antenna-2.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -161,6 +161,7 @@ const InstantAIConnect = () => {
   return (
     <section
       ref={sectionRef}
+      id="instantaiconnect"
       className="w-full h-screen bg-white flex items-center justify-center relative overflow-hidden"
     >
       {/* Header and Subtitle - Phase 1 */}

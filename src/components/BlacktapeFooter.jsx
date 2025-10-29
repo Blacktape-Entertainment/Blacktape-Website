@@ -1,19 +1,19 @@
 import React from "react";
-import footerBg from "../assets/images/Footer Picture.png";
-import footerLogo from "../assets/images/footer-logo.svg";
-import blacktape from "../assets/images/Blacktape Footer.png";
+import footerBg from "/images/Footer Picture.png";
+import footerLogo from "/images/footer-logo.svg";
+import blacktape from "/images/Blacktape Footer.png";
 
 const BlacktapeFooter = () => {
   return (
-    <>
+    <section id="footer">
       {/* Full Viewport Image Section */}
-      <section className="w-full">
+      <div className="w-full">
         <img
           src={footerBg}
           alt="footer background"
           className="w-full h-full object-cover"
         />
-      </section>
+      </div>
 
       {/* Footer Content */}
       <footer className="w-full flex justify-center bg-white">
@@ -181,7 +181,7 @@ const BlacktapeFooter = () => {
           </div>
         </div>
       </footer>
-    </>
+    </section>
   );
 };
 

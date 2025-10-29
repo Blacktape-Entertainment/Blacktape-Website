@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import mockup1 from "../assets/images/mockup-1.png";
-import mockup2 from "../assets/images/mockup-2.png";
-import mockup3 from "../assets/images/mockup-3.png";
+import mockup1 from "/images/mockup-1.png";
+import mockup2 from "/images/mockup-2.png";
+import mockup3 from "/images/mockup-3.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

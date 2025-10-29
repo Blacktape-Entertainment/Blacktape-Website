@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import teamBg from "../assets/images/team-bg.jpg";
-import teamBgMobile from "../assets/images/team-bg-mobile.jpg";
-import leftImage from "../assets/images/left-image-our-team.png";
+import teamBg from "/images/team-bg.jpg";
+import teamBgMobile from "/images/team-bg-mobile.jpg";
+import leftImage from "/images/left-image-our-team.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

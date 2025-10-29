@@ -11,8 +11,26 @@
   --color-navbar-active: #847847;
 
   /* 🖋️ Typography */
-  --font-header: "Playfair Display", serif;
-  --font-text: "Playfair Display", serif;
+  --font-header: "Denton Condensed", serif;
+  --font-text: "Denton Condensed", serif;
+}
+
+/* =========================
+   Custom Fonts
+========================= */
+
+@font-face {
+  font-family: "Denton Condensed";
+  src: url("DentonCondensed-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Denton Condensed";
+  src: url("DentonCondensed-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
 }
 
 @layer base {

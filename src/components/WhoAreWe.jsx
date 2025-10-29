@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import select from "../assets/images/select.png";
-import radio from "../assets/images/radio.png";
-import radioMobile from "../assets/images/radio-mobile.png";
-import value from "../assets/images/value.png";
-import logo1 from "../assets/images/Logo1.svg";
-import logo2 from "../assets/images/Logo2.svg";
-import logo3 from "../assets/images/Logo3.svg";
-import logo4 from "../assets/images/Logo4.svg";
+import select from "/images/select.png";
+import radio from "/images/radio.png";
+import radioMobile from "/images/radio-mobile.png";
+import value from "/images/value.png";
+import logo1 from "/images/Logo1.svg";
+import logo2 from "/images/Logo2.svg";
+import logo3 from "/images/Logo3.svg";
+import logo4 from "/images/Logo4.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,7 +66,7 @@ const WhoAreWeDesktop = () => {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        trigger: "#whoarewe-wrapper",
+        trigger: "#whoarewe",
         start: "top top",
         end: "+=500%",
         pin: "#whoarewe",
@@ -276,7 +276,7 @@ const WhoAreWeMobile = () => {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        trigger: "#whoarewe-wrapper",
+        trigger: "#whoarewe",
         start: "top top",
         end: "+=500%",
         pin: "#whoarewe",

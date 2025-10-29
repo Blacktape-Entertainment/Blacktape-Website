@@ -61,7 +61,10 @@ const Intro = ({ onFinish }) => {
   );
 
   return (
-    <>
+    <section
+      className="intro-screen fixed inset-0 z-[100] w-full h-screen bg-black flex items-center justify-center p-4"
+      id="intro"
+    >
       <svg
         ref={svgRef}
         viewBox="0 0 394 141"
@@ -107,7 +110,7 @@ const Intro = ({ onFinish }) => {
           fill="#BEB693"
         />
       </svg>
-    </>
+    </section>
   );
 };
 
