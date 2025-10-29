@@ -24,3 +24,27 @@ export const VALUES = [
     span: "INVESTMENT",
   },
 ];
+
+export const items = [
+  {
+    id: "quality",
+    icon: "images/Statue Icon.svg",
+    alt: "status icon",
+    title: "Excellence, Artistry, and Impact",
+    desc: "Focusing on the high quality of the final product.",
+  },
+  {
+    id: "process",
+    icon: "images/Book Icon.svg",
+    alt: "book icon",
+    title: "Strategic, Scientific, and Meticulous",
+    desc: "Focusing on their unique and careful process.",
+  },
+  {
+    id: "scope",
+    icon: "images/Eye Icon.svg",
+    alt: "eye icon",
+    title: "Comprehensive, Full-Service, and Visionary",
+    desc: "Focusing on their ability to handle everything.",
+  },
+];

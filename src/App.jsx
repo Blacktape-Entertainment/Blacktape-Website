@@ -46,14 +46,16 @@ function App() {
           <Navbar ref={navbarRef} />
           <Hero navbarRef={navbarRef} />
           <WhoAreWe />
-          {/* <DevicesMockups />
+          <DevicesMockups />
+          {/* 
           <WhatIsIncluded />
           <OurTeam />
           <ItsYourTurn />
           <DigitalSovereignty />
           <TrustedClients />
           <InstantAIConnect />
-          <BlacktapeFooter /> */}
+          <BlacktapeFooter />
+           */}
         </>
       )}
     </main>

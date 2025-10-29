@@ -33,67 +33,70 @@ const WhoAreWe = () => {
   }, []);
 
   // 📜 Scroll + intro animation
-  useGSAP(() => {
-    const header = headerRef.current;
-    const radio = radioRef.current;
-    const dynamicText = dynamicContentRef.current;
+  useGSAP(
+    () => {
+      const header = headerRef.current;
+      const radio = radioRef.current;
+      const dynamicText = dynamicContentRef.current;
 
-    if (!header || !radio || !dynamicText) return;
+      if (!header || !radio || !dynamicText) return;
 
-    gsap.set(header, { scale: 1.5, y: "30vh" });
-    gsap.set([radio, dynamicText], { opacity: 0, y: "100vh" });
+      gsap.set(header, { scale: isMobile ? 1.2 : 1.5, y: "30vh" });
+      gsap.set([radio, dynamicText], { opacity: 0, y: "100vh" });
 
-    let hasScrolled = false;
+      let hasScrolled = false;
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "+=500%",
-        pin: sectionRef.current,
-        pinSpacing: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          const { progress, direction } = self;
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=500%",
+          pin: sectionRef.current,
+          pinSpacing: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const { progress, direction } = self;
 
-          if (progress < 0.2) {
-            scrollAnimationRef.current = false;
-          } else if (progress >= 0.2 && progress < 0.8) {
-            scrollAnimationRef.current = true;
-            const selectionProgress = (progress - 0.2) / 0.6;
+            if (progress < 0.2) {
+              scrollAnimationRef.current = false;
+            } else if (progress >= 0.2 && progress < 0.8) {
+              scrollAnimationRef.current = true;
+              const selectionProgress = (progress - 0.2) / 0.6;
 
-            if (selectionProgress < 0.25) setActiveValue("value1");
-            else if (selectionProgress < 0.5) setActiveValue("value2");
-            else if (selectionProgress < 0.75) setActiveValue("value3");
-            else setActiveValue("value4");
-          }
+              if (selectionProgress < 0.25) setActiveValue("value1");
+              else if (selectionProgress < 0.5) setActiveValue("value2");
+              else if (selectionProgress < 0.75) setActiveValue("value3");
+              else setActiveValue("value4");
+            }
 
-          if (progress >= 0.99 && direction === 1 && !hasScrolled) {
-            hasScrolled = true;
-          }
+            if (progress >= 0.99 && direction === 1 && !hasScrolled) {
+              hasScrolled = true;
+            }
 
-          if (progress < 0.99) hasScrolled = false;
+            if (progress < 0.99) hasScrolled = false;
+          },
         },
-      },
-    });
+      });
 
-    timeline.to(
-      header,
-      { scale: 1, y: 0, ease: "power3.out", duration: 0.2 },
-      0
-    );
-    timeline.to(
-      radio,
-      { opacity: 1, y: 0, ease: "power3.out", duration: 0.2 },
-      0
-    );
-    timeline.to(
-      dynamicText,
-      { opacity: 1, y: 0, ease: "power3.out", duration: 0.2 },
-      0
-    );
-    timeline.to({}, { duration: 0.6 }, ">");
-  }, []);
+      timeline.to(
+        header,
+        { scale: 1, y: 0, ease: "power3.out", duration: 0.2 },
+        0
+      );
+      timeline.to(
+        radio,
+        { opacity: 1, y: 0, ease: "power3.out", duration: 0.2 },
+        0
+      );
+      timeline.to(
+        dynamicText,
+        { opacity: 1, y: 0, ease: "power3.out", duration: 0.2 },
+        0
+      );
+      timeline.to({}, { duration: 0.6 }, ">");
+    },
+    { scope: sectionRef.current, dependencies: [] }
+  );
 
   // 🎛️ Animate buttons when value changes
   useGSAP(() => {
@@ -115,29 +118,47 @@ const WhoAreWe = () => {
     });
   }, [activeValue]);
 
-  // ✨ SplitText animation for content
   useGSAP(() => {
     if (!dynamicContentRef.current) return;
 
-    const splitH1 = new SplitText(".header", { type: "chars" });
-    const splitP = new SplitText(".paragraph", { type: "words" });
+    // Wait for fonts to be loaded before running SplitText
+    const runSplitAnimation = () => {
+      // Make sure the elements exist
+      const headerEl = dynamicContentRef.current.querySelector(".header");
+      const paragraphEl = dynamicContentRef.current.querySelector(".paragraph");
+      if (!headerEl || !paragraphEl) return;
 
-    gsap.from(splitH1.chars, {
-      opacity: 0,
-      y: 20,
-      stagger: 0.03,
-      duration: 0.4,
-      ease: "power2.out",
-    });
+      // Create new splits
+      const splitH1 = new SplitText(headerEl, { type: "chars" });
+      const splitP = new SplitText(paragraphEl, { type: "words" });
 
-    gsap.from(splitP.words, {
-      opacity: 0,
-      y: 20,
-      stagger: 0.03,
-      duration: 0.4,
-      ease: "power2.out",
-      delay: 0.2,
-    });
+      // Animate header
+      gsap.from(splitH1.chars, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.03,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+
+      // Animate paragraph
+      gsap.from(splitP.words, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.02,
+        duration: 0.4,
+        ease: "power2.out",
+        delay: 0.2,
+      });
+    };
+
+    // Ensure fonts are ready first
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => requestAnimationFrame(runSplitAnimation));
+    } else {
+      // Fallback for older browsers
+      window.addEventListener("load", runSplitAnimation, { once: true });
+    }
   }, [current]);
 
   return (
