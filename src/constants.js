@@ -48,3 +48,67 @@ export const items = [
     desc: "Focusing on their ability to handle everything.",
   },
 ];
+
+export const cards = [
+  {
+    image: "images/card1.png",
+    title: "All your data in one place",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    image: "images/card2.png",
+    title: "Seamless Collaboration",
+    text: "Empower your team with real-time visibility and creative tools.",
+  },
+  {
+    image: "images/card3.png",
+    title: "Smart Performance",
+    text: "Track results effortlessly with clear and actionable metrics.",
+  },
+  {
+    image: "images/card4.png",
+    title: "Client Satisfaction",
+    text: "Deliver excellence consistently with intuitive planning tools.",
+  },
+  {
+    image: "images/card5.png",
+    title: "Engagement Insights",
+    text: "Understand and enhance audience connection through data.",
+  },
+  {
+    image: "images/card6.png",
+    title: "Post-Event Analytics",
+    text: "Evaluate every success story with detailed post-event insights.",
+  },
+];
+
+export const teamMembers = [
+  {
+    name: "Mohammed Walid",
+    position: "Tech Lead",
+    image: "images/team-mohammed.jpg",
+    points: [
+      "Guiding the Blacktape Legacy.",
+      "Architect of Visionary Experiences.",
+    ],
+  },
+  {
+    name: "Ahmed Samir",
+    position: "CEO",
+    image: "images/team-ahmed.jpg",
+    points: [
+      "Guiding the Blacktape Legacy.",
+      "Architect of Visionary Experiences.",
+    ],
+    isCenter: true,
+  },
+  {
+    name: "Ammar Ayman",
+    position: "Art Director",
+    image: "images/team-ammar.jpg",
+    points: [
+      "Guiding the Blacktape Legacy.",
+      "Architect of Visionary Experiences.",
+    ],
+  },
+];

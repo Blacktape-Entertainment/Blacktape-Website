@@ -11,7 +11,6 @@ import WhoAreWe from "./components/WhoAreWe";
 import DevicesMockups from "./components/DevicesMockups";
 import WhatIsIncluded from "./components/WhatIsIncluded";
 import OurTeam from "./components/OurTeam";
-import ItsYourTurn from "./components/ItsYourTurn";
 import DigitalSovereignty from "./components/DigitalSovereignty";
 import TrustedClients from "./components/TrustedClients";
 import InstantAIConnect from "./components/InstantAIConnect";
@@ -38,7 +37,7 @@ function App() {
   };
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-hidden">
       {showIntro && <Intro onFinish={handleIntroFinish} />}
 
       {!showIntro && (
@@ -47,11 +46,10 @@ function App() {
           <Hero navbarRef={navbarRef} />
           <WhoAreWe />
           <DevicesMockups />
-          {/* 
           <WhatIsIncluded />
           <OurTeam />
-          <ItsYourTurn />
           <DigitalSovereignty />
+          {/* 
           <TrustedClients />
           <InstantAIConnect />
           <BlacktapeFooter />
