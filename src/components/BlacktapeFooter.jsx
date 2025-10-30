@@ -1,8 +1,3 @@
-import React from "react";
-import footerBg from "/images/Footer Picture.png";
-import footerLogo from "/images/footer-logo.svg";
-import blacktape from "/images/Blacktape Footer.png";
-
 const BlacktapeFooter = () => {
   return (
     <section
@@ -12,7 +7,7 @@ const BlacktapeFooter = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src={footerBg}
+          src="images/Footer Picture.png"
           alt="footer background"
           className="w-full h-full object-cover object-bottom"
         />
@@ -25,14 +20,14 @@ const BlacktapeFooter = () => {
           <div className="flex flex-col md:flex-row items-center justify-between md:mb-10">
             {/* Blacktape logo */}
             <img
-              src={blacktape}
+              src="images/Blacktape Footer.png"
               alt="Blacktape Logo"
               className="h-20 md:h-32 lg:h-40 object-contain"
             />
 
             {/* Circular logo */}
             <img
-              src={footerLogo}
+              src="images/footer-logo.svg"
               alt="Blacktape Emblem"
               className="h-20 md:h-35 lg:h-40 object-contain mt-6 md:mt-0 hidden md:block"
             />

@@ -50,10 +50,8 @@ function App() {
           <OurTeam />
           <DigitalSovereignty />
           <TrustedClients />
-          <BlacktapeFooter />
-          {/* 
           <InstantAIConnect />
-           */}
+          <BlacktapeFooter />
         </>
       )}
     </main>
