@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/all";
 import {
   MdMovie,
   MdBusiness,
@@ -16,46 +16,8 @@ import {
   MdLightbulb,
 } from "react-icons/md";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const clients = [
-  { name: "Alpha Media", icon: "film" },
-  { name: "Skyline Group", icon: "building" },
-  { name: "Nova Labs", icon: "flask" },
-  { name: "Orion Studios", icon: "camera" },
-  { name: "Vertex Events", icon: "calendar" },
-  { name: "Pulse Digital", icon: "chart" },
-  { name: "Echo Partners", icon: "users" },
-  { name: "Nimbus Co.", icon: "cloud" },
-  { name: "Horizon Film", icon: "video" },
-  { name: "Quartz Tech", icon: "cpu" },
-  { name: "Aether Co.", icon: "globe" },
-  { name: "Lumen Agency", icon: "lightbulb" },
-  { name: "Stellar Productions", icon: "film" },
-  { name: "Zenith Group", icon: "building" },
-  { name: "Fusion Labs", icon: "flask" },
-  { name: "Pixel Studios", icon: "camera" },
-  { name: "Prime Events", icon: "calendar" },
-  { name: "Digital Wave", icon: "chart" },
-  { name: "Synergy Partners", icon: "users" },
-  { name: "Cloud Nine", icon: "cloud" },
-  { name: "Motion Pictures", icon: "video" },
-  { name: "Nexus Tech", icon: "cpu" },
-  { name: "Global Reach", icon: "globe" },
-  { name: "Bright Ideas", icon: "lightbulb" },
-  { name: "Apex Media", icon: "film" },
-  { name: "Summit Corp", icon: "building" },
-  { name: "Innovation Labs", icon: "flask" },
-  { name: "Focus Studios", icon: "camera" },
-  { name: "Elite Events", icon: "calendar" },
-  { name: "Growth Digital", icon: "chart" },
-  { name: "Unity Partners", icon: "users" },
-  { name: "Sky High Co.", icon: "cloud" },
-  { name: "Frame Films", icon: "video" },
-  { name: "Logic Tech", icon: "cpu" },
-  { name: "World Vision", icon: "globe" },
-  { name: "Spark Agency", icon: "lightbulb" },
-];
+import { clients } from "../constants";
+import { useGSAP } from "@gsap/react";
 
 const IconComponent = ({ type, className = "h-5 w-5 md:h-6 md:w-6" }) => {
   const icons = {
@@ -82,7 +44,7 @@ const TrustedClients = () => {
   const headerRef = useRef(null);
   const rowsContainerRef = useRef(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const section = sectionRef.current;
     const header = headerRef.current;
     const rowsContainer = rowsContainerRef.current;
@@ -100,7 +62,7 @@ const TrustedClients = () => {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        trigger: "#trustedclients",
+        trigger: section,
         start: "top top",
         end: `+=${totalRows * 100}%`,
         pin: true,
@@ -108,21 +70,10 @@ const TrustedClients = () => {
         scrub: 1,
         onUpdate: (self) => {
           const progress = self.progress;
-
           // Auto-scroll to next section
           if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
             hasScrolled = true;
-            const nextSection = document.querySelector("#instantaiconnect");
-
-            if (nextSection) {
-              setTimeout(() => {
-                const targetY =
-                  nextSection.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({ top: targetY, behavior: "smooth" });
-              }, 300);
-            }
           }
-
           if (progress < 0.99) {
             hasScrolled = false;
           }
@@ -136,17 +87,9 @@ const TrustedClients = () => {
       {
         y: -(rowHeight * (totalRows - 2)), // Scroll through all rows
         ease: "none",
-        duration: 1,
       },
       0
     );
-
-    return () => {
-      if (timeline.scrollTrigger) {
-        timeline.scrollTrigger.kill(true);
-      }
-      timeline.kill();
-    };
   }, []);
 
   // Split clients into rows of 4
@@ -163,7 +106,7 @@ const TrustedClients = () => {
     >
       {/* Header */}
       <div ref={headerRef} className="text-center max-w-2xl mb-8 px-4 z-10">
-        <h2 className="font-header font-extrabold text-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-2 tracking-tight">
+        <h2 className="font-header font-extrabold text-black text-5xl md:text-4xl lg:text-5xl leading-tight mb-2 tracking-tight">
           Trusted Clients
         </h2>
         <p className="font-text text-xs sm:text-sm md:text-base text-black font-light">

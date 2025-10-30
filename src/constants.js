@@ -112,3 +112,56 @@ export const teamMembers = [
     ],
   },
 ];
+
+export const sections = [
+  {
+    subtitle: "Pitch & Propose",
+    title: "From Concept to Contract, All in One Place.",
+    description:
+      "Move beyond static PDFs and scattered email chains. Our collaborative platform allows you to present your creative concepts through interactive mood boards and dynamic proposals. Clients can easily compare different options side-by-side, whether it's venues, vendors, or design schemes. Transparent, line-item budgets can be reviewed, adjusted, and approved in real-time, ensuring everyone is aligned and confident before moving forward.",
+    image: "images/mockup-1.png",
+    imageAlt: "Pitch & Propose Mockup",
+  },
+  {
+    subtitle: "Sign & Seal",
+    title: "Secure Your Vendors in an Instant.",
+    description:
+      "Eliminate the paper chase and lock in your top choices without delay. Our integrated system allows for the creation and distribution of legally-binding digital contracts. All parties can review and sign electronically from any device with a single tap. You'll receive instant notifications upon signing, so you can move from agreement to execution in minutes, not days. It's faster, more secure, and completely paperless.",
+    image: "images/mockup-2.png",
+    imageAlt: "Sign & Seal Mockup",
+    reverse: true,
+  },
+  {
+    subtitle: "Track & Tweak",
+    title: "Your Event's Live Command Center.",
+    description:
+      "Maintain a bird's-eye view of every moving part. Our real-time dashboard tracks task progress through shared checklists and dynamic timelines, so you always know what's done and what's next. Collaborate effortlessly by leaving feedback directly on tasks, tagging team members, and attaching relevant files. When plans inevitably change, you can adjust priorities on the fly, ensuring your entire team stays agile and focused on what truly matters.",
+    image: "images/mockup-3.png",
+    imageAlt: "Track & Tweak Mockup",
+  },
+];
+
+export const clients = [
+  { name: "Alpha Media", icon: "film" },
+  { name: "Skyline Group", icon: "building" },
+  { name: "Nova Labs", icon: "flask" },
+  { name: "Orion Studios", icon: "camera" },
+  { name: "Vertex Events", icon: "calendar" },
+  { name: "Pulse Digital", icon: "chart" },
+  { name: "Echo Partners", icon: "users" },
+  { name: "Nimbus Co.", icon: "cloud" },
+  { name: "Horizon Film", icon: "video" },
+  { name: "Quartz Tech", icon: "cpu" },
+  { name: "Aether Co.", icon: "globe" },
+  { name: "Lumen Agency", icon: "lightbulb" },
+  { name: "Stellar Productions", icon: "film" },
+  { name: "Zenith Group", icon: "building" },
+  { name: "Fusion Labs", icon: "flask" },
+  { name: "Pixel Studios", icon: "camera" },
+  { name: "Prime Events", icon: "calendar" },
+  { name: "Digital Wave", icon: "chart" },
+  { name: "Synergy Partners", icon: "users" },
+  { name: "Cloud Nine", icon: "cloud" },
+  { name: "Motion Pictures", icon: "video" },
+  { name: "Nexus Tech", icon: "cpu" },
+];

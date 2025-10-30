@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/all";
 import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 
@@ -49,10 +49,10 @@ function App() {
           <WhatIsIncluded />
           <OurTeam />
           <DigitalSovereignty />
-          {/* 
           <TrustedClients />
-          <InstantAIConnect />
           <BlacktapeFooter />
+          {/* 
+          <InstantAIConnect />
            */}
         </>
       )}
