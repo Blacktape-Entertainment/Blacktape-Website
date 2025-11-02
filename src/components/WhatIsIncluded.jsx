@@ -89,10 +89,10 @@ const WhatIsIncluded = () => {
     <section
       ref={sectionRef}
       id="whatisincluded"
-      className="w-full md:pb-24 md:px-20 px-2.5 pb-12 h-screen pt-20 flex flex-col md:flex-row items-start md:items-start justify-center gap-10 overflow-hidden select-none"
+      className="w-full sm:pb-12 sm:px-10 md:pb-24 md:px-20 px-2.5 pb-12 h-screen pt-20 flex flex-col sm:flex-row items-center sm:items-start justify-center gap-10 overflow-hidden select-none "
     >
       {/* Text side */}
-      <div className="md:flex-1 flex flex-col items-center md:items-start justify-start gap-4 text-center md:text-left max-w-md">
+      <div className="flex flex-col items-center w-full sm:items-start justify-start gap-4 text-center sm:text-left sm:max-w-1/3">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-header font-bold leading-snug">
           What's included in the Blacktape experience
         </h1>
@@ -101,9 +101,12 @@ const WhatIsIncluded = () => {
           for seamless proposals, real-time tracking, and expert-led execution
           personalized to your unique vision.
         </p>
-        <button className="mt-4 px-6 py-2.5 text-sm sm:text-base text-white bg-gold font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all duration-300 hidden sm:block">
+        <a
+          className="mt-4 px-6 py-2.5 text-sm sm:text-base text-white bg-gold font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all duration-300 hidden sm:block"
+          href="#instantaiconnect"
+        >
           Plan Your Event &gt;
-        </button>
+        </a>
       </div>
 
       {/* Cards side */}

@@ -189,7 +189,7 @@ const WhoAreWe = () => {
         <div className="relative w-full h-auto flex items-center justify-center">
           <div
             className="relative w-full"
-            style={{ aspectRatio: isMobile ? "1/1.1" : "16/9" }}
+            style={{ aspectRatio: isMobile ? "1/0.9" : "16/9" }}
           >
             <img
               src={isMobile ? radioMobile : radioDesktop}
@@ -203,7 +203,7 @@ const WhoAreWe = () => {
                 ref={tunerBtnRef}
                 src={tuner}
                 alt="Tuner"
-                className="absolute w-[21%] top-[14%] right-[40%]"
+                className="absolute w-[19%] top-[13%] right-[41%]"
               />
             )}
 
@@ -227,10 +227,10 @@ const WhoAreWe = () => {
 
             {/* Value Box */}
             <div
-              className={`absolute rounded-lg bg-black shadow-lg flex items-center justify-center 
+              className={`absolute bg-black shadow-lg flex items-center justify-center 
               ${
                 isMobile
-                  ? "top-[35%] left-[33%] w-[31%] h-[14%]"
+                  ? "top-[35%] left-[36%] w-[25%] h-[14%]"
                   : "top-[39%] left-[30%] w-[41%] h-[10%]"
               }`}
             >
@@ -243,7 +243,7 @@ const WhoAreWe = () => {
                     <img
                       src={item.logo}
                       alt={item.id}
-                      className={`transition-all duration-300 w-auto max-w-[2rem] sm:max-w-[2rem] md:max-w-[3rem] lg:max-w-[4rem]
+                      className={`transition-all duration-300 w-auto max-w-[1.5rem] sm:max-w-[2.5rem] md:max-w-[3.5rem] lg:max-w-[4rem]
                       ${
                         activeValue === item.id
                           ? "opacity-100 brightness-125 scale-110"
