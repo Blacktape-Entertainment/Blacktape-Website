@@ -29,9 +29,19 @@ const DigitalSovereignty = () => {
         (context) => {
           const { isMobile } = context.conditions;
 
-          // Initial state
+          // Initial state - set all slides invisible except first
           gsap.set(slides, { opacity: 0 });
           gsap.set(slides[0], { opacity: 1, zIndex: 2 });
+
+          // Set initial positions for first slide elements
+          const firstText = slides[0].querySelector(".text-block");
+          const firstImage = slides[0].querySelector(".image-block");
+          gsap.set(firstText, { x: isMobile ? -100 : -100, opacity: 0 });
+          gsap.set(firstImage, {
+            x: isMobile ? 0 : 100,
+            y: isMobile ? 100 : 100,
+            opacity: 0,
+          });
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -43,6 +53,30 @@ const DigitalSovereignty = () => {
             },
           });
 
+          // Animate first slide on load (at start of timeline)
+          tl.to(
+            firstText,
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.3,
+              ease: "power2.out",
+            },
+            0
+          );
+
+          tl.to(
+            firstImage,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: 0.3,
+              ease: "power2.out",
+            },
+            0.1
+          );
+
           slides.forEach((slide, i) => {
             if (i === slides.length - 1) return;
             const nextSlide = slides[i + 1];
@@ -52,11 +86,10 @@ const DigitalSovereignty = () => {
             const nextText = nextSlide.querySelector(".text-block");
             const nextImage = nextSlide.querySelector(".image-block");
 
-            // exit current
+            // Exit current slide
             tl.to(
               [text, image],
               {
-                x: isMobile ? 0 : i % 2 === 0 ? -100 : 100,
                 opacity: 0,
                 duration: 0.6,
                 ease: "power2.inOut",
@@ -64,7 +97,7 @@ const DigitalSovereignty = () => {
               `slide${i}`
             );
 
-            // background fade-out
+            // Background fade-out
             tl.to(
               slide,
               {
@@ -75,20 +108,61 @@ const DigitalSovereignty = () => {
               `slide${i}+=0.2`
             );
 
-            // enter next
+            // Enter next slide with specific directions based on slide number
+            let textFromX, textFromY, imageFromX, imageFromY;
+
+            if (i === 0) {
+              // Second slide (index 1): text from right (desktop) / left (mobile), image from left-bottom (desktop) / bottom (mobile)
+              textFromX = isMobile ? -100 : 100;
+              textFromY = 0;
+              imageFromX = isMobile ? 0 : -100;
+              imageFromY = 100;
+            } else if (i === 1) {
+              // Third slide (index 2): text from left, image from right-bottom (desktop) / bottom (mobile)
+              textFromX = -100;
+              textFromY = 0;
+              imageFromX = isMobile ? 0 : 100;
+              imageFromY = 100;
+            } else {
+              // Fallback for additional slides
+              textFromX = -100;
+              textFromY = 0;
+              imageFromX = 0;
+              imageFromY = 100;
+            }
+
             tl.fromTo(
-              [nextText, nextImage],
+              nextText,
               {
-                x: isMobile ? 0 : i % 2 === 0 ? 100 : -100,
+                x: textFromX,
+                y: textFromY,
                 opacity: 0,
               },
               {
                 x: 0,
+                y: 0,
                 opacity: 1,
                 duration: 0.8,
                 ease: "power2.out",
               },
               `slide${i}+=0.5`
+            );
+
+            tl.fromTo(
+              nextImage,
+              {
+                x: imageFromX,
+                y: imageFromY,
+                opacity: 0,
+              },
+              {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out",
+              },
+              `slide${i}+=0.7`
             );
 
             tl.to(

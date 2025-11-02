@@ -121,42 +121,45 @@ const WhoAreWe = () => {
   useGSAP(() => {
     if (!dynamicContentRef.current) return;
 
-    // Wait for fonts to be loaded before running SplitText
     const runSplitAnimation = () => {
-      // Make sure the elements exist
       const headerEl = dynamicContentRef.current.querySelector(".header");
       const paragraphEl = dynamicContentRef.current.querySelector(".paragraph");
       if (!headerEl || !paragraphEl) return;
 
-      // Create new splits
+      // Split text into characters and words
       const splitH1 = new SplitText(headerEl, { type: "chars" });
       const splitP = new SplitText(paragraphEl, { type: "words" });
 
-      // Animate header
+      // Animate header (elastic bounce)
       gsap.from(splitH1.chars, {
         opacity: 0,
-        y: 20,
+        y: 80,
+        rotateX: 45,
+        scale: 0.8,
+        transformOrigin: "bottom center",
         stagger: 0.03,
-        duration: 0.5,
-        ease: "power2.out",
+        duration: 1.2,
+        ease: "elastic.out(0.5, 0.5)", // elasticity: (amplitude, period)
       });
 
-      // Animate paragraph
+      // Animate paragraph (softer elastic)
       gsap.from(splitP.words, {
         opacity: 0,
-        y: 20,
-        stagger: 0.02,
-        duration: 0.4,
-        ease: "power2.out",
-        delay: 0.2,
+        y: 40,
+        rotateX: 30,
+        scale: 0.9,
+        transformOrigin: "bottom center",
+        stagger: 0.05,
+        duration: 1,
+        ease: "elastic.out(0.5, 0.6)",
+        delay: 0.3,
       });
     };
 
-    // Ensure fonts are ready first
+    // Wait for fonts to be ready
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => requestAnimationFrame(runSplitAnimation));
     } else {
-      // Fallback for older browsers
       window.addEventListener("load", runSplitAnimation, { once: true });
     }
   }, [current]);

@@ -5,7 +5,6 @@ import Mockups from "/images/Mockups.png";
 import { items } from "../constants";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const DevicesMockups = () => {
   const sectionRef = useRef(null);

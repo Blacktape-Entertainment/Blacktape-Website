@@ -1,16 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
+import RequestCallModal from "./RequestCallModal";
 
 const InstantAIConnect = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const subtitleRef = useRef(null);
   const phoneRef = useRef(null);
   const textRef = useRef(null);
+  const antennaRef = useRef(null);
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -18,13 +19,14 @@ const InstantAIConnect = () => {
     const subtitle = subtitleRef.current;
     const phone = phoneRef.current;
     const text = textRef.current;
+    const antenna = antennaRef.current;
 
-    if (!section || !header || !subtitle || !phone || !text) return;
+    if (!section || !header || !subtitle || !phone || !text || !antenna) return;
 
     // Initial states
     gsap.set(header, { opacity: 1, y: 0 });
     gsap.set(subtitle, { opacity: 1, y: 0 });
-    gsap.set(phone, { opacity: 1, scale: 0.4, yPercent: 20 });
+    gsap.set(phone, { opacity: 1, scale: 0.3, yPercent: 20 });
     gsap.set(text, { opacity: 0, x: -150 });
 
     const tl = gsap.timeline({
@@ -61,12 +63,18 @@ const InstantAIConnect = () => {
     );
 
     // Phase 2: Phone scales up + moves up to right
+    tl.to(phone, {
+      scale: 0.8,
+      yPercent: 0,
+      xPercent: 30,
+      ease: "power2.inOut",
+      duration: 0.5,
+    });
+
     tl.to(
-      phone,
+      antenna,
       {
-        scale: 1,
-        yPercent: 0,
-        xPercent: 50,
+        top: "-42%",
         ease: "power2.inOut",
         duration: 0.5,
       },
@@ -93,7 +101,7 @@ const InstantAIConnect = () => {
       className="w-full h-screen bg-white relative overflow-hidden"
     >
       {/* Header */}
-      <div className="absolute top-16 md:top-20 left-0 right-0 text-center px-4 z-10">
+      <div className="absolute top-16 md:top-20 left-0 right-0 text-center px-4">
         <h2
           ref={headerRef}
           className="font-header font-extrabold text-black leading-tight text-5xl sm:text-6xl md:text-7xl"
@@ -147,10 +155,46 @@ const InstantAIConnect = () => {
                 alt="antenna"
                 className="w-full h-auto"
               />
+              <img
+                src="images/Part-1.png"
+                alt="antenna"
+                className="h-50 absolute top-[-18%] right-[9%] z-2"
+              />
+              <img
+                src="images/Part-2.png"
+                alt="antenna"
+                className="antenna h-50 absolute top-[-21%] right-[9%] z-1"
+                ref={antennaRef}
+              />
+
+              <div className="absolute top-[21%] w-[63%] right-[18%] bg-white p-4 shadow-lg z-60 flex flex-col rounded-2xl">
+                <label htmlFor="phone-number" className="font-text">
+                  Enter your phone number:
+                </label>
+                <input
+                  type="text"
+                  id="phone-number"
+                  className="border rounded border-gray-300 p-2 w-full"
+                  placeholder="Phone Number *"
+                />
+                <button
+                  className="mt-8 py-2 md:py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center"
+                  href="#instantaiconnect"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Request a Call
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      <RequestCallModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 };

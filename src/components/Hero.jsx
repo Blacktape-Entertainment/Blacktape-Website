@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const ANIMATION_CONFIG = {
   entry: { opacity: 1, z: 0, scale: 1, ease: "power3.out", duration: 1.2 },
