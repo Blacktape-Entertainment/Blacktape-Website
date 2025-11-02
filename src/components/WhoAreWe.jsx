@@ -113,7 +113,7 @@ const WhoAreWe = () => {
 
     gsap.to(targets, {
       rotate: "+=120",
-      duration: 0.5,
+      duration: 0.2,
       ease: "power2.out",
     });
   }, [activeValue]);
@@ -165,153 +165,127 @@ const WhoAreWe = () => {
     <section
       ref={sectionRef}
       id="whoarewe"
-      className={`relative h-screen flex flex-col items-center ${
-        isMobile ? "gap-4 py-4 px-3" : "gap-6 justify-center"
-      } bg-white overflow-hidden`}
+      className="relative h-screen flex flex-col items-center bg-white overflow-hidden"
     >
-      {/* Header */}
+      {/* Header - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={headerRef}
-        className={`flex flex-col text-center items-center ${
-          isMobile ? "gap-1 w-full" : "gap-2 max-w-5xl px-4"
-        }`}
+        className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1
-          className={`font-header font-bold leading-tight ${
-            isMobile ? "text-2xl" : "text-5xl"
-          }`}
-        >
+        <h1 className="font-header font-bold leading-tight text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
           So, Who Are We
         </h1>
-        <p
-          className={`font-header font-light ${
-            isMobile ? "text-xs max-w-xs" : "text-lg max-w-2xl"
-          }`}
-        >
+        <p className="font-header font-light text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
       </div>
 
-      {/* Radio Section */}
       <div
         ref={radioRef}
-        className={`relative flex items-center justify-center ${
-          isMobile ? "flex-col w-full" : "flex-1 w-full max-h-[50vh] mt-4"
-        }`}
+        className="flex-[3] min-h-0 relative flex items-center justify-center w-full overflow-hidden"
       >
-        <img
-          src={isMobile ? radioMobile : radioDesktop}
-          alt="Radio"
-          className={`object-contain ${
-            isMobile ? "max-w-[320px]" : "w-full h-auto"
-          }`}
-        />
-
-        {/* Mobile tuner */}
-        {isMobile && (
-          <img
-            ref={tunerBtnRef}
-            src={tuner}
-            alt="Tuner"
-            className="w-[30%] absolute right-[36%] top-[13%]"
-          />
-        )}
-
-        {/* Desktop knobs */}
-        {!isMobile && (
-          <>
-            <img
-              ref={valueBtnRef}
-              src={value}
-              alt="Value button"
-              className="w-[15%] absolute left-[10%] top-[22%]"
-            />
-            <img
-              ref={selectBtnRef}
-              src={select}
-              alt="Select button"
-              className="w-[15%] absolute right-[8.5%] top-[23%]"
-            />
-          </>
-        )}
-
-        {/* Value logos */}
-        <div
-          className={`absolute bg-black rounded-sm flex items-center justify-center ${
-            isMobile
-              ? "top-[35%] left-[27%] w-[42%] h-[14%]"
-              : "top-[26%] left-[30%] w-[41%] h-[19%]"
-          }`}
-        >
-          <ul
-            className={`flex items-center justify-between w-full h-full ${
-              isMobile ? "p-2 flex-wrap" : "justify-evenly"
-            }`}
+        {/* Radio Image Container */}
+        <div className="relative w-full h-auto flex items-center justify-center">
+          <div
+            className="relative w-full"
+            style={{ aspectRatio: isMobile ? "1/1.1" : "16/9" }}
           >
-            {VALUES.map((item) => (
-              <li
-                key={item.id}
-                className="cursor-pointer flex flex-col items-center justify-center relative"
-              >
+            <img
+              src={isMobile ? radioMobile : radioDesktop}
+              alt="Radio"
+              className="w-full h-full object-contain"
+            />
+
+            {/* Tuner (Mobile only) */}
+            {isMobile && (
+              <img
+                ref={tunerBtnRef}
+                src={tuner}
+                alt="Tuner"
+                className="absolute w-[21%] top-[14%] right-[40%]"
+              />
+            )}
+
+            {/* Desktop knobs */}
+            {!isMobile && (
+              <>
                 <img
-                  src={item.logo}
-                  alt={item.id}
-                  className={`transition-all duration-300 ${
-                    isMobile ? "w-13" : "w-16"
-                  } ${
-                    activeValue === item.id
-                      ? "opacity-100 brightness-150 scale-105"
-                      : "opacity-70 brightness-90"
-                  }`}
+                  ref={valueBtnRef}
+                  src={value}
+                  alt="Value button"
+                  className="absolute w-[14.3%] left-[10.2%] top-[38%] transition-all duration-300"
                 />
-                {activeValue === item.id && (
-                  <span className="absolute -bottom-1 h-1 w-0.5 bg-orange-500 rounded-sm" />
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+                <img
+                  ref={selectBtnRef}
+                  src={select}
+                  alt="Select button"
+                  className="absolute w-[14%] right-[9%] top-[38%] transition-all duration-300"
+                />
+              </>
+            )}
 
-        {/* Desktop button */}
-        {!isMobile && (
-          <a
-            className="absolute bottom-[21%] right-[29.9%] w-[39%] h-[24%] bg-[#DCD9BA] font-text rounded-sm flex items-center justify-center text-black text-2xl tracking-wide cursor-pointer hover:bg-[#e6e3c8] transition"
-            href="#instantaiconnect"
-          >
-            Know More
-          </a>
-        )}
+            {/* Value Box */}
+            <div
+              className={`absolute rounded-lg bg-black shadow-lg flex items-center justify-center 
+              ${
+                isMobile
+                  ? "top-[35%] left-[33%] w-[31%] h-[14%]"
+                  : "top-[39%] left-[30%] w-[41%] h-[10%]"
+              }`}
+            >
+              <ul className="flex items-center justify-evenly w-full h-full flex-wrap">
+                {VALUES.map((item) => (
+                  <li
+                    key={item.id}
+                    className="cursor-pointer flex flex-col items-center justify-center relative"
+                  >
+                    <img
+                      src={item.logo}
+                      alt={item.id}
+                      className={`transition-all duration-300 w-auto max-w-[2rem] sm:max-w-[2rem] md:max-w-[3rem] lg:max-w-[4rem]
+                      ${
+                        activeValue === item.id
+                          ? "opacity-100 brightness-125 scale-110"
+                          : "opacity-60 brightness-90"
+                      }`}
+                    />
+                    {activeValue === item.id && (
+                      <span className="absolute -bottom-1 w-1 h-1 bg-orange-500 rounded-full" />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* "Know More" Button (Desktop only) */}
+            {!isMobile && (
+              <a
+                href="#instantaiconnect"
+                className="absolute bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]
+                bg-[#DCD9BA] rounded-md flex items-center justify-center 
+                text-black text-base md:text-lg lg:text-xl font-semibold 
+                hover:bg-[#e6e3c8] transition-colors duration-300"
+              >
+                Know More
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Dynamic text */}
+      {/* Dynamic text - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={dynamicContentRef}
-        className={`flex flex-col items-center text-center ${
-          isMobile ? "gap-1 w-full" : "gap-2 max-w-5xl px-4"
-        }`}
+        className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1
-          className={`header font-header font-bold ${
-            isMobile ? "text-xl" : "text-3xl"
-          }`}
-        >
+        <h1 className="header font-header font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
           Blacktape{" "}
-          <span
-            className={`span font-light uppercase tracking-wider ${
-              isMobile ? "text-sm" : "text-lg"
-            }`}
-          >
+          <span className="span font-light uppercase tracking-wider text-xs sm:text-sm md:text-base lg:text-lg">
             {current?.span}
           </span>
         </h1>
-        <p
-          className={`paragraph font-header font-light ${
-            isMobile
-              ? "text-[11px] max-w-xs px-3 mt-1"
-              : "text-base max-w-xl px-2 mt-2"
-          }`}
-        >
+        <p className="paragraph font-header font-light text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
           {current?.text}
         </p>
       </div>

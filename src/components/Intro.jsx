@@ -62,7 +62,7 @@ const Intro = ({ onFinish }) => {
 
   return (
     <section
-      className="intro-screen fixed inset-0 z-[100] w-full h-screen bg-black flex items-center justify-center p-4"
+      className="intro-screen fixed inset-0 z-[100] w-full h-screen bg-blacktape flex items-center justify-center p-4"
       id="intro"
     >
       <svg

@@ -125,7 +125,7 @@ const Hero = ({ navbarRef }) => {
             commitment to artistry and technical excellence to every project.
           </p>
           <a
-            className="mt-8 py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300"
+            className="mt-8 py-2 md:py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300"
             href="#instantaiconnect"
           >
             Explore Our World
