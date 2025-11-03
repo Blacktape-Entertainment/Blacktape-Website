@@ -4,9 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Mockups from "/images/Mockups.png";
 import { items } from "../constants";
 import { useGSAP } from "@gsap/react";
+import { ANIMATION_CONFIG } from "../constants";
 
-
-const DevicesMockups = () => {
+const DevicesMockups = ({ navbarRef }) => {
   const sectionRef = useRef(null);
   const companyGoalsRef = useRef(null);
   const textContentRef = useRef(null);
@@ -62,6 +62,10 @@ const DevicesMockups = () => {
           },
           "<0.1"
         );
+      // Hide navbar if ref exists
+      if (navbarRef?.current) {
+        tl.to(navbarRef.current, ANIMATION_CONFIG.navbarHide, "hold+=0.3");
+      }
     },
     { scope: sectionRef }
   );
@@ -71,7 +75,7 @@ const DevicesMockups = () => {
       ref={sectionRef}
       id="devicesmockups"
       className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-6 md:gap-8"
+             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-6 md:gap-8 pt-16 sm:pt-20 md:pt-24"
     >
       {/* Company Goals */}
       <div

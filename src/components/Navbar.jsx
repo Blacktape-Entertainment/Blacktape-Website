@@ -32,7 +32,7 @@ const Navbar = forwardRef((props, ref) => {
 
   return (
     <nav className="fixed top-0 left-0 mt-7 w-full z-50" ref={ref}>
-      <div className="w-full flex justify-between lg:justify-center px-8 lg:px-12 gap-3">
+      <div className="w-full flex justify-between md:justify-center px-8 lg:px-12 gap-3">
         <div
           className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
             isScrolled ? "bg-black" : "bg-navbar"
@@ -46,7 +46,7 @@ const Navbar = forwardRef((props, ref) => {
         </div>
 
         {/* Desktop Menu */}
-        <div className="relative hidden lg:flex items-center rounded shadow-md backdrop-blur-sm">
+        <div className="relative hidden md:flex items-center rounded shadow-md backdrop-blur-sm">
           <div
             className={`absolute inset-0 rounded transition-colors duration-700 ${
               isScrolled ? "bg-black" : "bg-navbar"
@@ -74,7 +74,7 @@ const Navbar = forwardRef((props, ref) => {
         </div>
 
         {/* Mobile Menu */}
-        <div className="lg:hidden relative">
+        <div className="md:hidden relative">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`flex items-center gap-2 py-2 px-2 font-header text-xl tracking-wide ${

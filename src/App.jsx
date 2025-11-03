@@ -38,14 +38,13 @@ function App() {
 
   return (
     <main className="w-full overflow-hidden">
-      {showIntro && <Intro onFinish={handleIntroFinish} />}
-
+      {showIntro && <Intro onFinish={handleIntroFinish} />} {/* Done */}
       {!showIntro && (
         <>
-          <Navbar ref={navbarRef} />
-          <Hero navbarRef={navbarRef} />
-          <WhoAreWe />
-          <DevicesMockups />
+          <Navbar ref={navbarRef} /> {/* Done */}
+          <Hero navbarRef={navbarRef} /> {/* Done */}
+          <WhoAreWe navbarRef={navbarRef} /> {/* Done */}
+          <DevicesMockups navbarRef={navbarRef} /> {/* Done */}
           <WhatIsIncluded />
           <OurTeam />
           <DigitalSovereignty />

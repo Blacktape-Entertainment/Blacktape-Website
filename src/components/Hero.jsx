@@ -2,19 +2,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-
-
-const ANIMATION_CONFIG = {
-  entry: { opacity: 1, z: 0, scale: 1, ease: "power3.out", duration: 1.2 },
-  exit: {
-    opacity: 0,
-    z: -2000,
-    scale: 0.3,
-    ease: "power3.inOut",
-    duration: 1.2,
-  },
-  navbarHide: { opacity: 0, y: -100, ease: "power3.inOut", duration: 1 },
-};
+import { ANIMATION_CONFIG } from "../constants";
 
 const Hero = ({ navbarRef }) => {
   const sectionRef = useRef(null);
@@ -96,7 +84,7 @@ const Hero = ({ navbarRef }) => {
           muted
           playsInline
           preload="auto"
-          src="/Blacktape-Website/output.mp4" // ✅ Use base path (based on vite.config.js)
+          src="/Blacktape-Website/output.mp4"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
@@ -106,12 +94,7 @@ const Hero = ({ navbarRef }) => {
         {/* Hero content */}
         <div
           ref={contentRef}
-          className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15"
-          style={{
-            perspective: "1000px",
-            opacity: 0,
-            transform: "translateZ(-2000px) scale(0.3)",
-          }}
+          className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15 perspective-distant opacity-0 translate-z-[-2000px] scale-[0.3]"
         >
           <h1 className="text-4xl md:text-6xl font-header font-bold">
             Beyond Entertainment.

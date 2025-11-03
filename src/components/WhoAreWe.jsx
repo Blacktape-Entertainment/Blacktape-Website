@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
@@ -8,10 +8,10 @@ import radioDesktop from "/images/radio.png";
 import tuner from "/images/tuner.png";
 import value from "/images/value.png";
 import select from "/images/select.png";
+import { useMediaQuery } from "react-responsive";
+import { ANIMATION_CONFIG } from "../constants";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
-
-const WhoAreWe = () => {
+const WhoAreWe = ({ navbarRef }) => {
   const [activeValue, setActiveValue] = useState("value1");
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -22,15 +22,8 @@ const WhoAreWe = () => {
   const selectBtnRef = useRef(null);
   const isFirstChoiceRef = useRef(true);
   const scrollAnimationRef = useRef(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const current = VALUES.find((item) => item.id === activeValue);
-
-  // 🧭 Handle resize responsiveness
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 767);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // 📜 Scroll + intro animation
   useGSAP(
@@ -41,7 +34,7 @@ const WhoAreWe = () => {
 
       if (!header || !radio || !dynamicText) return;
 
-      gsap.set(header, { scale: isMobile ? 1.2 : 1.5, y: "30vh" });
+      gsap.set(header, { scale: isMobile ? 1 : 1.5, y: "30vh" });
       gsap.set([radio, dynamicText], { opacity: 0, y: "100vh" });
 
       let hasScrolled = false;
@@ -77,6 +70,11 @@ const WhoAreWe = () => {
           },
         },
       });
+
+      // Animate navbar if ref exists
+      if (navbarRef?.current && !isMobile) {
+        timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
+      }
 
       timeline.to(
         header,
@@ -168,14 +166,14 @@ const WhoAreWe = () => {
     <section
       ref={sectionRef}
       id="whoarewe"
-      className="relative h-screen flex flex-col items-center bg-white overflow-hidden"
+      className="relative h-screen flex flex-col items-center bg-white overflow-hidden md:pt-16"
     >
       {/* Header - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={headerRef}
         className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1 className="font-header font-bold leading-tight text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
+        <h1 className="font-header font-bold leading-tight text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
           So, Who Are We
         </h1>
         <p className="font-header font-light text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
@@ -246,7 +244,7 @@ const WhoAreWe = () => {
                     <img
                       src={item.logo}
                       alt={item.id}
-                      className={`transition-all duration-300 w-auto max-w-[1.5rem] sm:max-w-[2.5rem] md:max-w-[3.5rem] lg:max-w-[4rem]
+                      className={`transition-all duration-300 w-auto max-w-[2rem] sm:max-w-[3rem] md:max-w-[4rem] lg:max-w-[6rem]
                       ${
                         activeValue === item.id
                           ? "opacity-100 brightness-125 scale-110"
@@ -254,7 +252,7 @@ const WhoAreWe = () => {
                       }`}
                     />
                     {activeValue === item.id && (
-                      <span className="absolute -bottom-1 w-1 h-1 bg-orange-500 rounded-full" />
+                      <span className="absolute -bottom-1 w-0.5 h-1 bg-orange-500 rounded" />
                     )}
                   </li>
                 ))}
@@ -282,7 +280,7 @@ const WhoAreWe = () => {
         ref={dynamicContentRef}
         className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1 className="header font-header font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+        <h1 className="header font-header font-bold text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
           Blacktape{" "}
           <span className="span font-light uppercase tracking-wider text-xs sm:text-sm md:text-base lg:text-lg">
             {current?.span}
