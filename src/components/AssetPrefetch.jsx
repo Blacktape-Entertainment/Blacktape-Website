@@ -62,74 +62,72 @@ const videoAssets = [
   "/Blacktape-Website/output.mp4", // Hero video
 ];
 
-const AssetPrefetch = () => {
+// Critical assets that must load before showing content
+const criticalAssets = [
+  "images/logo.svg", // Navbar logo
+  "/Blacktape-Website/output.mp4", // Hero video
+  "images/ai-antenna-2.png", // InstantAIConnect phone
+];
+
+const AssetPrefetch = ({ onAssetsReady }) => {
   useEffect(() => {
-    console.log("🚀 Asset Prefetch Started");
-    console.log(
-      `📦 Prefetching ${imageAssets.length} images and ${videoAssets.length} video(s)`
-    );
+    let loadedCount = 0;
+    const totalCritical = criticalAssets.length;
 
-    let prefetchCount = 0;
-    let preloadCount = 0;
+    const checkAllLoaded = () => {
+      loadedCount++;
+      if (loadedCount === totalCritical && onAssetsReady) {
+        onAssetsReady();
+      }
+    };
 
-    // Prefetch images
+    // Preload critical assets and track when they're loaded
+    criticalAssets.forEach((src) => {
+      if (src.endsWith(".mp4")) {
+        // For video - wait until it can play through without buffering
+        const video = document.createElement("video");
+        video.preload = "auto";
+        video.src = src;
+        video.muted = true; // Muted videos load faster
+        video.playsInline = true;
+
+        // Wait for enough data to play through
+        video.oncanplaythrough = checkAllLoaded;
+        video.onerror = checkAllLoaded; // Continue even if error
+
+        // Start loading
+        video.load();
+      } else {
+        // For images
+        const img = new Image();
+        img.src = src;
+        img.onload = checkAllLoaded;
+        img.onerror = checkAllLoaded; // Continue even if error
+      }
+    });
+
+    // Prefetch remaining images in background
     imageAssets.forEach((src) => {
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.as = "image";
-      link.href = src;
-      document.head.appendChild(link);
-      prefetchCount++;
+      if (!criticalAssets.includes(src)) {
+        const link = document.createElement("link");
+        link.rel = "prefetch";
+        link.as = "image";
+        link.href = src;
+        document.head.appendChild(link);
+      }
     });
 
-    // Prefetch videos
+    // Prefetch videos in background
     videoAssets.forEach((src) => {
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.as = "video";
-      link.href = src;
-      document.head.appendChild(link);
-      prefetchCount++;
+      if (!criticalAssets.includes(src)) {
+        const link = document.createElement("link");
+        link.rel = "prefetch";
+        link.as = "video";
+        link.href = src;
+        document.head.appendChild(link);
+      }
     });
-
-    console.log(`✅ Added ${prefetchCount} prefetch links to <head>`);
-
-    // Optional: Preload critical assets (show immediately)
-    const criticalAssets = [
-      { src: "images/logo.svg", type: "image" }, // Navbar logo
-      { src: "images/ai-antenna-2.png", type: "image" }, // InstantAIConnect phone
-    ];
-
-    criticalAssets.forEach(({ src, type }) => {
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = type;
-      link.href = src;
-      document.head.appendChild(link);
-      preloadCount++;
-    });
-
-    // For video, use a different approach - create video element to trigger preload
-    const videoPreload = document.createElement("link");
-    videoPreload.rel = "prefetch"; // Use prefetch instead of preload for video
-    videoPreload.as = "video";
-    videoPreload.href = "/Blacktape-Website/output.mp4";
-    document.head.appendChild(videoPreload);
-    prefetchCount++;
-
-    console.log(`⚡ Added ${preloadCount} preload links for critical assets`);
-    console.log(`🎬 Added video prefetch for hero video`);
-    console.log(
-      "🎯 Asset Prefetch Complete - Check Network tab to see requests"
-    );
-
-    // Log the links added to head
-    console.group("📋 Prefetch/Preload Links Details");
-    console.log("Prefetch links:", prefetchCount);
-    console.log("Preload links:", preloadCount);
-    console.log("Total links added:", prefetchCount + preloadCount);
-    console.groupEnd();
-  }, []);
+  }, [onAssetsReady]);
 
   return null; // This component doesn't render anything
 };

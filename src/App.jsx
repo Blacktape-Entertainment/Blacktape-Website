@@ -21,6 +21,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [assetsReady, setAssetsReady] = useState(false);
+  const [introFinished, setIntroFinished] = useState(false);
   const navbarRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [layoutType] = useState(isMobile ? "mobile" : "desktop");
@@ -33,14 +35,25 @@ function App() {
     }
   }, [isMobile, layoutType]);
 
+  // Hide intro only when BOTH intro animation AND assets are ready
+  useEffect(() => {
+    if (introFinished && assetsReady) {
+      setShowIntro(false);
+    }
+  }, [introFinished, assetsReady]);
+
   const handleIntroFinish = () => {
-    setShowIntro(false);
+    setIntroFinished(true);
+  };
+
+  const handleAssetsReady = () => {
+    setAssetsReady(true);
   };
 
   return (
     <main className="w-full overflow-hidden">
       {/* Prefetch all assets */}
-      <AssetPrefetch />
+      <AssetPrefetch onAssetsReady={handleAssetsReady} />
       {showIntro && <Intro onFinish={handleIntroFinish} />} {/* Done */}
       {!showIntro && (
         <>

@@ -77,7 +77,7 @@ const Hero = ({ navbarRef }) => {
       id="hero"
       className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-2.5 overflow-x-hidden"
     >
-      <div className="relative w-full h-screen overflow-hidden rounded-xl">
+      <div className="relative w-full h-screen overflow-hidden rounded-xl bg-black">
         {/* Video for frame animation */}
         <video
           ref={videoRef}
