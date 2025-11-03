@@ -30,7 +30,7 @@ const DevicesMockups = ({ navbarRef }) => {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=200%",
+          end: "+=150%",
           pin: true,
           scrub: 1,
         },
@@ -74,14 +74,14 @@ const DevicesMockups = ({ navbarRef }) => {
     <section
       ref={sectionRef}
       id="devicesmockups"
-      className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-6 md:gap-8 pt-16 sm:pt-20 md:pt-24"
+      className="w-full min-h-screen flex flex-col md:justify-center items-center overflow-hidden 
+             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-4 md:gap-8 md:pt-24"
     >
       {/* Company Goals */}
       <div
         ref={companyGoalsRef}
         className="w-full flex flex-col md:flex-row items-center justify-between 
-               gap-6 md:gap-4 lg:gap-6 flex-shrink-0"
+               gap-4 md:gap-4 lg:gap-6 flex-shrink-0"
       >
         {items.map(({ id, icon, alt, title, desc }) => (
           <div
@@ -112,7 +112,7 @@ const DevicesMockups = ({ navbarRef }) => {
         className="flex flex-col items-center justify-center text-center 
                max-w-3xl gap-2 sm:gap-3 md:gap-4 flex-shrink-0"
       >
-        <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-header font-semibold leading-snug md:leading-tight">
+        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header leading-snug md:leading-tight">
           From 2018 to the Forefront of Experience
         </h1>
         <p

@@ -184,50 +184,50 @@ const DigitalSovereignty = () => {
       className="relative w-full h-screen bg-white overflow-hidden flex flex-col"
     >
       {/* Header */}
-      <div className="flex flex-col justify-center items-center text-center h-[20%] px-4 py-4 md:py-6 z-20">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-header font-bold text-black leading-tight mb-1">
+      <div className="flex flex-col justify-center items-center text-center px-[5%] py-[1.5vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] z-20 shrink-0">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black leading-tight mb-[0.5vh]">
           Digital Sovereignty
         </h1>
-        <p className="text-xs sm:text-sm md:text-base font-light text-black font-text">
+        <p className="text-[0.625rem] sm:text-xs md:text-sm lg:text-base font-light text-black font-text">
           All at once, all in one, all in between your hands
         </p>
       </div>
 
       {/* Slides */}
-      <div className="relative flex-1 w-full overflow-hidden">
+      <div className="relative flex-1 w-full overflow-hidden min-h-0">
         {sections.map((sec, i) => (
           <div
             key={i}
             ref={addToRefs}
-            className={`absolute w-full flex flex-col md:flex-row ${
+            className={`absolute inset-0 flex flex-col md:flex-row ${
               i % 2 !== 0 ? "md:flex-row-reverse" : ""
-            } items-center justify-center px-6 md:px-12 lg:px-24 gap-8 md:gap-12 transition-colors duration-500`}
+            } items-center justify-center px-[5%] sm:px-[7%] md:px-[8%] lg:px-[10%] xl:px-[12%] gap-[2vh] sm:gap-[3vh] md:gap-[4vh] lg:gap-[5vh] transition-colors duration-300`}
           >
             {/* Text */}
-            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-3 md:gap-4 max-w-md md:max-w-lg">
-              <p className="text-[10px] sm:text-xs md:text-sm font-header text-[#030706] mb-0.5">
+            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-[1vh] sm:gap-[1.5vh] md:gap-[2vh] w-full md:w-1/2 md:max-w-md lg:max-w-lg shrink-0">
+              <p className="text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm font-header text-[#030706] mb-0">
                 {sec.subtitle}
               </p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-header font-bold text-black leading-tight mb-1 md:mb-2">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black leading-tight mb-0 sm:mb-[0.5vh]">
                 {sec.title}
               </h2>
-              <p className="text-[10px] sm:text-xs md:text-sm lg:text-base font-text font-light text-[#686a6a] leading-relaxed max-w-xs sm:max-w-sm md:max-w-md line-clamp-3">
+              <p className="text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm xl:text-base font-text font-light text-[#686a6a] leading-relaxed line-clamp-4 md:line-clamp-5">
                 {sec.description}
               </p>
               <a
                 href="#instantaiconnect"
-                className="px-6 py-3 text-[10px] sm:text-xs md:text-sm text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-4 rounded-none"
+                className="px-[5%] sm:px-[6%] md:px-[7%] py-[1vh] sm:py-[1.2vh] md:py-[1.5vh] text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-[1vh] sm:mt-[1.5vh] md:mt-[2vh] rounded-none"
               >
                 App Coming Soon
               </a>
             </div>
 
             {/* Image */}
-            <div className="image-block flex items-center justify-center mt-6 md:mt-0 w-full md:w-auto">
+            <div className="image-block flex items-center justify-center w-full md:w-1/2 shrink-0">
               <img
                 src={sec.image}
                 alt={sec.imageAlt}
-                className="w-60 sm:w-72 md:w-80 lg:w-[400px] h-auto object-contain"
+                className="w-3/4 sm:w-4/5 md:w-full lg:w-full xl:w-full h-auto object-contain"
               />
             </div>
           </div>

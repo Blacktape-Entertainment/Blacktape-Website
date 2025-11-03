@@ -45,12 +45,12 @@ function App() {
           <Hero navbarRef={navbarRef} /> {/* Done */}
           <WhoAreWe navbarRef={navbarRef} /> {/* Done */}
           <DevicesMockups navbarRef={navbarRef} /> {/* Done */}
-          <WhatIsIncluded />
-          <OurTeam />
-          <DigitalSovereignty />
-          <TrustedClients />
-          <InstantAIConnect />
-          <BlacktapeFooter />
+          <WhatIsIncluded /> {/* Done */}
+          {/* <OurTeam /> */}
+          <DigitalSovereignty /> {/* Done */}
+          <TrustedClients navbarRef={navbarRef} /> {/* Done */}
+          <InstantAIConnect /> {/* Done */}
+          <BlacktapeFooter navbarRef={navbarRef} /> {/* Done */}
         </>
       )}
     </main>

@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { ANIMATION_CONFIG } from "../constants";
+import { useMediaQuery } from "react-responsive";
 import {
   MdMovie,
   MdBusiness,
@@ -39,10 +41,11 @@ const IconComponent = ({ type, className = "h-5 w-5 md:h-6 md:w-6" }) => {
   return <Icon className={className} />;
 };
 
-const TrustedClients = () => {
+const TrustedClients = ({ navbarRef }) => {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const rowsContainerRef = useRef(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -81,6 +84,11 @@ const TrustedClients = () => {
       },
     });
 
+    // Animate navbar if ref exists
+    if (navbarRef?.current && !isMobile) {
+      timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
+    }
+
     // Animate rows scrolling up
     timeline.to(
       rowsContainer,
@@ -90,6 +98,11 @@ const TrustedClients = () => {
       },
       0
     );
+
+    // Hide navbar if ref exists
+    if (navbarRef?.current) {
+      timeline.to(navbarRef.current, ANIMATION_CONFIG.navbarHide, "hold+=0.3");
+    }
   }, []);
 
   // Split clients into rows of 4
@@ -106,7 +119,7 @@ const TrustedClients = () => {
     >
       {/* Header */}
       <div ref={headerRef} className="text-center max-w-2xl mb-8 px-4 z-10">
-        <h2 className="font-header font-extrabold text-black text-5xl md:text-4xl lg:text-5xl leading-tight mb-2 tracking-tight">
+        <h2 className="font-header font-extrabold text-black text-4xl md:text-4xl lg:text-5xl leading-tight mb-2 tracking-tight">
           Trusted Clients
         </h2>
         <p className="font-text text-xs sm:text-sm md:text-base text-black font-light">

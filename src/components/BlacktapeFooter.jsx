@@ -1,4 +1,26 @@
-const BlacktapeFooter = () => {
+import { useGSAP } from "@gsap/react";
+import { ANIMATION_CONFIG } from "../constants";
+import { useMediaQuery } from "react-responsive";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const BlacktapeFooter = ({ navbarRef }) => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  useGSAP(() => {
+    // Animate navbar when entering footer section
+    if (navbarRef?.current && !isMobile) {
+      gsap.to(navbarRef.current, {
+        ...ANIMATION_CONFIG.entry,
+        y: 0,
+        scrollTrigger: {
+          trigger: "#footer",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    }
+  }, []);
+
   return (
     <section
       id="footer"

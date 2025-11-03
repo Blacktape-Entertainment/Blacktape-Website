@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
@@ -18,7 +18,7 @@ const WhatIsIncluded = () => {
       if (!section || !cardsContainer) return;
 
       if (isMobile) {
-        // ✅ Mobile: Horizontal scroll driven by vertical scrolling
+        // Mobile: Horizontal scroll animation
         const scrollWidth =
           cardsContainer.scrollWidth - cardsContainer.clientWidth;
 
@@ -35,12 +35,11 @@ const WhatIsIncluded = () => {
           },
         });
       } else {
-        // ✅ Desktop: 3 vertical card rows scroll animation
+        // Desktop: Vertical row-by-row scroll animation
         const cardRows = cardsContainer.querySelectorAll(".card-row");
         if (cardRows.length === 0) return;
 
         const rowHeight = cardRows[0].offsetHeight;
-        let hasScrolled = false;
 
         const timeline = gsap.timeline({
           scrollTrigger: {
@@ -49,17 +48,10 @@ const WhatIsIncluded = () => {
             end: "+=300%",
             pin: true,
             scrub: 1,
-            onUpdate: (self) => {
-              const progress = self.progress;
-              if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
-                hasScrolled = true;
-              }
-              if (progress < 0.99) hasScrolled = false;
-            },
           },
         });
 
-        // Phase 2: Move up by one row
+        // Animate rows sequentially
         timeline.to(
           cardsContainer,
           {
@@ -70,7 +62,6 @@ const WhatIsIncluded = () => {
           0.33
         );
 
-        // Phase 3: Move up by two rows
         timeline.to(
           cardsContainer,
           {
@@ -89,12 +80,13 @@ const WhatIsIncluded = () => {
     <section
       ref={sectionRef}
       id="whatisincluded"
-      className="w-full sm:pb-12 sm:px-10 md:pb-24 md:px-20 px-2.5 pb-12 h-screen pt-20 flex flex-col sm:flex-row items-center sm:items-start justify-center gap-10 overflow-hidden select-none "
+      className="w-full px-2.5 sm:px-10 md:px-20 pb-12 sm:pb-12 md:pb-24 h-screen pt-20 flex flex-col sm:flex-row items-center sm:items-start justify-center gap-5 overflow-hidden select-none"
     >
-      {/* Text side */}
+      {/* Text Section */}
       <div className="flex flex-col items-center w-full sm:items-start justify-start gap-4 text-center sm:text-left sm:max-w-1/3">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-header font-bold leading-snug">
-          What's included in the Blacktape experience
+          What's included in the{" "}
+          <span className="max-sm:text-gold">Blacktape</span> experience
         </h1>
         <p className="text-sm sm:text-base font-light text-black/70 font-text">
           Blacktape is more than an event plan. Access an all-in-one ecosystem
@@ -109,9 +101,9 @@ const WhatIsIncluded = () => {
         </a>
       </div>
 
-      {/* Cards side */}
+      {/* Cards Section */}
       <div className="flex-1 w-full relative">
-        {/* ✅ Mobile: Horizontal scroll driven by vertical scroll */}
+        {/* Mobile: Horizontal Scroll */}
         {isMobile && (
           <div className="w-full h-full overflow-hidden relative">
             <div
@@ -119,9 +111,9 @@ const WhatIsIncluded = () => {
               className="cards-inner flex gap-4 px-4"
             >
               {cards.map((card, i) => (
-                <div key={i} className="flex-shrink-0 w-[280px]">
+                <div key={i} className="flex-shrink-0 w-48 rounded">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
+                    <div className="w-full h-48 overflow-hidden mb-3 shadow-lg">
                       <img
                         src={card.image}
                         alt={card.title}
@@ -141,83 +133,39 @@ const WhatIsIncluded = () => {
           </div>
         )}
 
-        {/* ✅ Desktop: 3-row vertical scrolling cards */}
+        {/* Desktop: Vertical Rows */}
         {!isMobile && (
           <div
             ref={cardsContainerRef}
             className="flex flex-col gap-10 w-full max-w-2xl mx-auto"
           >
-            {/* Row 1 */}
-            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-              {cards.slice(0, 2).map((card, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center md:items-start text-center md:text-left"
-                >
-                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
+            {[0, 2, 4].map((startIndex, rowIndex) => (
+              <div
+                key={rowIndex}
+                className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10 rounded"
+              >
+                {cards.slice(startIndex, startIndex + 2).map((card, i) => (
+                  <div
+                    key={startIndex + i}
+                    className="flex flex-col items-center md:items-start text-center md:text-left"
+                  >
+                    <div className="w-full h-44 overflow-hidden mb-3 shadow-lg">
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold font-header text-black mb-1">
+                      {card.title}
+                    </h2>
+                    <p className="text-sm text-black/70 font-light font-text">
+                      {card.text}
+                    </p>
                   </div>
-                  <h2 className="text-lg font-semibold font-header text-black mb-1">
-                    {card.title}
-                  </h2>
-                  <p className="text-sm text-black/70 font-light font-text">
-                    {card.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Row 2 */}
-            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-              {cards.slice(2, 4).map((card, i) => (
-                <div
-                  key={i + 2}
-                  className="flex flex-col items-center md:items-start text-center md:text-left"
-                >
-                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                  <h2 className="text-lg font-semibold font-header text-black mb-1">
-                    {card.title}
-                  </h2>
-                  <p className="text-sm text-black/70 font-light font-text">
-                    {card.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Row 3 */}
-            <div className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10">
-              {cards.slice(4, 6).map((card, i) => (
-                <div
-                  key={i + 4}
-                  className="flex flex-col items-center md:items-start text-center md:text-left"
-                >
-                  <div className="w-full h-[280px] overflow-hidden mb-3 shadow-lg">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                  <h2 className="text-lg font-semibold font-header text-black mb-1">
-                    {card.title}
-                  </h2>
-                  <p className="text-sm text-black/70 font-light font-text">
-                    {card.text}
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ))}
           </div>
         )}
       </div>
