@@ -153,8 +153,7 @@ const InstantAIConnect = () => {
         text,
         {
           opacity: 1,
-          top: "-28%",
-
+          top: "-20%",
           ease: "power2.out",
           duration: 0.4,
         },
@@ -189,33 +188,33 @@ const InstantAIConnect = () => {
       {/* Phone */}
       <div
         ref={phoneRef}
-        className="absolute top-1/3 md:top-1/7 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+        className="absolute top-1/3 md:top-1/7 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
       >
         <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
           <img
             src="images/ai-antenna-2.png"
             alt="antenna"
-            className="w-full h-auto"
+            className="w-full h-auto relative z-10"
           />
 
           {/* Antenna Part 1 (shadow layer) */}
           <img
             src="images/Part-1.png"
             alt="antenna part 1"
-            className="absolute top-[0.2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-30"
+            className="absolute top-[0.2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-[5]"
           />
 
           {/* Antenna Part 2 (main antenna) */}
           <img
             src="images/Part-2.png"
             alt="antenna part 2"
-            className="antenna absolute top-[-2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-20"
+            className="antenna absolute top-[-2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-[3]"
             ref={antennaRef}
           />
 
           {/* Phone screen form */}
-          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-2 sm:p-3 md:p-4 shadow-lg z-60 flex flex-col rounded-2xl gap-2">
+          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-2 sm:p-3 md:p-4 shadow-lg z-50 flex flex-col rounded-2xl gap-2">
             <label
               htmlFor="phone-number"
               className="font-text text-xs sm:text-sm md:text-base"
@@ -229,7 +228,7 @@ const InstantAIConnect = () => {
               placeholder="Phone Number *"
             />
             <button
-              className="p-2 mt-0.5 bg-gold text-blacktape font-medium text-xs sm:text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center"
+              className="p-2 mt-0.5 bg-gold text-blacktape font-medium text-xs sm:text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60]"
               onClick={() => setIsModalOpen(true)}
             >
               Request a Call
@@ -243,7 +242,7 @@ const InstantAIConnect = () => {
         ref={textRef}
         className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
                    bottom-8 left-4 right-4 lg:bottom-auto lg:right-auto
-                   max-w-3/4 md:max-w-md z-30"
+                   max-w-3/4 md:max-w-md z-20 lg:z-30 pointer-events-none"
       >
         <h3 className="font-header font-extrabold text-black leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
           Instant AI Connect
