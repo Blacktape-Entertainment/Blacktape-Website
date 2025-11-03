@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import { useMediaQuery } from "react-responsive";
 import RequestCallModal from "./RequestCallModal";
 
 const InstantAIConnect = () => {
@@ -13,6 +14,8 @@ const InstantAIConnect = () => {
   const textRef = useRef(null);
   const antennaRef = useRef(null);
 
+  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
+
   useGSAP(() => {
     const section = sectionRef.current;
     const header = headerRef.current;
@@ -23,76 +26,142 @@ const InstantAIConnect = () => {
 
     if (!section || !header || !subtitle || !phone || !text || !antenna) return;
 
-    // Initial states
-    gsap.set(header, { opacity: 1, y: 0 });
-    gsap.set(subtitle, { opacity: 1, y: 0 });
-    gsap.set(phone, { opacity: 1, scale: 0.3, yPercent: 20 });
-    gsap.set(text, { opacity: 0, x: -150 });
+    if (isLargeScreen) {
+      // LARGE SCREENS: Phone moves right, text comes from left
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "+=200%",
-        pin: true,
-        scrub: 1,
-      },
-    });
+      // Initial states
+      gsap.set(header, { opacity: 1, y: 0 });
+      gsap.set(subtitle, { opacity: 1, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: 0 });
+      gsap.set(text, { opacity: 0, x: -200 });
+      gsap.set(antenna, { top: "-2%" });
 
-    // Phase 1: Header + subtitle fade up/out
-    tl.to(
-      header,
-      {
-        opacity: 0,
-        y: -100,
-        ease: "power2.inOut",
-        duration: 0.3,
-      },
-      0
-    );
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=200%",
+          pin: true,
+          scrub: 1,
+        },
+      });
 
-    tl.to(
-      subtitle,
-      {
-        opacity: 0,
-        y: -50,
-        ease: "power2.inOut",
-        duration: 0.3,
-      },
-      0
-    );
+      // Phase 1: Header + subtitle move up
+      tl.to(
+        [header, subtitle],
+        {
+          y: -150,
+          opacity: 0,
+          ease: "power2.inOut",
+          duration: 0.3,
+        },
+        0
+      );
 
-    // Phase 2: Phone scales up + moves up to right
-    tl.to(phone, {
-      scale: 0.8,
-      yPercent: 0,
-      xPercent: 30,
-      ease: "power2.inOut",
-      duration: 0.5,
-    });
+      // Phase 2: Antenna moves up at same time
+      tl.to(
+        antenna,
+        {
+          top: "-21%",
+          ease: "power2.inOut",
+          duration: 0.3,
+        },
+        0
+      );
 
-    tl.to(
-      antenna,
-      {
-        top: "-42%",
-        ease: "power2.inOut",
-        duration: 0.5,
-      },
-      0.25
-    );
+      // Phase 3: Phone scales up and moves to right
+      tl.to(
+        phone,
+        {
+          scale: 0.9,
+          x: "25vw",
+          ease: "power2.out",
+          duration: 0.5,
+        },
+        0.3
+      );
 
-    // Phase 3: Text fades/slides in
-    tl.to(
-      text,
-      {
-        opacity: 1,
-        x: 0,
-        ease: "power2.out",
-        duration: 0.4,
-      },
-      0.5
-    );
-  }, []);
+      // Phase 4: Text slides in from left
+      tl.to(
+        text,
+        {
+          opacity: 1,
+          x: 0,
+          ease: "power2.out",
+          duration: 0.4,
+        },
+        0.5
+      );
+    } else {
+      // SMALL SCREENS: Phone stays center, text comes from bottom
+
+      // Initial states
+      gsap.set(header, { opacity: 1, y: 0 });
+      gsap.set(subtitle, { opacity: 1, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.6, x: 0, y: 0 });
+      gsap.set(text, { opacity: 0, y: 200 });
+      gsap.set(antenna, { top: "-2%" });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=200%",
+          pin: true,
+          scrub: 1,
+        },
+      });
+
+      // Phase 1: Header + subtitle move up
+      tl.to(
+        [header, subtitle],
+        {
+          y: -150,
+          opacity: 0,
+          ease: "power2.inOut",
+          duration: 0.3,
+        },
+        0
+      );
+
+      // Phase 2: Antenna moves up at same time
+      tl.to(
+        antenna,
+        {
+          top: "-21%",
+          ease: "power2.inOut",
+          duration: 0.3,
+        },
+        0
+      );
+
+      // Phase 3: Phone scales up and stays centered
+      tl.to(
+        phone,
+        {
+          scale: 0.7,
+          y: "-10vh",
+          x: "10vw",
+          ease: "power2.out",
+          duration: 0.5,
+        },
+        0.3
+      );
+
+      // Phase 4: Text slides up from bottom
+      tl.to(
+        text,
+        {
+          opacity: 1,
+          top: "-28%",
+
+          ease: "power2.out",
+          duration: 0.4,
+        },
+        0.5
+      );
+    }
+  }, [isLargeScreen]);
 
   return (
     <section
@@ -101,93 +170,100 @@ const InstantAIConnect = () => {
       className="w-full h-screen bg-white relative overflow-hidden"
     >
       {/* Header */}
-      <div className="absolute top-16 md:top-20 left-0 right-0 text-center px-4">
+      <div className="absolute top-8 md:top-10 left-0 right-0 text-center px-4 z-10">
         <h2
           ref={headerRef}
-          className="font-header font-extrabold text-black leading-tight text-5xl sm:text-6xl md:text-7xl"
+          className="font-header font-extrabold text-black leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
         >
           Instant AI Connect
         </h2>
         <p
           ref={subtitleRef}
-          className="font-text text-black font-light text-base sm:text-lg md:text-xl mt-1"
+          className="font-text text-black font-light text-sm sm:text-base md:text-lg lg:text-xl mt-1"
         >
           Request a call, and your personal AI liaison will connect with you
           momentarily.
         </p>
       </div>
 
-      {/* Phone + Text */}
-      <div className="absolute inset-0 flex items-center justify-center px-8 lg:px-16">
-        <div className="w-full max-w-7xl flex flex-row items-center justify-between gap-12">
-          {/* Left Text */}
-          <div ref={textRef} className="max-w-md flex-shrink-0">
-            <h3 className="font-header font-extrabold text-black leading-tight text-3xl sm:text-4xl md:text-5xl">
-              Instant AI Connect
-            </h3>
-            <p className="font-text text-black font-light text-sm sm:text-base md:text-lg mt-1">
-              Request a call, and your personal AI liaison will connect with you
-              momentarily.
-            </p>
-            <p className="font-text text-black font-light text-xs sm:text-sm md:text-base mt-3">
-              In our commitment to providing exceptional and effortless service,
-              we invite you to connect with us directly. We understand that your
-              time is valuable, which is why we've eliminated hold times and
-              complexities. Simply provide your telephone number in the field
-              below.
-            </p>
-            <p className="font-text text-black font-light text-xs sm:text-sm md:text-base mt-2">
-              Prefer the Human touch?{" "}
-              <span className="underline text-[#7c680d] cursor-pointer">
-                Press Here
-              </span>
-            </p>
-          </div>
+      {/* Phone */}
+      <div
+        ref={phoneRef}
+        className="absolute top-1/3 md:top-1/7 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+      >
+        <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
+          {/* Phone base */}
+          <img
+            src="images/ai-antenna-2.png"
+            alt="antenna"
+            className="w-full h-auto"
+          />
 
-          {/* Phone */}
-          <div
-            ref={phoneRef}
-            className="absolute flex-shrink-0 left-[50%] transform -translate-x-1/2 "
-          >
-            <div className="relative w-64 sm:w-72 md:w-96 lg:w-[28rem]">
-              <img
-                src="images/ai-antenna-2.png"
-                alt="antenna"
-                className="w-full h-auto"
-              />
-              <img
-                src="images/Part-1.png"
-                alt="antenna"
-                className="h-50 absolute top-[-18%] right-[9%] z-2"
-              />
-              <img
-                src="images/Part-2.png"
-                alt="antenna"
-                className="antenna h-50 absolute top-[-21%] right-[9%] z-1"
-                ref={antennaRef}
-              />
+          {/* Antenna Part 1 (shadow layer) */}
+          <img
+            src="images/Part-1.png"
+            alt="antenna part 1"
+            className="absolute top-[0.2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-30"
+          />
 
-              <div className="absolute top-[21%] w-[63%] right-[18%] bg-white p-4 shadow-lg z-60 flex flex-col rounded-2xl">
-                <label htmlFor="phone-number" className="font-text">
-                  Enter your phone number:
-                </label>
-                <input
-                  type="text"
-                  id="phone-number"
-                  className="border rounded border-gray-300 p-2 w-full"
-                  placeholder="Phone Number *"
-                />
-                <button
-                  className="mt-8 py-2 md:py-4 px-10 bg-gold text-blacktape font-medium text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center"
-                  href="#instantaiconnect"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Request a Call
-                </button>
-              </div>
-            </div>
+          {/* Antenna Part 2 (main antenna) */}
+          <img
+            src="images/Part-2.png"
+            alt="antenna part 2"
+            className="antenna absolute top-[-2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-20"
+            ref={antennaRef}
+          />
+
+          {/* Phone screen form */}
+          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-2 sm:p-3 md:p-4 shadow-lg z-60 flex flex-col rounded-2xl gap-2">
+            <label
+              htmlFor="phone-number"
+              className="font-text text-xs sm:text-sm md:text-base"
+            >
+              Enter your phone number:
+            </label>
+            <input
+              type="text"
+              id="phone-number"
+              className="border rounded border-gray-300 p-1.5 sm:p-2 w-full text-xs sm:text-sm"
+              placeholder="Phone Number *"
+            />
+            <button
+              className="p-2 mt-0.5 bg-gold text-blacktape font-medium text-xs sm:text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Request a Call
+            </button>
           </div>
         </div>
+      </div>
+
+      {/* Text - positioned differently based on screen size */}
+      <div
+        ref={textRef}
+        className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
+                   bottom-8 left-4 right-4 lg:bottom-auto lg:right-auto
+                   max-w-3/4 md:max-w-md z-30"
+      >
+        <h3 className="font-header font-extrabold text-black leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+          Instant AI Connect
+        </h3>
+        <p className="font-text text-black font-light text-xs sm:text-sm md:text-base lg:text-lg mt-1">
+          Request a call, and your personal AI liaison will connect with you
+          momentarily.
+        </p>
+        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3">
+          In our commitment to providing exceptional and effortless service, we
+          invite you to connect with us directly. We understand that your time
+          is valuable, which is why we've eliminated hold times and
+          complexities. Simply provide your telephone number in the field below.
+        </p>
+        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-sm lg:text-base mt-1.5 md:mt-2">
+          Prefer the Human touch?{" "}
+          <span className="underline text-[#7c680d] cursor-pointer">
+            Press Here
+          </span>
+        </p>
       </div>
 
       {/* Modal */}

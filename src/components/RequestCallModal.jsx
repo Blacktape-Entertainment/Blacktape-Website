@@ -9,29 +9,14 @@ const RequestCallModal = ({ isOpen, onClose }) => {
   useGSAP(() => {
     if (!isOpen || !modalRef.current || !contentRef.current) return;
 
-    // Set initial state
     gsap.set(contentRef.current, { x: "100%", opacity: 0 });
     gsap.set(modalRef.current, { opacity: 0 });
 
-    // Create animation timeline
     const tl = gsap.timeline();
-
-    // Fade in backdrop
-    tl.to(modalRef.current, {
-      opacity: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-
-    // Slide in modal content from right
+    tl.to(modalRef.current, { opacity: 1, duration: 0.3, ease: "power2.out" });
     tl.to(
       contentRef.current,
-      {
-        x: "0%",
-        opacity: 1,
-        duration: 0.5,
-        ease: "power3.out",
-      },
+      { x: "0%", opacity: 1, duration: 0.5, ease: "power3.out" },
       "-=0.1"
     );
   }, [isOpen]);
@@ -41,109 +26,91 @@ const RequestCallModal = ({ isOpen, onClose }) => {
   return (
     <div
       ref={modalRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-2 sm:p-4 md:p-6"
       onClick={onClose}
     >
       <div
         ref={contentRef}
-        className="relative bg-white rounded-lg shadow-2xl w-full max-w-2xl mx-4 overflow-hidden"
+        className="relative bg-white w-full max-w-[1100px] h-auto max-h-[95vh] overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold z-10"
+          className="absolute top-4 right-4 lg:top-6 lg:right-6 z-20 w-15 h-15 md:w-20 md:h-20 lg:w-25 lg:h-25 flex items-center justify-center rounded-full hover:opacity-80 transition-opacity"
           aria-label="Close modal"
         >
           <img
             src="images/x-image.png"
-            alt="Clutch mechanism"
-            className="w-20 h-20 object-contain max-w-sm"
+            alt="Close"
+            className="w-full h-full object-contain"
           />
         </button>
 
-        {/* Modal content - split layout */}
-        <div className="flex flex-col md:flex-row">
-          {/* Left side - Form */}
-          <div className="w-full md:w-1/2 p-8 md:p-10">
-            <h3 className="font-header font-bold text-2xl md:text-3xl text-black mb-2">
+        {/* FORM SECTION */}
+        <div className="relative flex items-center p-15">
+          {/* FORM CONTENT */}
+          <div className="relative w-[70%] z-10">
+            <h3 className="font-header text-lg md:text-xl lg:text-2xl xl:text-3xl text-[#3a3a3a] mb-2 tracking-wide">
               Why the wait ..
             </h3>
-            <h2 className="font-header font-bold text-3xl md:text-4xl text-[#B8A668] mb-6">
+            <h2 className="font-header font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#B8A066] leading-[1.1] mb-8 tracking-wide">
               PRESS THE CLUTCH
             </h2>
 
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="name" className="sr-only">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Name *"
-                  className="w-full px-0 py-2 border-b border-gray-300 focus:border-[#B8A668] focus:outline-none font-text text-sm"
-                  required
-                />
-              </div>
+            <form className="space-y-5">
+              <input
+                type="text"
+                placeholder="Name *"
+                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
+              />
+              <input
+                type="tel"
+                placeholder="Phone number *"
+                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
+                required
+              />
 
-              <div>
-                <label htmlFor="email" className="sr-only">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Email"
-                  className="w-full px-0 py-2 border-b border-gray-300 focus:border-[#B8A668] focus:outline-none font-text text-sm"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="sr-only">
-                  Phone number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  placeholder="Phone number"
-                  className="w-full px-0 py-2 border-b border-gray-300 focus:border-[#B8A668] focus:outline-none font-text text-sm"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="source" className="sr-only">
-                  How did you find us?
-                </label>
-                <select
-                  id="source"
-                  className="w-full px-0 py-2 border-b border-gray-300 focus:border-[#B8A668] focus:outline-none font-text text-sm text-gray-600"
-                >
+              <div className="relative">
+                <select className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] bg-transparent py-2 appearance-none cursor-pointer">
                   <option value="">How did you find us?</option>
                   <option value="search">Search Engine</option>
                   <option value="social">Social Media</option>
                   <option value="referral">Referral</option>
                   <option value="other">Other</option>
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#888888]">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full mt-6 py-3 bg-[#B8A668] text-white font-semibold text-sm tracking-wide hover:bg-[#a89659] transition-all duration-300"
+                className="w-full mt-6 py-3 bg-[#B8A066] text-white font-semibold text-sm tracking-widest hover:bg-[#a89159] transition-all duration-300"
               >
                 SEND
               </button>
             </form>
           </div>
 
-          {/* Right side - Image */}
-          <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-10">
-            <img
-              src="images/modal.png"
-              alt="Clutch mechanism"
-              className="w-full h-full object-contain max-w-sm"
-            />
-          </div>
+          {/* IMAGE ON TOP RIGHT */}
+          <img
+            src="images/modal.png"
+            alt="Clutch mechanism"
+            className="hidden md:block absolute z-50 bottom-0 right-0 w-[45%] max-w-[480px] object-contain pointer-events-none "
+          />
         </div>
       </div>
     </div>
