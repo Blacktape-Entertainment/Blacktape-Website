@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/all";
 import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 
+import AssetPrefetch from "./components/AssetPrefetch";
 import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
@@ -38,6 +39,8 @@ function App() {
 
   return (
     <main className="w-full overflow-hidden">
+      {/* Prefetch all assets */}
+      <AssetPrefetch />
       {showIntro && <Intro onFinish={handleIntroFinish} />} {/* Done */}
       {!showIntro && (
         <>
