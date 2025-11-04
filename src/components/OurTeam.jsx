@@ -176,7 +176,7 @@ const OurTeam = () => {
       <section
         ref={ourTeamRef}
         id="ourteam"
-        className="absolute inset-0 z-50 bg-[#685A51] overflow-hidden w-full h-screen opacity-100"
+        className="absolute inset-0 z-70 bg-[#685A51] overflow-hidden w-full h-screen opacity-100"
       >
         {/* Mobile: Background + Overlay Card */}
         {isMobile && (
@@ -300,7 +300,7 @@ const OurTeam = () => {
       <section
         ref={itIsyourTurnRef}
         id="itsyourturn"
-        className="absolute opacity-0 inset-0 z-50 bg-white flex flex-col justify-center items-center w-full h-screen overflow-hidden py-[1rem] md:py-0"
+        className="absolute opacity-0 inset-0 z-70 bg-white flex flex-col justify-center items-center w-full h-screen overflow-hidden py-[1rem] md:py-0"
       >
         {/* Header Section */}
         <div

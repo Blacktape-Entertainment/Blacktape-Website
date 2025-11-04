@@ -42,7 +42,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
       ref={modalRef}
       className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm p-2 sm:p-4 md:p-6"
       onClick={onClose}
-      style={{ pointerEvents: "auto", zIndex: 9999 }}
+      style={{ pointerEvents: "auto", zIndex: 100 }}
     >
       <div
         ref={contentRef}

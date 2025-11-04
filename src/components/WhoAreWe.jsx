@@ -73,11 +73,6 @@ const WhoAreWe = ({ navbarRef }) => {
         },
       });
 
-      // Animate navbar if ref exists
-      if (navbarRef?.current && !isMobile) {
-        timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
-      }
-
       timeline.to(
         header,
         { scale: 1, y: 0, ease: "power3.out", duration: 0.2 },
@@ -93,6 +88,16 @@ const WhoAreWe = ({ navbarRef }) => {
         { opacity: 1, y: 0, ease: "power3.out", duration: 0.2 },
         0
       );
+
+      // Animate navbar at the start of the section
+      if (navbarRef?.current && !isMobile) {
+        timeline.to(
+          navbarRef.current,
+          { ...ANIMATION_CONFIG.entry, y: 0, duration: 0.2 },
+          0
+        );
+      }
+
       timeline.to({}, { duration: 0.6 }, ">");
     },
     { scope: sectionRef.current, dependencies: [] }
