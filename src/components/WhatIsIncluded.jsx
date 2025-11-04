@@ -24,7 +24,7 @@ const WhatIsIncluded = () => {
 
         gsap.to(cardsContainer, {
           x: () => -scrollWidth,
-          ease: "none",
+          ease: "power1.inOut",
           scrollTrigger: {
             trigger: section,
             start: "top top",
@@ -56,7 +56,7 @@ const WhatIsIncluded = () => {
           cardsContainer,
           {
             y: -rowHeight - 40,
-            ease: "none",
+            ease: "power1.inOut",
             duration: 0.33,
           },
           0.33
@@ -66,7 +66,7 @@ const WhatIsIncluded = () => {
           cardsContainer,
           {
             y: -(rowHeight * 2 + 80),
-            ease: "none",
+            ease: "power1.inOut",
             duration: 0.34,
           },
           0.66

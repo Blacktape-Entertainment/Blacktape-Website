@@ -40,7 +40,7 @@ const DevicesMockups = ({ navbarRef }) => {
         opacity: 0,
         y: "-40vh",
         ease: "power3.inOut",
-        duration: 0.6,
+        duration: 1,
       })
         .to(
           textContent,
@@ -48,7 +48,7 @@ const DevicesMockups = ({ navbarRef }) => {
             opacity: 0,
             y: "-40vh",
             ease: "power3.inOut",
-            duration: 0.6,
+            duration: 1,
           },
           "<0.1"
         )
@@ -58,7 +58,7 @@ const DevicesMockups = ({ navbarRef }) => {
             opacity: 0,
             y: "-40vh",
             ease: "power3.inOut",
-            duration: 0.6,
+            duration: 1,
           },
           "<0.1"
         );
@@ -141,7 +141,7 @@ const DevicesMockups = ({ navbarRef }) => {
         <img
           src={Mockups}
           alt="Device Mockups"
-          className="w-[90%] sm:w-[75%] md:w-[60%] lg:w-[50%] xl:w-[45%] h-auto object-contain"
+          className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[60%] xl:w-[60%] h-auto object-contain"
         />
       </div>
     </section>

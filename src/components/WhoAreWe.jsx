@@ -173,10 +173,10 @@ const WhoAreWe = ({ navbarRef }) => {
         ref={headerRef}
         className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1 className="font-header font-bold leading-tight text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
+        <h1 className="font-header font-bold leading-tight text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
           So, Who Are We
         </h1>
-        <p className="font-header font-light text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="font-header font-light text-sm lg:text-base xl:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
@@ -204,7 +204,7 @@ const WhoAreWe = ({ navbarRef }) => {
                 ref={tunerBtnRef}
                 src={tuner}
                 alt="Tuner"
-                className="absolute w-[19%] top-[13%] right-[41%]"
+                className="absolute w-[18%] top-[13%] right-[42%]"
               />
             )}
 
@@ -260,17 +260,20 @@ const WhoAreWe = ({ navbarRef }) => {
             </div>
 
             {/* "Know More" Button (Desktop only) */}
-            {!isMobile && (
-              <a
-                href="#instantaiconnect"
-                className="absolute bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]
-                bg-[#DCD9BA] rounded-md flex items-center justify-center 
-                text-black text-base md:text-lg lg:text-xl font-semibold 
-                hover:bg-[#e6e3c8] transition-colors duration-300"
-              >
-                Know More
-              </a>
-            )}
+
+            <a
+              href="#instantaiconnect"
+              className={`absolute
+                bg-[#DCD9BA] rounded flex items-center justify-center 
+                text-black text-[10px] md:text-lg lg:text-xl font-semibold 
+                hover:bg-[#e6e3c8] transition-colors duration-300 ${
+                  isMobile
+                    ? "bottom-[38%] right-[38.5%] w-[25.5%] h-[8%]"
+                    : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]"
+                }`}
+            >
+              Know More
+            </a>
           </div>
         </div>
       </div>
@@ -280,13 +283,13 @@ const WhoAreWe = ({ navbarRef }) => {
         ref={dynamicContentRef}
         className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
       >
-        <h1 className="header font-header font-bold text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+        <h1 className="header font-header font-bold text-3xl lg:text-4xl xl:text-5xl">
           Blacktape{" "}
-          <span className="span font-light uppercase tracking-wider text-xs sm:text-sm md:text-base lg:text-lg">
+          <span className="span font-light uppercase tracking-wider text-sm md:text-base lg:text-lg">
             {current?.span}
           </span>
         </h1>
-        <p className="paragraph font-header font-light text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="paragraph font-header font-light text-sm lg:text-base max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
           {current?.text}
         </p>
       </div>

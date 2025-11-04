@@ -1,72 +1,65 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { SplitText } from "gsap/all";
+import { ScrollTrigger, SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 
+// Components
 import AssetPrefetch from "./components/AssetPrefetch";
 import Intro from "./components/Intro";
-import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
 import WhoAreWe from "./components/WhoAreWe";
 import DevicesMockups from "./components/DevicesMockups";
 import WhatIsIncluded from "./components/WhatIsIncluded";
-import OurTeam from "./components/OurTeam";
 import DigitalSovereignty from "./components/DigitalSovereignty";
 import TrustedClients from "./components/TrustedClients";
 import InstantAIConnect from "./components/InstantAIConnect";
 import BlacktapeFooter from "./components/BlacktapeFooter";
+import OurTeam from "./components/OurTeam";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [assetsReady, setAssetsReady] = useState(false);
-  const [introFinished, setIntroFinished] = useState(false);
   const navbarRef = useRef(null);
+
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [layoutType] = useState(isMobile ? "mobile" : "desktop");
 
-  useEffect(() => {
-    const newLayout = isMobile ? "mobile" : "desktop";
+  const [showIntro, setShowIntro] = useState(true);
+  const [assetsReady, setAssetsReady] = useState(false);
+  const [introFinished, setIntroFinished] = useState(false);
 
-    if (layoutType !== newLayout) {
-      window.location.reload();
-    }
+  // Reload the page if layout type changes (to avoid mismatched animations/layouts)
+  useEffect(() => {
+    const currentLayout = isMobile ? "mobile" : "desktop";
+    if (layoutType !== currentLayout) window.location.reload();
   }, [isMobile, layoutType]);
 
-  // Hide intro only when BOTH intro animation AND assets are ready
+  // Hide intro only when both assets and intro animation are finished
   useEffect(() => {
-    if (introFinished && assetsReady) {
-      setShowIntro(false);
-    }
+    if (introFinished && assetsReady) setShowIntro(false);
   }, [introFinished, assetsReady]);
-
-  const handleIntroFinish = () => {
-    setIntroFinished(true);
-  };
-
-  const handleAssetsReady = () => {
-    setAssetsReady(true);
-  };
 
   return (
     <main className="w-full overflow-hidden">
       {/* Prefetch all assets */}
-      <AssetPrefetch onAssetsReady={handleAssetsReady} />
-      {showIntro && <Intro onFinish={handleIntroFinish} />} {/* Done */}
-      {!showIntro && (
+      <AssetPrefetch onAssetsReady={() => setAssetsReady(true)} />
+
+      {/* Intro screen */}
+      {showIntro ? (
+        <Intro onFinish={() => setIntroFinished(true)} />
+      ) : (
         <>
-          <Navbar ref={navbarRef} /> {/* Done */}
-          <Hero navbarRef={navbarRef} /> {/* Done */}
-          <WhoAreWe navbarRef={navbarRef} /> {/* Done */}
-          <DevicesMockups navbarRef={navbarRef} /> {/* Done */}
-          <WhatIsIncluded /> {/* Done */}
-          {/* <OurTeam /> */}
-          <DigitalSovereignty /> {/* Done */}
-          <TrustedClients navbarRef={navbarRef} /> {/* Done */}
-          <InstantAIConnect /> {/* Done */}
-          <BlacktapeFooter navbarRef={navbarRef} /> {/* Done */}
+          <Navbar ref={navbarRef} />
+          <Hero navbarRef={navbarRef} />
+          <WhoAreWe navbarRef={navbarRef} />
+          <DevicesMockups navbarRef={navbarRef} />
+          <WhatIsIncluded />
+          <OurTeam />
+          <DigitalSovereignty />
+          <TrustedClients navbarRef={navbarRef} />
+          <InstantAIConnect />
+          <BlacktapeFooter navbarRef={navbarRef} />
         </>
       )}
     </main>
