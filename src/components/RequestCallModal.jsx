@@ -1,10 +1,24 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const RequestCallModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
+
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   useGSAP(() => {
     if (!isOpen || !modalRef.current || !contentRef.current) return;
@@ -26,8 +40,9 @@ const RequestCallModal = ({ isOpen, onClose }) => {
   return (
     <div
       ref={modalRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-2 sm:p-4 md:p-6"
+      className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm p-2 sm:p-4 md:p-6"
       onClick={onClose}
+      style={{ pointerEvents: "auto", zIndex: 9999 }}
     >
       <div
         ref={contentRef}

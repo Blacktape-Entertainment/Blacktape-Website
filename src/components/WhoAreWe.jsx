@@ -10,9 +10,11 @@ import value from "/images/value.png";
 import select from "/images/select.png";
 import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
+import InvestmentsModal from "./InvestmentsModal";
 
 const WhoAreWe = ({ navbarRef }) => {
   const [activeValue, setActiveValue] = useState("value1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const radioRef = useRef(null);
@@ -261,19 +263,19 @@ const WhoAreWe = ({ navbarRef }) => {
 
             {/* "Know More" Button (Desktop only) */}
 
-            <a
-              href="#instantaiconnect"
+            <button
+              onClick={() => setIsModalOpen(true)}
               className={`absolute
                 bg-[#DCD9BA] rounded flex items-center justify-center 
                 text-black text-[10px] md:text-lg lg:text-xl font-semibold 
-                hover:bg-[#e6e3c8] transition-colors duration-300 ${
+                hover:bg-[#e6e3c8] transition-colors duration-300 cursor-pointer ${
                   isMobile
                     ? "bottom-[38%] right-[38.5%] w-[25.5%] h-[8%]"
                     : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]"
                 }`}
             >
               Know More
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -293,6 +295,12 @@ const WhoAreWe = ({ navbarRef }) => {
           {current?.text}
         </p>
       </div>
+
+      {/* Investments Modal */}
+      <InvestmentsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 };

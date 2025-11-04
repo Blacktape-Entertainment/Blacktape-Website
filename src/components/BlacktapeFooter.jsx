@@ -24,9 +24,6 @@ const BlacktapeFooter = ({ navbarRef }) => {
         toggleActions: "play none none reverse", // plays on enter, reverses on leave
       },
     });
-
-    // Keep navbar always above footer
-    gsap.set(navbarRef.current, { zIndex: 9999 });
   }, [isMobile, navbarRef]);
 
   return (

@@ -21,7 +21,6 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
   const navbarRef = useRef(null);
-
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [layoutType] = useState(isMobile ? "mobile" : "desktop");
 
@@ -55,7 +54,7 @@ function App() {
           <WhoAreWe navbarRef={navbarRef} />
           <DevicesMockups navbarRef={navbarRef} />
           <WhatIsIncluded />
-          <OurTeam />
+          {/* <OurTeam /> */}
           <DigitalSovereignty />
           <TrustedClients navbarRef={navbarRef} />
           <InstantAIConnect />

@@ -7,6 +7,10 @@ import { sections } from "../constants";
 const DigitalSovereignty = () => {
   const sectionRef = useRef(null);
   const slidesRef = useRef([]);
+  const headerRef = useRef(null);
+  const leftPhoneRef = useRef(null);
+  const middlePhoneRef = useRef(null);
+  const rightPhoneRef = useRef(null);
   slidesRef.current = [];
 
   const addToRefs = (el) => {
@@ -17,7 +21,19 @@ const DigitalSovereignty = () => {
     () => {
       const section = sectionRef.current;
       const slides = slidesRef.current;
-      if (!section || slides.length === 0) return;
+      const header = headerRef.current;
+      const leftPhone = leftPhoneRef.current;
+      const middlePhone = middlePhoneRef.current;
+      const rightPhone = rightPhoneRef.current;
+      if (
+        !section ||
+        slides.length === 0 ||
+        !header ||
+        !leftPhone ||
+        !middlePhone ||
+        !rightPhone
+      )
+        return;
 
       const mm = gsap.matchMedia();
 
@@ -29,9 +45,26 @@ const DigitalSovereignty = () => {
         (context) => {
           const { isMobile } = context.conditions;
 
-          // Initial state - set all slides invisible except first
+          // Initial state for header and phones
+          if (isMobile) {
+            // Mobile: no scale animation, header at normal size, phones hidden
+            gsap.set(header, { scale: 1, opacity: 1 });
+            gsap.set([leftPhone, middlePhone, rightPhone], {
+              opacity: 0,
+              display: "none",
+            });
+          } else {
+            // Desktop/Tablet: full intro animation
+            gsap.set(header, { scale: 2, opacity: 1 });
+            gsap.set([leftPhone, middlePhone, rightPhone], {
+              x: 0,
+              y: 0,
+              opacity: 1,
+            });
+          }
+
+          // Initial state - set all slides invisible
           gsap.set(slides, { opacity: 0 });
-          gsap.set(slides[0], { opacity: 1, zIndex: 2 });
 
           // Set initial positions for first slide elements
           const firstText = slides[0].querySelector(".text-block");
@@ -47,13 +80,73 @@ const DigitalSovereignty = () => {
             scrollTrigger: {
               trigger: section,
               start: "top top",
-              end: `+=${slides.length * 150}%`,
+              end: `+=${slides.length * 150 + 100}%`,
               scrub: 1,
               pin: true,
             },
           });
 
-          // Animate first slide on load (at start of timeline)
+          // Intro animation only for desktop/tablet
+          if (!isMobile) {
+            // Header scales down, phones exit in different directions (simultaneously)
+            tl.to(
+              header,
+              {
+                scale: 1,
+                duration: 0.5,
+                ease: "power2.inOut",
+              },
+              0
+            );
+
+            // Left phone exits to bottom-left (same time as header)
+            tl.to(
+              leftPhone,
+              {
+                x: "-100vw",
+                y: "100vh",
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.in",
+              },
+              0
+            );
+
+            // Middle phone exits to bottom (same time as header)
+            tl.to(
+              middlePhone,
+              {
+                y: "100vh",
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.in",
+              },
+              0
+            );
+
+            // Right phone exits to bottom-right (same time as header)
+            tl.to(
+              rightPhone,
+              {
+                x: "100vw",
+                y: "100vh",
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.in",
+              },
+              0
+            );
+          }
+
+          // Show first slide after intro (or immediately on mobile)
+          const firstSlideStart = isMobile ? 0 : 0.4;
+          tl.to(
+            slides[0],
+            { opacity: 1, zIndex: 2, duration: 0.3 },
+            firstSlideStart
+          );
+
+          // Animate first slide elements
           tl.to(
             firstText,
             {
@@ -62,7 +155,7 @@ const DigitalSovereignty = () => {
               duration: 0.3,
               ease: "power2.out",
             },
-            0
+            firstSlideStart + 0.1
           );
 
           tl.to(
@@ -74,7 +167,7 @@ const DigitalSovereignty = () => {
               duration: 0.3,
               ease: "power2.out",
             },
-            0.1
+            firstSlideStart + 0.2
           );
 
           slides.forEach((slide, i) => {
@@ -184,7 +277,10 @@ const DigitalSovereignty = () => {
       className="relative w-full h-screen bg-white overflow-hidden flex flex-col"
     >
       {/* Header */}
-      <div className="flex flex-col justify-center items-center text-center px-[5%] py-[1.5vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] z-20 shrink-0">
+      <div
+        ref={headerRef}
+        className="flex flex-col justify-center items-center text-center px-[5%] py-[1.5vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] z-[5] shrink-0"
+      >
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black leading-tight mb-[0.5vh]">
           Digital Sovereignty
         </h1>
@@ -193,18 +289,40 @@ const DigitalSovereignty = () => {
         </p>
       </div>
 
+      {/* Phones Row - Centered (Hidden on Mobile) */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[15] hidden md:flex items-center justify-center">
+        <img
+          ref={leftPhoneRef}
+          src="images/left-phone.png"
+          alt="Left Phone"
+          className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -mr-8 sm:-mr-10 md:-mr-12 lg:-mr-16"
+        />
+        <img
+          ref={middlePhoneRef}
+          src="images/middle-phone.png"
+          alt="Middle Phone"
+          className="h-[45vh] sm:h-[55vh] md:h-[65vh] lg:h-[75vh] w-auto object-contain z-10"
+        />
+        <img
+          ref={rightPhoneRef}
+          src="images/right-phone.png"
+          alt="Right Phone"
+          className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -ml-8 sm:-ml-10 md:-ml-12 lg:-ml-16"
+        />
+      </div>
+
       {/* Slides */}
-      <div className="relative flex-1 w-full overflow-hidden min-h-0">
+      <div className="relative flex-1 w-full overflow-hidden min-h-0 z-[20]">
         {sections.map((sec, i) => (
           <div
             key={i}
             ref={addToRefs}
             className={`absolute inset-0 flex flex-col md:flex-row ${
               i % 2 !== 0 ? "md:flex-row-reverse" : ""
-            } items-center justify-center px-[5%] sm:px-[7%] md:px-[8%] lg:px-[10%] xl:px-[12%] gap-[2vh] sm:gap-[3vh] md:gap-[4vh] lg:gap-[5vh] transition-colors duration-300`}
+            } items-center justify-between px-[5%] sm:px-[7%] md:px-[8%] lg:px-[10%] xl:px-[12%] gap-[2vh] sm:gap-[3vh] md:gap-[4vh] lg:gap-[6vh] transition-colors duration-300`}
           >
             {/* Text */}
-            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-[1vh] sm:gap-[1.5vh] md:gap-[2vh] w-full md:w-1/2 md:max-w-md lg:max-w-lg shrink-0">
+            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-[1vh] sm:gap-[1.5vh] md:gap-[2vh] w-full md:w-[45%] lg:w-[40%] shrink-0">
               <p className="text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm font-header text-[#030706] mb-0">
                 {sec.subtitle}
               </p>
@@ -223,11 +341,11 @@ const DigitalSovereignty = () => {
             </div>
 
             {/* Image */}
-            <div className="image-block flex items-center justify-center w-full md:w-1/2 shrink-0">
+            <div className="image-block flex items-center justify-center w-full md:w-[50%] lg:w-[55%] shrink-0 max-h-[60vh] md:max-h-[80vh]">
               <img
                 src={sec.image}
                 alt={sec.imageAlt}
-                className="w-3/4 sm:w-4/5 md:w-full lg:w-full xl:w-full h-auto object-contain"
+                className="w-full h-auto object-contain max-h-[60vh] md:max-h-[80vh]"
               />
             </div>
           </div>

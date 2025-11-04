@@ -31,7 +31,7 @@ const Navbar = forwardRef((props, ref) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 mt-7 w-full z-50" ref={ref}>
+    <nav className="fixed top-0 left-0 mt-7 w-full z-10" ref={ref}>
       <div className="w-full flex justify-between md:justify-center px-8 lg:px-12 gap-3">
         <div
           className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${

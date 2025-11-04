@@ -30,18 +30,20 @@ const DevicesMockups = ({ navbarRef }) => {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=150%",
+          end: "+=300%",
           pin: true,
           scrub: 1,
         },
       });
 
-      tl.to(companyGoals, {
-        opacity: 0,
-        y: "-40vh",
-        ease: "power3.inOut",
-        duration: 1,
-      })
+      // Add a hold period (3/4 of the timeline) before animations start
+      tl.to({}, { duration: 3 })
+        .to(companyGoals, {
+          opacity: 0,
+          y: "-40vh",
+          ease: "power3.inOut",
+          duration: 1,
+        })
         .to(
           textContent,
           {
@@ -56,6 +58,7 @@ const DevicesMockups = ({ navbarRef }) => {
           image,
           {
             opacity: 0,
+            width: "150%",
             y: "-40vh",
             ease: "power3.inOut",
             duration: 1,

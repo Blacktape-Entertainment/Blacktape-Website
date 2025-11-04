@@ -24,7 +24,7 @@ const WhatIsIncluded = () => {
 
         gsap.to(cardsContainer, {
           x: () => -scrollWidth,
-          ease: "power1.inOut",
+          ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top top",
@@ -56,7 +56,7 @@ const WhatIsIncluded = () => {
           cardsContainer,
           {
             y: -rowHeight - 40,
-            ease: "power1.inOut",
+            ease: "none",
             duration: 0.33,
           },
           0.33
@@ -66,7 +66,7 @@ const WhatIsIncluded = () => {
           cardsContainer,
           {
             y: -(rowHeight * 2 + 80),
-            ease: "power1.inOut",
+            ease: "none",
             duration: 0.34,
           },
           0.66
@@ -142,14 +142,14 @@ const WhatIsIncluded = () => {
             {[0, 2, 4].map((startIndex, rowIndex) => (
               <div
                 key={rowIndex}
-                className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10 rounded"
+                className="card-row grid grid-cols-1 sm:grid-cols-2 gap-10"
               >
                 {cards.slice(startIndex, startIndex + 2).map((card, i) => (
                   <div
                     key={startIndex + i}
                     className="flex flex-col items-center md:items-start text-center md:text-left"
                   >
-                    <div className="w-full h-44 overflow-hidden mb-3 shadow-lg">
+                    <div className="w-full h-48 overflow-hidden mb-3 shadow-lg rounded">
                       <img
                         src={card.image}
                         alt={card.title}

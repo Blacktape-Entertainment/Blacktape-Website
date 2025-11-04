@@ -69,12 +69,13 @@ const InstantAIConnect = () => {
         0
       );
 
-      // Phase 3: Phone scales up and moves to right
+      // Phase 3: Phone scales up and moves to right edge and top edge
       tl.to(
         phone,
         {
-          scale: 0.9,
-          x: "25vw",
+          scale: 1.2,
+          x: "35vw",
+          y: "-25vh",
           ease: "power2.out",
           duration: 0.5,
         },
@@ -93,12 +94,12 @@ const InstantAIConnect = () => {
         0.5
       );
     } else {
-      // SMALL SCREENS: Phone stays center, text comes from bottom
+      // SMALL SCREENS: Phone at bottom center, scales up in place
 
       // Initial states
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.6, x: 0, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "70vh" });
       gsap.set(text, { opacity: 0, y: 200 });
       gsap.set(antenna, { top: "-2%" });
 
@@ -135,25 +136,23 @@ const InstantAIConnect = () => {
         0
       );
 
-      // Phase 3: Phone scales up and stays centered
+      // Phase 3: Phone only scales up, stays in place
       tl.to(
         phone,
         {
-          scale: 0.7,
-          y: "-10vh",
-          x: "10vw",
+          scale: 0.9,
           ease: "power2.out",
           duration: 0.5,
         },
         0.3
       );
 
-      // Phase 4: Text slides up from bottom
+      // Phase 4: Text slides up to top edge
       tl.to(
         text,
         {
           opacity: 1,
-          top: "-20%",
+          y: -300,
           ease: "power2.out",
           duration: 0.4,
         },
@@ -227,10 +226,7 @@ const InstantAIConnect = () => {
               className="border rounded border-gray-300 p-1.5 sm:p-2 w-full text-xs sm:text-sm"
               placeholder="Phone Number *"
             />
-            <button
-              className="p-2 mt-0.5 bg-gold text-blacktape font-medium text-xs sm:text-sm md:text-base tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60]"
-              onClick={() => setIsModalOpen(true)}
-            >
+            <button className="p-2 mt-0.5 bg-gold text-blacktape text-xs sm:text-sm md:text-base font-text tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60] flex-1">
               Request a Call
             </button>
           </div>
@@ -242,16 +238,15 @@ const InstantAIConnect = () => {
         ref={textRef}
         className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
                    bottom-8 left-4 right-4 lg:bottom-auto lg:right-auto
-                   max-w-3/4 md:max-w-md z-20 lg:z-30 pointer-events-none"
+                   max-w-3/4 md:max-w-md z-20 lg:z-30"
       >
-        <h3 className="font-header font-extrabold text-black leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+        <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
         </h3>
-        <p className="font-text text-black font-light text-xs sm:text-sm md:text-base lg:text-lg mt-1">
-          Request a call, and your personal AI liaison will connect with you
-          momentarily.
+        <p className="font-text text-black font-light text-xs sm:text-sm md:text-base  mt-1 pointer-events-none">
+          Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3">
+        <p className="font-text text-black text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3 pointer-events-none">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and
@@ -259,7 +254,10 @@ const InstantAIConnect = () => {
         </p>
         <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-sm lg:text-base mt-1.5 md:mt-2">
           Prefer the Human touch?{" "}
-          <span className="underline text-[#7c680d] cursor-pointer">
+          <span
+            className="underline text-[#7c680d] cursor-pointer pointer-events-auto"
+            onClick={() => setIsModalOpen(true)}
+          >
             Press Here
           </span>
         </p>
