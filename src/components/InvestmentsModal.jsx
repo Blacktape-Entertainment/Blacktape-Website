@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
-const InvestmentsModal = ({ isOpen, onClose }) => {
+const InvestmentsModal = ({ isOpen, onClose, navbarRef }) => {
   const modalRef = useRef(null);
   const backdropRef = useRef(null);
 
@@ -9,6 +9,16 @@ const InvestmentsModal = ({ isOpen, onClose }) => {
     if (isOpen) {
       // Disable body scroll
       document.body.style.overflow = "hidden";
+
+      // Hide navbar
+      if (navbarRef?.current) {
+        gsap.to(navbarRef.current, {
+          opacity: 0,
+          y: -100,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
 
       // Animate modal entrance
       gsap.fromTo(
@@ -24,13 +34,23 @@ const InvestmentsModal = ({ isOpen, onClose }) => {
     } else {
       // Re-enable body scroll when modal closes
       document.body.style.overflow = "auto";
+
+      // Show navbar again
+      if (navbarRef?.current) {
+        gsap.to(navbarRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
     }
 
     // Cleanup function
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isOpen]);
+  }, [isOpen, navbarRef]);
 
   const handleClose = () => {
     // Animate modal exit

@@ -304,6 +304,7 @@ const WhoAreWe = ({ navbarRef }) => {
       {/* Investments Modal */}
       <InvestmentsModal
         isOpen={isModalOpen}
+        navbarRef={navbarRef}
         onClose={() => setIsModalOpen(false)}
       />
     </section>

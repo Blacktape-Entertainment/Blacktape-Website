@@ -31,7 +31,7 @@ const Navbar = forwardRef((props, ref) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 mt-7 w-full z-50" ref={ref}>
+    <nav className="fixed top-0 left-0 mt-7 w-full z-10" ref={ref}>
       <div className="w-full flex justify-between md:justify-center px-8 lg:px-12 gap-3">
         <div
           className={`flex items-center justify-center w-10 h-10 rounded lg:rounded-full shadow-md hover:scale-105 transition-all duration-300 ${
@@ -53,7 +53,7 @@ const Navbar = forwardRef((props, ref) => {
             }`}
           />
           <ul
-            className={`relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-50 transition-colors duration-500 ${
+            className={`relative flex items-center gap-8 py-2 px-8 font-header text-[15px] tracking-wide z-10 transition-colors duration-500 ${
               isScrolled ? "text-white" : "text-gold"
             }`}
           >
@@ -96,7 +96,7 @@ const Navbar = forwardRef((props, ref) => {
               isScrolled ? "bg-black text-white" : "bg-navbar text-gold"
             } ${
               isMenuOpen
-                ? "opacity-100 translate-y-0 scale-100 z-60"
+                ? "opacity-100 translate-y-0 scale-100 z-40"
                 : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
             }`}
           >

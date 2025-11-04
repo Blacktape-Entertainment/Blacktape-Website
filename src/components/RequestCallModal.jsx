@@ -1,10 +1,21 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const RequestCallModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    source: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
 
   // Disable body scroll when modal is open
   useEffect(() => {
@@ -19,6 +30,85 @@ const RequestCallModal = ({ isOpen, onClose }) => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
+
+  // Reset form when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({ name: "", email: "", phone: "", source: "" });
+      setErrors({});
+      setSubmitStatus(null);
+    }
+  }, [isOpen]);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Name validation (required)
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    // Phone validation (required)
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^[\d\s\-+()]+$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+
+    // Email validation (optional but must be valid if provided)
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Example API endpoint - replace with your actual API
+      const response = await fetch("https://api.example.com/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        // Reset form after successful submission
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useGSAP(() => {
     if (!isOpen || !modalRef.current || !contentRef.current) return;
@@ -46,7 +136,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
     >
       <div
         ref={contentRef}
-        className="relative bg-white w-full max-w-[1100px] h-auto max-h-[95vh] overflow-hidden shadow-2xl"
+        className="relative bg-white w-full max-w-[1000px] h-auto max-h-[95vh] overflow-hidden shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -63,37 +153,89 @@ const RequestCallModal = ({ isOpen, onClose }) => {
         </button>
 
         {/* FORM SECTION */}
-        <div className="relative flex items-center p-15">
+        <div className="relative flex items-center justify-start p-4 sm:p-6 md:p-8 lg:p-12 xl:p-15 flex-1">
           {/* FORM CONTENT */}
-          <div className="relative w-[70%] z-10">
-            <h3 className="font-header text-lg md:text-xl lg:text-2xl xl:text-3xl text-[#3a3a3a] mb-2 tracking-wide">
+          <div className="relative w-full z-10">
+            <h3 className="font-header text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#3a3a3a] mb-1 sm:mb-2 tracking-wide">
               Why the wait ..
             </h3>
-            <h2 className="font-header font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#B8A066] leading-[1.1] mb-8 tracking-wide">
+            <h2 className="font-header font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#B8A066] leading-[1.1] mb-3 sm:mb-4 md:mb-6 tracking-wide">
               PRESS THE CLUTCH
             </h2>
 
-            <form className="space-y-5">
-              <input
-                type="text"
-                placeholder="Name *"
-                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
-              />
-              <input
-                type="tel"
-                placeholder="Phone number *"
-                className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-2"
-                required
-              />
+            {/* Success Message */}
+            {submitStatus === "success" && (
+              <div className="mb-3 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center text-xs sm:text-sm">
+                Thank you! We'll contact you soon.
+              </div>
+            )}
+
+            {/* Error Message */}
+            {submitStatus === "error" && (
+              <div className="mb-3 p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center text-xs sm:text-sm">
+                Something went wrong. Please try again.
+              </div>
+            )}
+
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-2 sm:space-y-3 md:space-y-4"
+            >
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Name *"
+                  className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-xs sm:text-sm md:text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-1.5 sm:py-2"
+                />
+                {errors.name && (
+                  <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-red-600">
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
+                  className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-xs sm:text-sm md:text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-1.5 sm:py-2"
+                />
+                {errors.email && (
+                  <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-red-600">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Phone number *"
+                  className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-xs sm:text-sm md:text-base text-[#888888] placeholder:text-[#b8b8b8] bg-transparent py-1.5 sm:py-2"
+                />
+                {errors.phone && (
+                  <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-red-600">
+                    {errors.phone}
+                  </p>
+                )}
+              </div>
 
               <div className="relative">
-                <select className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-base text-[#888888] bg-transparent py-2 appearance-none cursor-pointer">
+                <select
+                  name="source"
+                  value={formData.source}
+                  onChange={handleInputChange}
+                  className="w-full border-b border-[#d4d4d4] focus:border-[#B8A066] focus:outline-none text-xs sm:text-sm md:text-base text-[#888888] bg-transparent py-1.5 sm:py-2 appearance-none cursor-pointer"
+                >
                   <option value="">How did you find us?</option>
                   <option value="search">Search Engine</option>
                   <option value="social">Social Media</option>
@@ -102,7 +244,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#888888]">
                   <svg
-                    className="fill-current h-4 w-4"
+                    className="fill-current h-3 w-3 sm:h-4 sm:w-4"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
@@ -113,9 +255,36 @@ const RequestCallModal = ({ isOpen, onClose }) => {
 
               <button
                 type="submit"
-                className="w-full mt-6 py-3 bg-[#B8A066] text-white font-semibold text-sm tracking-widest hover:bg-[#a89159] transition-all duration-300"
+                disabled={isSubmitting}
+                className="w-full mt-3 sm:mt-4 md:mt-5 py-2 sm:py-2.5 md:py-3 bg-[#B8A066] text-white font-semibold text-[10px] sm:text-xs md:text-sm tracking-widest hover:bg-[#a89159] disabled:bg-[#d4c9a8] disabled:cursor-not-allowed transition-all duration-300"
               >
-                SEND
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center">
+                    <svg
+                      className="animate-spin h-5 w-5 mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    SENDING...
+                  </span>
+                ) : (
+                  "SEND"
+                )}
               </button>
             </form>
           </div>
@@ -124,7 +293,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
           <img
             src="images/modal.png"
             alt="Clutch mechanism"
-            className="hidden md:block absolute z-50 bottom-0 right-0 w-[45%] max-w-[480px] object-contain pointer-events-none "
+            className="hidden lg:block absolute z-50 bottom-0 right-0 w-[40%] xl:w-[45%] max-w-[420px] xl:max-w-[480px] object-contain pointer-events-none"
           />
         </div>
       </div>
