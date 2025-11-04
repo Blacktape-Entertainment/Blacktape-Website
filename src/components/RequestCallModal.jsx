@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import Toast from "./Toast";
 
 const RequestCallModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
@@ -15,7 +16,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+  const [toast, setToast] = useState({ show: false, type: "", message: "" });
 
   // Disable body scroll when modal is open
   useEffect(() => {
@@ -36,7 +37,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
     if (isOpen) {
       setFormData({ name: "", email: "", phone: "", source: "" });
       setErrors({});
-      setSubmitStatus(null);
+      setToast({ show: false, type: "", message: "" });
     }
   }, [isOpen]);
 
@@ -81,7 +82,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
     }
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
+    setToast({ show: false, type: "", message: "" });
 
     try {
       // Example API endpoint - replace with your actual API
@@ -94,17 +95,29 @@ const RequestCallModal = ({ isOpen, onClose }) => {
       });
 
       if (response.ok) {
-        setSubmitStatus("success");
+        setToast({
+          show: true,
+          type: "success",
+          message: "Thank you! We'll contact you soon.",
+        });
         // Reset form after successful submission
         setTimeout(() => {
-          onClose();
+          setFormData({ name: "", email: "", phone: "", source: "" });
         }, 2000);
       } else {
-        setSubmitStatus("error");
+        setToast({
+          show: true,
+          type: "error",
+          message: "Something went wrong. Please try again.",
+        });
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      setSubmitStatus("error");
+      setToast({
+        show: true,
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -162,20 +175,6 @@ const RequestCallModal = ({ isOpen, onClose }) => {
             <h2 className="font-header font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#B8A066] leading-[1.1] mb-3 sm:mb-4 md:mb-6 tracking-wide">
               PRESS THE CLUTCH
             </h2>
-
-            {/* Success Message */}
-            {submitStatus === "success" && (
-              <div className="mb-3 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center text-xs sm:text-sm">
-                Thank you! We'll contact you soon.
-              </div>
-            )}
-
-            {/* Error Message */}
-            {submitStatus === "error" && (
-              <div className="mb-3 p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center text-xs sm:text-sm">
-                Something went wrong. Please try again.
-              </div>
-            )}
 
             <form
               onSubmit={handleSubmit}
@@ -297,6 +296,14 @@ const RequestCallModal = ({ isOpen, onClose }) => {
           />
         </div>
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        type={toast.type}
+        message={toast.message}
+        isVisible={toast.show}
+        onClose={() => setToast({ show: false, type: "", message: "" })}
+      />
     </div>
   );
 };
