@@ -12,7 +12,7 @@ const Hero = ({ navbarRef }) => {
 
   useGSAP(
     () => {
-      gsap.set(navbarRef?.current, { y: -100, opacity: 0 });
+      gsap.set(navbarRef?.current, { y: -100, opacity: 0, zIndex: 0 });
 
       // Hero scroll-based animation
       const timeline = gsap.timeline({
@@ -50,7 +50,11 @@ const Hero = ({ navbarRef }) => {
 
       // Animate navbar if ref exists
       if (navbarRef?.current) {
-        timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
+        timeline.to(
+          navbarRef.current,
+          { ...ANIMATION_CONFIG.entry, y: 0, zIndex: 10 },
+          0
+        );
       }
 
       // Hold hero visible briefly
