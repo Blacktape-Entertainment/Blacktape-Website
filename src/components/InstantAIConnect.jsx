@@ -74,8 +74,8 @@ const InstantAIConnect = () => {
         phone,
         {
           scale: 1.2,
-          x: "35vw",
-          y: "-25vh",
+          x: "30vw",
+          y: "-10vh",
           ease: "power2.out",
           duration: 0.5,
         },

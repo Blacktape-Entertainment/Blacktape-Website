@@ -34,9 +34,11 @@ function App() {
     if (layoutType !== currentLayout) window.location.reload();
   }, [isMobile, layoutType]);
 
-  // Hide intro only when both assets and intro animation are finished
+  // Hide intro only when both intro animation finished AND all assets are ready
   useEffect(() => {
-    if (introFinished && assetsReady) setShowIntro(false);
+    if (introFinished && assetsReady) {
+      setShowIntro(false);
+    }
   }, [introFinished, assetsReady]);
 
   return (
@@ -44,7 +46,7 @@ function App() {
       {/* Prefetch all assets */}
       <AssetPrefetch onAssetsReady={() => setAssetsReady(true)} />
 
-      {/* Intro screen */}
+      {/* Intro screen - stays until assets are ready */}
       {showIntro ? (
         <Intro onFinish={() => setIntroFinished(true)} />
       ) : (

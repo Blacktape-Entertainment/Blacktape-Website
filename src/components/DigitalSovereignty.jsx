@@ -179,26 +179,26 @@ const DigitalSovereignty = () => {
             const nextText = nextSlide.querySelector(".text-block");
             const nextImage = nextSlide.querySelector(".image-block");
 
-            // Exit current slide
+            // Exit current slide with subtle fade
             tl.to(
               [text, image],
               {
-                opacity: 0,
-                duration: 0.6,
+                opacity: 0.3,
+                duration: 0.4,
                 ease: "power2.inOut",
               },
               `slide${i}`
             );
 
-            // Background fade-out
+            // Background fade-out (subtle)
             tl.to(
               slide,
               {
                 opacity: 0,
-                duration: 0.5,
+                duration: 0.3,
                 ease: "power1.inOut",
               },
-              `slide${i}+=0.2`
+              `slide${i}+=0.15`
             );
 
             // Enter next slide with specific directions based on slide number

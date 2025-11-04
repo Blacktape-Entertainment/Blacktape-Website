@@ -62,70 +62,41 @@ const videoAssets = [
   "/Blacktape-Website/output.mp4", // Hero video
 ];
 
-// Critical assets that must load before showing content
-const criticalAssets = [
-  "images/logo.svg", // Navbar logo
-  "/Blacktape-Website/output.mp4", // Hero video
-  "images/ai-antenna-2.png", // InstantAIConnect phone
-];
-
 const AssetPrefetch = ({ onAssetsReady }) => {
   useEffect(() => {
     let loadedCount = 0;
-    const totalCritical = criticalAssets.length;
+    const totalAssets = imageAssets.length + videoAssets.length;
 
     const checkAllLoaded = () => {
       loadedCount++;
-      if (loadedCount === totalCritical && onAssetsReady) {
+      if (loadedCount >= totalAssets && onAssetsReady) {
         onAssetsReady();
       }
     };
 
-    // Preload critical assets and track when they're loaded
-    criticalAssets.forEach((src) => {
-      if (src.endsWith(".mp4")) {
-        // For video - wait until it can play through without buffering
-        const video = document.createElement("video");
-        video.preload = "auto";
-        video.src = src;
-        video.muted = true; // Muted videos load faster
-        video.playsInline = true;
-
-        // Wait for enough data to play through
-        video.oncanplaythrough = checkAllLoaded;
-        video.onerror = checkAllLoaded; // Continue even if error
-
-        // Start loading
-        video.load();
-      } else {
-        // For images
-        const img = new Image();
-        img.src = src;
-        img.onload = checkAllLoaded;
-        img.onerror = checkAllLoaded; // Continue even if error
-      }
-    });
-
-    // Prefetch remaining images in background
+    // Preload all images and track when they're loaded
     imageAssets.forEach((src) => {
-      if (!criticalAssets.includes(src)) {
-        const link = document.createElement("link");
-        link.rel = "prefetch";
-        link.as = "image";
-        link.href = src;
-        document.head.appendChild(link);
-      }
+      const img = new Image();
+      img.src = src;
+      img.onload = checkAllLoaded;
+      img.onerror = checkAllLoaded; // Continue even if error
     });
 
-    // Prefetch videos in background
+    // Preload all videos and track when they're loaded
     videoAssets.forEach((src) => {
-      if (!criticalAssets.includes(src)) {
-        const link = document.createElement("link");
-        link.rel = "prefetch";
-        link.as = "video";
-        link.href = src;
-        document.head.appendChild(link);
-      }
+      // For video - wait until it can play through without buffering
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.src = src;
+      video.muted = true; // Muted videos load faster
+      video.playsInline = true;
+
+      // Wait for enough data to play through
+      video.oncanplaythrough = checkAllLoaded;
+      video.onerror = checkAllLoaded; // Continue even if error
+
+      // Start loading
+      video.load();
     });
   }, [onAssetsReady]);
 
