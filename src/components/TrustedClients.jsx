@@ -3,43 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { ANIMATION_CONFIG } from "../constants";
 import { useMediaQuery } from "react-responsive";
-import {
-  MdMovie,
-  MdBusiness,
-  MdScience,
-  MdCameraAlt,
-  MdEvent,
-  MdTrendingUp,
-  MdPeople,
-  MdCloud,
-  MdVideocam,
-  MdMemory,
-  MdPublic,
-  MdLightbulb,
-} from "react-icons/md";
-
-import { clients } from "../constants";
+import { clientLogos } from "../constants";
 import { useGSAP } from "@gsap/react";
-
-const IconComponent = ({ type, className = "h-5 w-5 md:h-6 md:w-6" }) => {
-  const icons = {
-    film: MdMovie,
-    building: MdBusiness,
-    flask: MdScience,
-    camera: MdCameraAlt,
-    calendar: MdEvent,
-    chart: MdTrendingUp,
-    users: MdPeople,
-    cloud: MdCloud,
-    video: MdVideocam,
-    cpu: MdMemory,
-    globe: MdPublic,
-    lightbulb: MdLightbulb,
-  };
-
-  const Icon = icons[type] || MdPublic;
-  return <Icon className={className} />;
-};
 
 const TrustedClients = ({ navbarRef }) => {
   const sectionRef = useRef(null);
@@ -57,58 +22,71 @@ const TrustedClients = ({ navbarRef }) => {
     const rows = rowsContainer.querySelectorAll(".client-row");
     if (rows.length === 0) return;
 
-    // Split clients into rows of 4
-    const rowHeight = 80; // Approximate height per row
-    const totalRows = Math.ceil(clients.length / 4);
+    // Split logos into rows of 4
+    const rowHeight = 120; // Height per row (increased to ensure all content visible)
+    const totalRows = Math.ceil(clientLogos.length / 4);
+    const visibleRows = 3; // Number of rows visible at once
 
-    let hasScrolled = false;
+    // Animate navbar immediately when entering section with smooth animation
+    if (navbarRef?.current && !isMobile) {
+      gsap.fromTo(
+        navbarRef.current,
+        { opacity: 0, y: -100 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
 
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: `+=${totalRows * 100}%`,
+        end: `+=${totalRows * 50}%`,
         pin: true,
         pinSpacing: true,
         scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          // Auto-scroll to next section
-          if (progress >= 0.99 && self.direction === 1 && !hasScrolled) {
-            hasScrolled = true;
-          }
-          if (progress < 0.99) {
-            hasScrolled = false;
-          }
-        },
       },
     });
 
-    // Animate navbar if ref exists
-    if (navbarRef?.current && !isMobile) {
-      timeline.to(navbarRef.current, { ...ANIMATION_CONFIG.entry, y: 0 }, 0);
-    }
-
-    // Animate rows scrolling up
+    // Animate rows scrolling up - ensure we scroll to show ALL rows
     timeline.to(
       rowsContainer,
       {
-        y: -(rowHeight * (totalRows - 2)), // Scroll through all rows
+        y: -(rowHeight * (totalRows - visibleRows + 1)),
         ease: "none",
       },
       0
     );
 
-    // Hide navbar if ref exists
+    // Hide navbar if ref exists - fast exit
     if (navbarRef?.current) {
-      timeline.to(navbarRef.current, ANIMATION_CONFIG.navbarHide, "hold+=0.3");
+      timeline.to(navbarRef.current, {
+        opacity: 0,
+        y: -100,
+        ease: "power2.in",
+        duration: 0.3,
+      });
     }
   }, []);
 
-  // Split clients into rows of 4
+  // Use all logos from clientLogos
+  const logoItems = clientLogos.map((logoPath, i) => ({
+    logo: logoPath,
+    id: i,
+  }));
+
   const clientRows = [];
-  for (let i = 0; i < clients.length; i += 4) {
-    clientRows.push(clients.slice(i, i + 4));
+  for (let i = 0; i < logoItems.length; i += 4) {
+    clientRows.push(logoItems.slice(i, i + 4));
   }
 
   return (
@@ -151,14 +129,15 @@ const TrustedClients = ({ navbarRef }) => {
               {row.map((client, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-center gap-2 sm:gap-2.5 md:gap-3 text-[#111827] opacity-80 hover:opacity-100 transition-opacity duration-200"
+                  className="flex flex-col items-center justify-center gap-2 sm:gap-2.5 md:gap-3 text-[#111827] opacity-80 hover:opacity-100 transition-opacity duration-200"
                 >
-                  <span className="text-[#6b7280]">
-                    <IconComponent type={client.icon} />
-                  </span>
-                  <span className="font-text text-xs sm:text-sm md:text-base font-light tracking-wide whitespace-nowrap">
-                    {client.name}
-                  </span>
+                  <div className="w-24 sm:w-28 md:w-32 lg:w-36 h-12 md:h-16 flex items-center justify-center">
+                    <img
+                      src={client.logo}
+                      alt={`client-logo-${client.id}`}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
