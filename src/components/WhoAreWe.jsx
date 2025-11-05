@@ -271,13 +271,13 @@ const WhoAreWe = ({ navbarRef }) => {
             <button
               onClick={() => setIsModalOpen(true)}
               className={`absolute
-                bg-[#DCD9BA] rounded flex items-center justify-center 
+                 rounded flex items-center justify-center 
                 text-black text-[10px] md:text-lg lg:text-xl font-semibold 
-                hover:bg-[#e6e3c8] transition-colors duration-300 cursor-pointer ${
-                  isMobile
-                    ? "bottom-[38%] right-[38.5%] w-[25.5%] h-[8%]"
-                    : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]"
-                }`}
+                 transition-colors duration-300 cursor-pointer ${
+                   isMobile
+                     ? "bottom-[38%] right-[38.5%] w-[25.5%] h-[8%] bg-[#B7B5A9] hover:bg-[#c3c2b3]"
+                     : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%] bg-[#DCD9BA] hover:bg-[#e6e3c8]"
+                 }`}
             >
               Know More
             </button>
@@ -306,6 +306,8 @@ const WhoAreWe = ({ navbarRef }) => {
         isOpen={isModalOpen}
         navbarRef={navbarRef}
         onClose={() => setIsModalOpen(false)}
+        bullets={current?.bullets}
+        logo={current?.logo}
       />
     </section>
   );

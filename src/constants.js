@@ -4,24 +4,52 @@ export const VALUES = [
     logo: "images/Logo3.svg",
     text: "The music division. It discovers talent, produces albums, and creates sonic identities. More than a label, it builds cultural imprints that turn music into legacy.",
     span: "INVESTMENT",
+    bullets: [
+      "The financial backbone and growth arm of BlackTape.",
+      "Focuses on culture-forward startups, real estate, creative talent, and technology ventures.",
+      "Ensures long-term expansion of the BlackTape ecosystem beyond projects.",
+      "Builds partnerships that align with our vision of sustainable cultural legacy.",
+      "Every investment becomes part of the creative dynasty.",
+    ],
   },
   {
     id: "value2",
     logo: "images/Logo2.svg",
     text: "Where brands are born and artists are managed. They craft striking campaigns, launch identities, and guide talent with long-term vision, strategy, and cultural fluency.",
     span: "RECORDS",
+    bullets: [
+      "Discovering and nurturing groundbreaking musical talent.",
+      "Producing and releasing albums that define cultural moments.",
+      "Creating sonic identities that resonate across media and audiences.",
+      "Building a community of artists united by vision and authenticity.",
+      "Turning music into a lasting legacy through innovative approaches.",
+    ],
   },
   {
     id: "value3",
     logo: "images/Logo1.svg",
     text: "We build a collective of creators united by vision and authenticity.",
     span: "INTENDENCY",
+    bullets: [
+      "A creative agency crafting compelling brand stories and campaigns.",
+      "Specializing in brand identity, digital marketing, and experiential design.",
+      "Collaborating with artists to elevate their public profiles and reach.",
+      "Fostering long-term relationships built on trust and shared vision.",
+      "Driving cultural impact through innovative and authentic storytelling.",
+    ],
   },
   {
     id: "value4",
     logo: "images/Logo4.svg",
     text: "The financial backbone of BlackTape. It inverts in culture-driven startups, real estate, creative talent, and technology to expand the ecosystem and secure a lasting cultural legacy.",
     span: "PRODUCTIONS",
+    bullets: [
+      "Producing groundbreaking films, series, and documentaries.",
+      "Collaborating with visionary directors and storytellers.",
+      "Bringing diverse narratives to global audiences through innovative media.",
+      "Building a portfolio of culturally significant and impactful content.",
+      "Shaping the future of entertainment with authenticity and creativity.",
+    ],
   },
 ];
 

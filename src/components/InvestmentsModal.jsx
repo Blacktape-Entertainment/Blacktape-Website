@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
-const InvestmentsModal = ({ isOpen, onClose, navbarRef }) => {
+const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
   const modalRef = useRef(null);
   const backdropRef = useRef(null);
 
@@ -94,8 +94,8 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef }) => {
         <div className="flex flex-col flex-1 items-start p-2 sm:p-3 md:p-4 gap-3 sm:gap-4">
           <div className="flex justify-between items-center w-full">
             <img
-              src="images/Logo3.svg"
-              alt=""
+              src={logo}
+              alt="logo"
               className="w-24 sm:w-32 md:w-40 lg:w-44 h-auto"
             />
             <img
@@ -108,20 +108,9 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef }) => {
 
           <div className="flex-1 overflow-y-auto">
             <ul className="list-disc pl-4 font-text text-xs sm:text-sm md:text-base text-black/70 leading-relaxed flex flex-col gap-2 sm:gap-2.5 md:gap-3">
-              <li>The financial backbone and growth arm of BlackTape.</li>
-              <li>
-                Focuses on culture-forward startups, real estate, creative
-                talent, and technology ventures
-              </li>
-              <li>
-                Ensures long-term expansion of the BlackTape ecosystem beyond
-                projects.
-              </li>
-              <li>
-                Builds partnerships that align with our vision of sustainable
-                cultural legacy.
-              </li>
-              <li>Every investment becomes part of the creative dynasty</li>
+              {bullets?.map((bullet, index) => (
+                <li key={index}>{bullet}</li>
+              ))}
             </ul>
           </div>
 
