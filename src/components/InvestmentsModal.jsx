@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useMediaQuery } from "react-responsive";
 
 const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const modalRef = useRef(null);
   const backdropRef = useRef(null);
 
@@ -11,7 +13,7 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
       document.body.style.overflow = "hidden";
 
       // Hide navbar
-      if (navbarRef?.current) {
+      if (navbarRef?.current && !isMobile) {
         gsap.to(navbarRef.current, {
           opacity: 0,
           y: -100,
@@ -36,7 +38,7 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
       document.body.style.overflow = "auto";
 
       // Show navbar again
-      if (navbarRef?.current) {
+      if (navbarRef?.current && !isMobile) {
         gsap.to(navbarRef.current, {
           opacity: 1,
           y: 0,
@@ -50,7 +52,7 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isOpen, navbarRef]);
+  }, [isOpen, navbarRef, isMobile]);
 
   const handleClose = () => {
     // Animate modal exit

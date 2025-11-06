@@ -22,10 +22,12 @@ const TrustedClients = ({ navbarRef }) => {
     const rows = rowsContainer.querySelectorAll(".client-row");
     if (rows.length === 0) return;
 
-    // Split logos into rows of 4
-    const rowHeight = 120; // Height per row (increased to ensure all content visible)
-    const totalRows = Math.ceil(clientLogos.length / 4);
-    const visibleRows = 3; // Number of rows visible at once
+    // Calculate based on mobile or desktop grid
+    const columnsPerRow = isMobile ? 3 : 4;
+    const rowHeight = isMobile ? 100 : 120; // Smaller row height on mobile
+    const totalRows = Math.ceil(clientLogos.length / columnsPerRow);
+    const visibleRows = isMobile ? 2.5 : 3; // Show fewer rows on mobile
+    const scrollMultiplier = isMobile ? 40 : 50; // Faster scroll on mobile
 
     // Animate navbar immediately when entering section with smooth animation
     if (navbarRef?.current && !isMobile) {
@@ -50,7 +52,7 @@ const TrustedClients = ({ navbarRef }) => {
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: `+=${totalRows * 50}%`,
+        end: `+=${totalRows * scrollMultiplier}%`,
         pin: true,
         pinSpacing: true,
         scrub: 1,
@@ -76,7 +78,7 @@ const TrustedClients = ({ navbarRef }) => {
         duration: 0.3,
       });
     }
-  }, []);
+  }, [isMobile]);
 
   // Use all logos from clientLogos
   const logoItems = clientLogos.map((logoPath, i) => ({
@@ -84,9 +86,11 @@ const TrustedClients = ({ navbarRef }) => {
     id: i,
   }));
 
+  // Split into rows based on device type
+  const columnsPerRow = isMobile ? 3 : 4;
   const clientRows = [];
-  for (let i = 0; i < logoItems.length; i += 4) {
-    clientRows.push(logoItems.slice(i, i + 4));
+  for (let i = 0; i < logoItems.length; i += columnsPerRow) {
+    clientRows.push(logoItems.slice(i, i + columnsPerRow));
   }
 
   return (
@@ -121,7 +125,7 @@ const TrustedClients = ({ navbarRef }) => {
           {clientRows.map((row, rowIdx) => (
             <div
               key={rowIdx}
-              className="client-row w-full grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 px-4 md:px-8 py-4 justify-items-center"
+              className="client-row w-full grid grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 px-4 md:px-8 py-4 justify-items-center"
               style={{
                 filter: "blur(0px)",
               }}

@@ -97,10 +97,10 @@ const InstantAIConnect = () => {
       // SMALL SCREENS: Phone at bottom center, scales up in place
 
       // Initial states
-      gsap.set(header, { opacity: 1, y: 0 });
-      gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "70vh" });
-      gsap.set(text, { opacity: 0, y: 200 });
+      gsap.set(header, { opacity: 1, y: "20vh" });
+      gsap.set(subtitle, { opacity: 1, y: "20vh" });
+      gsap.set(phone, { opacity: 1, scale: 0.7, x: 0, y: "50vh" });
+      gsap.set(text, { opacity: 0 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -152,7 +152,8 @@ const InstantAIConnect = () => {
         text,
         {
           opacity: 1,
-          y: -300,
+          top: "15%",
+          left: "15%",
           ease: "power2.out",
           duration: 0.4,
         },
@@ -237,8 +238,8 @@ const InstantAIConnect = () => {
       <div
         ref={textRef}
         className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
-                   bottom-8 left-4 right-4 lg:bottom-auto lg:right-auto
-                   max-w-3/4 md:max-w-md z-20 lg:z-30"
+                   top-1/2 left-1/2 right-4 lg:bottom-auto lg:right-auto
+                   max-w-[55%] md:max-w-md z-20 lg:z-30"
       >
         <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
@@ -246,7 +247,7 @@ const InstantAIConnect = () => {
         <p className="font-text text-black font-light text-xs sm:text-sm md:text-base  mt-1 pointer-events-none">
           Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3 pointer-events-none">
+        <p className="font-text text-black text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3 pointer-events-none md:line-clamp-none line-clamp-3">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and

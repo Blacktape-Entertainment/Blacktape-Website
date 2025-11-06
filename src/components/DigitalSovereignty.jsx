@@ -47,9 +47,10 @@ const DigitalSovereignty = () => {
 
           // Initial state for header and phones
           if (isMobile) {
-            // Mobile: no scale animation, header at normal size, phones hidden
+            // Mobile: header at normal size, phones hidden, first slide visible
             gsap.set(header, { scale: 1, opacity: 1 });
-            gsap.set([leftPhone, middlePhone, rightPhone], {
+
+            gsap.set([middlePhone, rightPhone], {
               opacity: 0,
               display: "none",
             });
@@ -63,18 +64,26 @@ const DigitalSovereignty = () => {
             });
           }
 
-          // Initial state - set all slides invisible
-          gsap.set(slides, { opacity: 0 });
+          // Initial state - set all slides invisible except first on mobile
+          if (isMobile) {
+            gsap.set(slides[0], { opacity: 1 }); // First slide visible
+            gsap.set(slides.slice(1), { opacity: 0 }); // Others hidden
+          } else {
+            gsap.set(slides, { opacity: 0 }); // All hidden on desktop
+          }
 
           // Set initial positions for first slide elements
           const firstText = slides[0].querySelector(".text-block");
           const firstImage = slides[0].querySelector(".image-block");
-          gsap.set(firstText, { x: isMobile ? -100 : -100, opacity: 0 });
-          gsap.set(firstImage, {
-            x: isMobile ? 0 : 100,
-            y: isMobile ? 100 : 100,
-            opacity: 0,
-          });
+
+          if (isMobile) {
+            // Mobile: first slide elements already visible
+            gsap.set([firstText, firstImage], { x: 0, y: 0, opacity: 1 });
+          } else {
+            // Desktop: first slide elements animate in
+            gsap.set(firstText, { x: -100, opacity: 0 });
+            gsap.set(firstImage, { x: 100, y: 100, opacity: 0 });
+          }
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -140,35 +149,40 @@ const DigitalSovereignty = () => {
 
           // Show first slide after intro (or immediately on mobile)
           const firstSlideStart = isMobile ? 0 : 0.4;
-          tl.to(
-            slides[0],
-            { opacity: 1, zIndex: 2, duration: 0.3 },
-            firstSlideStart
-          );
 
-          // Animate first slide elements
-          tl.to(
-            firstText,
-            {
-              x: 0,
-              opacity: 1,
-              duration: 0.3,
-              ease: "power2.out",
-            },
-            firstSlideStart + 0.1
-          );
+          if (!isMobile) {
+            // Desktop: animate first slide in
+            tl.to(
+              slides[0],
+              { opacity: 1, zIndex: 2, duration: 0.3 },
+              firstSlideStart
+            );
 
-          tl.to(
-            firstImage,
-            {
-              x: 0,
-              y: 0,
-              opacity: 1,
-              duration: 0.3,
-              ease: "power2.out",
-            },
-            firstSlideStart + 0.2
-          );
+            // Animate first slide elements
+            tl.to(
+              firstText,
+              {
+                x: 0,
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out",
+              },
+              firstSlideStart + 0.1
+            );
+
+            tl.to(
+              firstImage,
+              {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out",
+              },
+              firstSlideStart + 0.2
+            );
+          }
+          // Mobile: first slide is already visible, no animation needed
 
           slides.forEach((slide, i) => {
             if (i === slides.length - 1) return;
@@ -257,7 +271,6 @@ const DigitalSovereignty = () => {
               },
               `slide${i}+=0.7`
             );
-
             tl.to(
               nextSlide,
               { opacity: 1, zIndex: 2, duration: 0.5, ease: "power1.out" },
@@ -279,12 +292,12 @@ const DigitalSovereignty = () => {
       {/* Header */}
       <div
         ref={headerRef}
-        className="flex flex-col justify-center items-center text-center px-[5%] py-[1.5vh] sm:py-[2vh] md:py-[3vh] lg:py-[4vh] z-[5] shrink-0"
+        className="flex flex-col justify-center items-center text-center px-4 pt-8 pb-4 md:px-[5%] md:py-[3vh] lg:py-[4vh] z-[5] shrink-0"
       >
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black leading-tight mb-[0.5vh]">
+        <h1 className="text-[1.5rem] leading-[2rem] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
           Digital Sovereignty
         </h1>
-        <p className="text-[0.625rem] sm:text-xs md:text-sm lg:text-base font-light text-black font-text">
+        <p className="text-[0.5rem] sm:text-xs md:text-sm lg:text-base font-light text-black font-text leading-tight">
           All at once, all in one, all in between your hands
         </p>
       </div>
@@ -317,35 +330,35 @@ const DigitalSovereignty = () => {
           <div
             key={i}
             ref={addToRefs}
-            className={`absolute inset-0 flex flex-col md:flex-row ${
-              i % 2 !== 0 ? "md:flex-row-reverse" : ""
-            } items-center justify-between px-[5%] sm:px-[7%] md:px-[8%] lg:px-[10%] xl:px-[12%] gap-[2vh] sm:gap-[3vh] md:gap-[4vh] lg:gap-[6vh] transition-colors duration-300`}
+            className={`absolute inset-0 flex flex-col ${
+              i % 2 !== 0 ? "md:flex-row-reverse" : "md:flex-row"
+            } items-center justify-between px-6 md:px-[8%] lg:px-[10%] xl:px-[12%] py-4 md:py-0 gap-4 md:gap-[4vh] lg:gap-[6vh] transition-colors duration-300`}
           >
             {/* Text */}
-            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-[1vh] sm:gap-[1.5vh] md:gap-[2vh] w-full md:w-[45%] lg:w-[40%] shrink-0">
-              <p className="text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm font-header text-[#030706] mb-0">
+            <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-2 md:gap-[2vh] w-full md:w-[45%] lg:w-[40%] shrink-0">
+              <p className="text-[0.8rem] md:text-xs lg:text-sm font-header text-[#030706] mb-0">
                 {sec.subtitle}
               </p>
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black leading-tight mb-0 sm:mb-[0.5vh]">
+              <h2 className="text-[2.5rem] leading-[3rem] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
                 {sec.title}
               </h2>
-              <p className="text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm xl:text-base font-text font-light text-[#686a6a] leading-relaxed line-clamp-4 md:line-clamp-5">
+              <p className="text-[0.8rem] md:text-xs lg:text-sm xl:text-base font-text font-light text-[#686a6a] leading-relaxed px-4 md:px-0 line-clamp-4">
                 {sec.description}
               </p>
               <a
                 href="#instantaiconnect"
-                className="px-[5%] sm:px-[6%] md:px-[7%] py-[1vh] sm:py-[1.2vh] md:py-[1.5vh] text-[0.563rem] sm:text-[0.625rem] md:text-xs lg:text-sm text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-[1vh] sm:mt-[1.5vh] md:mt-[2vh] rounded-none"
+                className="px-8 py-3 md:px-[7%] md:py-[1.5vh] text-[0.813rem] md:text-xs lg:text-sm text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-2 md:mt-[2vh] rounded-none"
               >
                 App Coming Soon
               </a>
             </div>
 
             {/* Image */}
-            <div className="image-block flex items-center justify-center w-full md:w-[50%] lg:w-[55%] shrink-0 max-h-[60vh] md:max-h-[80vh]">
+            <div className="image-block flex items-center justify-center w-full md:w-[50%] lg:w-[55%] shrink-0 max-h-[45vh] md:max-h-[80vh]">
               <img
                 src={sec.image}
                 alt={sec.imageAlt}
-                className="w-full h-auto object-contain max-h-[60vh] md:max-h-[80vh]"
+                className="w-auto h-full object-contain max-w-full"
               />
             </div>
           </div>

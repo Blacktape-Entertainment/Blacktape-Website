@@ -5,12 +5,14 @@ import Mockups from "/images/Mockups.png";
 import { items } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { ANIMATION_CONFIG } from "../constants";
+import { useMediaQuery } from "react-responsive";
 
 const DevicesMockups = ({ navbarRef }) => {
   const sectionRef = useRef(null);
   const companyGoalsRef = useRef(null);
   const textContentRef = useRef(null);
   const imageRef = useRef(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(
     () => {
@@ -21,64 +23,84 @@ const DevicesMockups = ({ navbarRef }) => {
 
       if (!section || !textContent || !image) return;
 
-      gsap.set([companyGoals, textContent, image], {
-        opacity: 1,
-        y: 0,
-      });
+      if (isMobile) {
+        // Mobile: Simple scroll-triggered animation without pinning
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: "center center",
+              end: "bottom top",
+              scrub: 1,
+            },
+          })
+          .to([companyGoals, textContent, image], {
+            y: "-100vh",
+            ease: "power1.out",
+            duration: 3,
+            delay: 1,
+          });
+      } else {
+        // Desktop: Pinned scroll animation
+        gsap.set([companyGoals, textContent, image], {
+          opacity: 1,
+          y: 0,
+        });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=300%",
-          pin: true,
-          scrub: 1,
-        },
-      });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "+=400%",
+            pin: true,
+            scrub: 1,
+            pinSpacing: true,
+          },
+        });
 
-      // Add a hold period (3/4 of the timeline) before animations start
-      tl.to({}, { duration: 3 })
-        .to(companyGoals, {
-          opacity: 0,
-          y: "-40vh",
-          ease: "power3.inOut",
-          duration: 1,
-        })
-        .to(
-          textContent,
-          {
-            opacity: 0,
-            y: "-40vh",
-            ease: "power3.inOut",
-            duration: 1,
-          },
-          "<0.1"
-        )
-        .to(
-          image,
-          {
-            opacity: 0,
-            width: "150%",
-            y: "-40vh",
-            ease: "power3.inOut",
-            duration: 1,
-          },
-          "<0.1"
-        );
-      // Hide navbar if ref exists
-      if (navbarRef?.current) {
-        tl.to(navbarRef.current, ANIMATION_CONFIG.navbarHide, "hold+=0.3");
+        // Add a hold period before animations start
+        tl.to({}, { duration: 2 })
+          .to(companyGoals, {
+            y: "-120vh",
+            ease: "power1.inOut",
+            duration: 3,
+          })
+          .to(
+            textContent,
+            {
+              y: "-120vh",
+              ease: "power1.inOut",
+              duration: 3,
+            },
+            "<0.2"
+          )
+          .to(
+            image,
+            {
+              width: "150%",
+              opacity: 0,
+              y: "-120vh",
+              ease: "power1.inOut",
+              duration: 3,
+            },
+            "<0.2"
+          );
+
+        // Hide navbar if ref exists
+        if (navbarRef?.current) {
+          tl.to(navbarRef.current, ANIMATION_CONFIG.navbarHide);
+        }
       }
     },
-    { scope: sectionRef }
+    { scope: sectionRef, dependencies: [isMobile] }
   );
 
   return (
     <section
       ref={sectionRef}
       id="devicesmockups"
-      className="w-full min-h-screen flex flex-col md:justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-4 md:gap-8 md:pt-24"
+      className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
+             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-15 md:gap-8 md:pt-24"
     >
       {/* Company Goals */}
       <div

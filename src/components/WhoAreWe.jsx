@@ -178,7 +178,7 @@ const WhoAreWe = ({ navbarRef }) => {
       {/* Header - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={headerRef}
-        className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
+        className="flex flex-col max-h-[20vh] text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3"
       >
         <h1 className="font-header font-bold leading-tight text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
           So, Who Are We
@@ -191,13 +191,13 @@ const WhoAreWe = ({ navbarRef }) => {
 
       <div
         ref={radioRef}
-        className="flex-[3] min-h-0 relative flex items-center justify-center w-full overflow-hidden"
+        className="flex-1 relative flex items-center justify-center w-full overflow-hidden"
       >
         {/* Radio Image Container */}
         <div className="relative w-full h-auto flex items-center justify-center">
           <div
             className="relative w-full"
-            style={{ aspectRatio: isMobile ? "1/0.9" : "16/9" }}
+            style={{ aspectRatio: isMobile ? "1/1.2" : "16/9" }}
           >
             <img
               src={isMobile ? radioMobile : radioDesktop}
@@ -211,7 +211,7 @@ const WhoAreWe = ({ navbarRef }) => {
                 ref={tunerBtnRef}
                 src={tuner}
                 alt="Tuner"
-                className="absolute w-[18%] top-[13%] right-[42%]"
+                className="absolute w-[23%] top-[14%] right-[40%]"
               />
             )}
 
@@ -238,7 +238,7 @@ const WhoAreWe = ({ navbarRef }) => {
               className={`absolute bg-black shadow-lg flex items-center justify-center 
               ${
                 isMobile
-                  ? "top-[35%] left-[36%] w-[25%] h-[14%]"
+                  ? "top-[35%] left-[32%] w-[33%] h-[14%]"
                   : "top-[39%] left-[30%] w-[41%] h-[10%]"
               }`}
             >
@@ -251,7 +251,7 @@ const WhoAreWe = ({ navbarRef }) => {
                     <img
                       src={item.logo}
                       alt={item.id}
-                      className={`transition-all duration-300 w-auto max-w-[2rem] sm:max-w-[3rem] md:max-w-[4rem] lg:max-w-[6rem]
+                      className={`transition-all duration-300 w-auto max-w-[3.2rem] sm:max-w-[3rem] md:max-w-[4rem] lg:max-w-[6rem]
                       ${
                         activeValue === item.id
                           ? "opacity-100 brightness-125 scale-110"
@@ -275,7 +275,7 @@ const WhoAreWe = ({ navbarRef }) => {
                 text-black text-[10px] md:text-lg lg:text-xl font-semibold 
                  transition-colors duration-300 cursor-pointer ${
                    isMobile
-                     ? "bottom-[38%] right-[38.5%] w-[25.5%] h-[8%] bg-[#B7B5A9] hover:bg-[#c3c2b3]"
+                     ? "bottom-[38%] right-[35.5%] w-[32.5%] h-[8%] bg-[#B7B5A9] hover:bg-[#c3c2b3]"
                      : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%] bg-[#DCD9BA] hover:bg-[#e6e3c8]"
                  }`}
             >
@@ -288,7 +288,7 @@ const WhoAreWe = ({ navbarRef }) => {
       {/* Dynamic text - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={dynamicContentRef}
-        className="flex-1 min-h-[15vh] max-h-[25vh] flex flex-col items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3"
+        className="flex flex-col max-h-[20vh] items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3"
       >
         <h1 className="header font-header font-bold text-3xl lg:text-4xl xl:text-5xl">
           Blacktape{" "}
