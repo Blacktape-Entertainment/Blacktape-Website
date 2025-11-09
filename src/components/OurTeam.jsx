@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import { ScrollTrigger } from "gsap/all";
 import { gsap } from "gsap";
-import teamBg from "/images/team-bg.jpg";
-import teamBgMobile from "/images/team-bg-mobile.jpg";
-import leftImage from "/images/left-image-our-team.png";
 import { useMediaQuery } from "react-responsive";
 import { useGSAP } from "@gsap/react";
 import { teamMembers } from "../constants";
+
+const CDN_BASE =
+  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
+const teamBg = `${CDN_BASE}/images/team-bg.jpg`;
+const teamBgMobile = `${CDN_BASE}/images/team-bg-mobile.jpg`;
+const leftImage = `${CDN_BASE}/images/left-image-our-team.png`;
 
 const OurTeam = () => {
   const ourTeamRef = useRef(null);

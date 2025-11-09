@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Mockups from "/images/Mockups.png";
 import { items } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { ANIMATION_CONFIG } from "../constants";
 import { useMediaQuery } from "react-responsive";
+
+const CDN_BASE =
+  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
+const Mockups = `${CDN_BASE}/images/Mockups.png`;
 
 const DevicesMockups = ({ navbarRef }) => {
   const sectionRef = useRef(null);

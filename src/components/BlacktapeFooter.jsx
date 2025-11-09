@@ -4,6 +4,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef } from "react";
 
+const CDN_BASE =
+  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
+
 const BlacktapeFooter = ({ navbarRef }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const sectionRef = useRef(null);
@@ -35,7 +38,7 @@ const BlacktapeFooter = ({ navbarRef }) => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="images/Footer Picture.png"
+          src={`${CDN_BASE}/images/Footer Picture.png`}
           alt="footer background"
           className="w-full h-full object-cover object-bottom"
         />
@@ -47,12 +50,12 @@ const BlacktapeFooter = ({ navbarRef }) => {
           {/* Branding */}
           <div className="flex flex-col md:flex-row items-center justify-between md:mb-10">
             <img
-              src="images/Blacktape Footer.png"
+              src={`${CDN_BASE}/images/Blacktape Footer.png`}
               alt="Blacktape Logo"
               className="h-20 md:h-32 lg:h-40 object-contain"
             />
             <img
-              src="images/footer-logo.svg"
+              src={`${CDN_BASE}/images/footer-logo.svg`}
               alt="Blacktape Emblem"
               className="h-20 md:h-35 lg:h-40 object-contain mt-6 md:mt-0 hidden md:block"
             />
