@@ -21,16 +21,14 @@
 
 @font-face {
   font-family: "Denton Condensed";
-  src: url("https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public/fonts/DentonCondensed-Light.woff2")
-    format("woff2");
+  src: url("/fonts/DentonCondensed-Light.woff2") format("woff2");
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Denton Condensed";
-  src: url("https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public/fonts/DentonCondensed-Medium.woff2")
-    format("woff2");
+  src: url("/fonts/DentonCondensed-Medium.woff2") format("woff2");
   font-weight: 500;
   font-display: swap;
 }

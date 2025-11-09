@@ -1,8 +1,5 @@
 import { useEffect } from "react";
 
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-
 // All image assets used across the application
 const imageAssets = [
   // InstantAIConnect
@@ -125,7 +122,7 @@ const AssetPrefetch = ({ onAssetsReady }) => {
     // Preload all images and track when they're loaded
     imageAssets.forEach((src) => {
       const img = new Image();
-      img.src = `${CDN_BASE}/${src}`;
+      img.src = src;
       img.onload = checkAllLoaded;
       img.onerror = checkAllLoaded; // Continue even if error
     });

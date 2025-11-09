@@ -2,9 +2,6 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useMediaQuery } from "react-responsive";
 
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-
 const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const modalRef = useRef(null);
@@ -91,7 +88,7 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src={`${CDN_BASE}/images/modal-know-more.png`}
+          src="images/modal-know-more.png"
           alt="Know More"
           className="w-full md:w-[40%] max-h-[30vh] md:max-h-full object-cover rounded hidden md:block"
         />
@@ -104,7 +101,7 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
               className="w-24 sm:w-32 md:w-40 lg:w-44 h-auto"
             />
             <img
-              src={`${CDN_BASE}/images/x-image.png`}
+              src="images/x-image.png"
               alt="Close"
               className="w-8 sm:w-10 md:w-12 lg:w-16 h-auto cursor-pointer hover:opacity-70 transition-opacity"
               onClick={handleClose}

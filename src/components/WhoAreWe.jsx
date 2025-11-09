@@ -3,17 +3,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { VALUES } from "../constants";
+import radioMobile from "/images/radio-mobile.png";
+import radioDesktop from "/images/radio.png";
+import tuner from "/images/tuner.png";
+import value from "/images/value.png";
+import select from "/images/select.png";
 import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
 import InvestmentsModal from "./InvestmentsModal";
-
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-const radioMobile = `${CDN_BASE}/images/radio-mobile.png`;
-const radioDesktop = `${CDN_BASE}/images/radio.png`;
-const tuner = `${CDN_BASE}/images/tuner.png`;
-const value = `${CDN_BASE}/images/value.png`;
-const select = `${CDN_BASE}/images/select.png`;
 
 const WhoAreWe = ({ navbarRef }) => {
   const [activeValue, setActiveValue] = useState("value1");

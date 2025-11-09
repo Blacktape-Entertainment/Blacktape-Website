@@ -1,8 +1,5 @@
 import { useState, useEffect, forwardRef } from "react";
-
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-const logo = `${CDN_BASE}/images/logo.svg`;
+import logo from "/images/logo.svg";
 
 const NAV_LINKS = [
   { name: "Home", id: "hero" },

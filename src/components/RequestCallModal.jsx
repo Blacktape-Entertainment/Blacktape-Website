@@ -3,9 +3,6 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import Toast from "./Toast";
 
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-
 const RequestCallModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
@@ -162,7 +159,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
           aria-label="Close modal"
         >
           <img
-            src={`${CDN_BASE}/images/x-image.png`}
+            src="images/x-image.png"
             alt="Close"
             className="w-full h-full object-contain"
           />
@@ -293,7 +290,7 @@ const RequestCallModal = ({ isOpen, onClose }) => {
 
           {/* IMAGE ON TOP RIGHT */}
           <img
-            src={`${CDN_BASE}/images/modal.png`}
+            src="images/modal.png"
             alt="Clutch mechanism"
             className="hidden lg:block absolute z-50 bottom-0 right-0 w-[40%] xl:w-[45%] max-w-[420px] xl:max-w-[480px] object-contain pointer-events-none"
           />

@@ -4,9 +4,6 @@ import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { sections } from "../constants";
 
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-
 const DigitalSovereignty = () => {
   const sectionRef = useRef(null);
   const slidesRef = useRef([]);
@@ -309,19 +306,19 @@ const DigitalSovereignty = () => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[15] hidden md:flex items-center justify-center">
         <img
           ref={leftPhoneRef}
-          src={`${CDN_BASE}/images/left-phone.png`}
+          src="images/left-phone.png"
           alt="Left Phone"
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -mr-8 sm:-mr-10 md:-mr-12 lg:-mr-16"
         />
         <img
           ref={middlePhoneRef}
-          src={`${CDN_BASE}/images/middle-phone.png`}
+          src="images/middle-phone.png"
           alt="Middle Phone"
           className="h-[45vh] sm:h-[55vh] md:h-[65vh] lg:h-[75vh] w-auto object-contain z-10"
         />
         <img
           ref={rightPhoneRef}
-          src={`${CDN_BASE}/images/right-phone.png`}
+          src="images/right-phone.png"
           alt="Right Phone"
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -ml-8 sm:-ml-10 md:-ml-12 lg:-ml-16"
         />

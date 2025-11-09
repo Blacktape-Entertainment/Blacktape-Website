@@ -5,9 +5,6 @@ import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import RequestCallModal from "./RequestCallModal";
 
-const CDN_BASE =
-  "https://cdn.jsdelivr.net/gh/Blacktape-Entertainment/Blacktape-Website@main/public";
-
 const InstantAIConnect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef(null);
@@ -196,21 +193,21 @@ const InstantAIConnect = () => {
         <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
           <img
-            src={`${CDN_BASE}/images/ai-antenna-2.png`}
+            src="images/ai-antenna-2.png"
             alt="antenna"
             className="w-full h-auto relative z-10"
           />
 
           {/* Antenna Part 1 (shadow layer) */}
           <img
-            src={`${CDN_BASE}/images/Part-1.png`}
+            src="images/Part-1.png"
             alt="antenna part 1"
             className="absolute top-[0.2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-[5]"
           />
 
           {/* Antenna Part 2 (main antenna) */}
           <img
-            src={`${CDN_BASE}/images/Part-2.png`}
+            src="images/Part-2.png"
             alt="antenna part 2"
             className="antenna absolute top-[-2%] right-[9%] -translate-y-[100%] w-[13%] sm:w-[13%] md:w-[13%] z-[3]"
             ref={antennaRef}
