@@ -152,8 +152,8 @@ const InstantAIConnect = () => {
         text,
         {
           opacity: 1,
-          top: "15%",
-          left: "15%",
+          top: "10%",
+          left: "10%",
           ease: "power2.out",
           duration: 0.4,
         },

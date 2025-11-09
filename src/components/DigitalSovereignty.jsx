@@ -354,7 +354,7 @@ const DigitalSovereignty = () => {
             </div>
 
             {/* Image */}
-            <div className="image-block flex items-center justify-center w-full md:w-[50%] lg:w-[55%] shrink-0 max-h-[45vh] md:max-h-[80vh]">
+            <div className="image-block flex items-center justify-center w-full md:w-[40%] shrink-0 max-h-[45vh] md:max-h-[80vh]">
               <img
                 src={sec.image}
                 alt={sec.imageAlt}
