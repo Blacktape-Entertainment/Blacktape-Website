@@ -25,6 +25,42 @@ const Navbar = forwardRef((props, ref) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Detect active section based on scroll position
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-50% 0px -50% 0px",
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          const linkName = NAV_LINKS.find(
+            (link) => link.id === sectionId
+          )?.name;
+          if (linkName) {
+            setActiveLink(linkName);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+
+    // Observe all sections
+    NAV_LINKS.forEach((link) => {
+      const section = document.getElementById(link.id);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleLinkClick = (name) => {
     setActiveLink(name);
     setIsMenuOpen(false);
