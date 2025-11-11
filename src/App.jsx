@@ -56,7 +56,7 @@ function App() {
           <WhoAreWe navbarRef={navbarRef} />
           <DevicesMockups navbarRef={navbarRef} />
           <WhatIsIncluded />
-          {/* <OurTeam /> */}
+          <OurTeam />
           <DigitalSovereignty />
           <TrustedClients navbarRef={navbarRef} />
           <InstantAIConnect />

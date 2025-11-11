@@ -121,16 +121,6 @@ export const teamMembers = [
     ],
   },
   {
-    name: "Ahmed Samir",
-    position: "CEO",
-    image: "images/team-ahmed.jpg",
-    points: [
-      "Guiding the Blacktape Legacy.",
-      "Architect of Visionary Experiences.",
-    ],
-    isCenter: true,
-  },
-  {
     name: "Ammar Ayman",
     position: "Art Director",
     image: "images/team-ammar.jpg",
