@@ -7,7 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { ANIMATION_CONFIG } from "../constants";
 import { useMediaQuery } from "react-responsive";
 
-const DevicesMockups = ({ navbarRef }) => {
+const DevicesMockups = () => {
   const sectionRef = useRef(null);
   const companyGoalsRef = useRef(null);
   const textContentRef = useRef(null);
@@ -85,11 +85,6 @@ const DevicesMockups = ({ navbarRef }) => {
             },
             "<0.2"
           );
-
-        // Hide navbar if ref exists
-        if (navbarRef?.current) {
-          tl.to(navbarRef.current, ANIMATION_CONFIG.navbarHide);
-        }
       }
     },
     { scope: sectionRef, dependencies: [isMobile] }
@@ -100,7 +95,7 @@ const DevicesMockups = ({ navbarRef }) => {
       ref={sectionRef}
       id="devicesmockups"
       className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-6 py-6 md:py-8 gap-15 md:gap-8 md:pt-24"
+             text-center px-3 sm:px-4 md:px-6 py-8 md:py-12 gap-15 md:gap-10"
     >
       {/* Company Goals */}
       <div

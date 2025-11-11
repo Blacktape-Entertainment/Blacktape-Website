@@ -12,7 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
 import InvestmentsModal from "./InvestmentsModal";
 
-const WhoAreWe = ({ navbarRef }) => {
+const WhoAreWe = () => {
   const [activeValue, setActiveValue] = useState("value1");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef(null);
@@ -89,15 +89,6 @@ const WhoAreWe = ({ navbarRef }) => {
         0
       );
 
-      // Animate navbar at the start of the section
-      if (navbarRef?.current && !isMobile) {
-        timeline.to(
-          navbarRef.current,
-          { ...ANIMATION_CONFIG.entry, y: 0, duration: 0.2 },
-          0
-        );
-      }
-
       timeline.to({}, { duration: 0.6 }, ">");
     },
     { scope: sectionRef.current, dependencies: [] }
@@ -126,46 +117,82 @@ const WhoAreWe = ({ navbarRef }) => {
   useGSAP(() => {
     if (!dynamicContentRef.current) return;
 
-    const runSplitAnimation = () => {
+    const runShuffleAnimation = () => {
       const headerEl = dynamicContentRef.current.querySelector(".header");
       const paragraphEl = dynamicContentRef.current.querySelector(".paragraph");
       if (!headerEl || !paragraphEl) return;
+
+      // Shuffle animation function
+      const shuffleText = (element, finalText, duration = 0.8) => {
+        const chars =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        const textLength = finalText.length;
+        let frame = 0;
+        const totalFrames = duration * 60; // 60fps
+
+        const shuffle = () => {
+          if (frame >= totalFrames) {
+            element.textContent = finalText;
+            return;
+          }
+
+          const progress = frame / totalFrames;
+          let displayText = "";
+
+          for (let i = 0; i < textLength; i++) {
+            if (progress > i / textLength) {
+              displayText += finalText[i];
+            } else {
+              displayText += chars[Math.floor(Math.random() * chars.length)];
+            }
+          }
+
+          element.textContent = displayText;
+          frame++;
+          requestAnimationFrame(shuffle);
+        };
+
+        shuffle();
+      };
 
       // Split text into characters and words
       const splitH1 = new SplitText(headerEl, { type: "chars" });
       const splitP = new SplitText(paragraphEl, { type: "words" });
 
-      // Animate header (elastic bounce)
-      gsap.from(splitH1.chars, {
-        opacity: 0,
-        y: 80,
-        rotateX: 45,
-        scale: 0.8,
-        transformOrigin: "bottom center",
-        stagger: 0.03,
-        duration: 1.2,
-        ease: "elastic.out(0.5, 0.5)", // elasticity: (amplitude, period)
+      // Animate header with shuffle effect
+      splitH1.chars.forEach((char, i) => {
+        const originalText = char.textContent;
+        gsap.from(char, {
+          opacity: 0,
+          duration: 0.01,
+          delay: 0.3 + i * 0.05,
+          onComplete: () => {
+            shuffleText(char, originalText, 0.3);
+          },
+        });
       });
 
-      // Animate paragraph (softer elastic)
-      gsap.from(splitP.words, {
-        opacity: 0,
-        y: 40,
-        rotateX: 30,
-        scale: 0.9,
-        transformOrigin: "bottom center",
-        stagger: 0.05,
-        duration: 1,
-        ease: "elastic.out(0.5, 0.6)",
-        delay: 0.3,
+      // Animate paragraph with shuffle effect
+      splitP.words.forEach((word, i) => {
+        const originalText = word.textContent;
+        gsap.from(word, {
+          opacity: 0,
+          duration: 0.01,
+          delay: 0.3 + i * 0.05,
+          onComplete: () => {
+            shuffleText(word, originalText, 0.3);
+          },
+        });
       });
     };
 
     // Wait for fonts to be ready
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => requestAnimationFrame(runSplitAnimation));
+      document.fonts.ready.then(() =>
+        requestAnimationFrame(runShuffleAnimation)
+      );
     } else {
-      window.addEventListener("load", runSplitAnimation, { once: true });
+      window.addEventListener("load", runShuffleAnimation, { once: true });
     }
   }, [current]);
 
@@ -173,12 +200,12 @@ const WhoAreWe = ({ navbarRef }) => {
     <section
       ref={sectionRef}
       id="whoarewe"
-      className="relative h-screen flex flex-col items-center bg-white overflow-hidden md:pt-16"
+      className="relative h-screen flex flex-col items-center bg-white overflow-hidden pt-8 md:pt-0"
     >
       {/* Header - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={headerRef}
-        className="flex flex-col max-h-[20vh] text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3"
+        className="flex flex-col max-h-[20vh] text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-3"
       >
         <h1 className="font-header font-bold leading-tight text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
           So, Who Are We
@@ -304,7 +331,6 @@ const WhoAreWe = ({ navbarRef }) => {
       {/* Investments Modal */}
       <InvestmentsModal
         isOpen={isModalOpen}
-        navbarRef={navbarRef}
         onClose={() => setIsModalOpen(false)}
         bullets={current?.bullets}
         logo={current?.logo}

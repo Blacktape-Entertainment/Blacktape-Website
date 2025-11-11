@@ -1,35 +1,7 @@
-import { useGSAP } from "@gsap/react";
-import { useMediaQuery } from "react-responsive";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { useRef } from "react";
-
-const BlacktapeFooter = ({ navbarRef }) => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const sectionRef = useRef(null);
-
-  useGSAP(() => {
-    if (!navbarRef?.current || isMobile) return;
-
-    // Animate navbar back in when the footer section starts to appear
-    gsap.to(navbarRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.inOut",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // when footer starts to appear
-        end: "top 50%",
-        toggleActions: "play none none reverse", // plays on enter, reverses on leave
-      },
-    });
-  }, [isMobile, navbarRef]);
-
+const BlacktapeFooter = () => {
   return (
     <section
       id="footer"
-      ref={sectionRef}
       className="relative w-full h-screen flex flex-col justify-end overflow-hidden"
     >
       {/* Background Image */}

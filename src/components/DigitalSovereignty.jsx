@@ -293,7 +293,7 @@ const DigitalSovereignty = () => {
       {/* Header */}
       <div
         ref={headerRef}
-        className="flex flex-col justify-center items-center text-center px-4 pt-8 pb-4 md:px-[5%] md:py-[3vh] lg:py-[4vh] z-[5] shrink-0"
+        className="flex flex-col justify-center items-center text-center px-4 pt-6 pb-3 md:px-[5%] md:pt-[2vh] md:pb-[1.5vh] lg:pt-[2.5vh] lg:pb-[2vh] z-[5] shrink-0"
       >
         <h1 className="text-[1.5rem] leading-[2rem] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
           Digital Sovereignty

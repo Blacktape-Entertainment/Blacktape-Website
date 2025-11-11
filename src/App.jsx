@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
@@ -6,7 +6,6 @@ import { useMediaQuery } from "react-responsive";
 // Components
 import AssetPrefetch from "./components/AssetPrefetch";
 import Intro from "./components/Intro";
-import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import WhoAreWe from "./components/WhoAreWe";
 import DevicesMockups from "./components/DevicesMockups";
@@ -20,7 +19,6 @@ import OurTeam from "./components/OurTeam";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function App() {
-  const navbarRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [layoutType] = useState(isMobile ? "mobile" : "desktop");
 
@@ -51,16 +49,15 @@ function App() {
         <Intro onFinish={() => setIntroFinished(true)} />
       ) : (
         <>
-          <Navbar ref={navbarRef} />
-          <Hero navbarRef={navbarRef} />
-          <WhoAreWe navbarRef={navbarRef} />
-          <DevicesMockups navbarRef={navbarRef} />
+          <Hero />
+          <WhoAreWe />
+          <DevicesMockups />
           <WhatIsIncluded />
           <OurTeam />
           <DigitalSovereignty />
-          <TrustedClients navbarRef={navbarRef} />
+          <TrustedClients />
           <InstantAIConnect />
-          <BlacktapeFooter navbarRef={navbarRef} />
+          <BlacktapeFooter />
         </>
       )}
     </main>

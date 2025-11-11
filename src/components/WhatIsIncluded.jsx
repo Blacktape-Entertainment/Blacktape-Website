@@ -80,7 +80,7 @@ const WhatIsIncluded = () => {
     <section
       ref={sectionRef}
       id="whatisincluded"
-      className="w-full px-2.5 sm:px-10 md:px-20 pb-12 sm:pb-12 md:pb-24 h-screen pt-20 flex flex-col sm:flex-row items-center sm:items-start justify-center gap-5 overflow-hidden select-none"
+      className="w-full px-2.5 sm:px-10 md:px-20 py-8 sm:py-12 md:py-16 h-screen flex flex-col sm:flex-row items-center sm:items-start justify-center gap-5 overflow-hidden select-none"
     >
       {/* Text Section */}
       <div className="flex flex-col items-center w-full sm:items-start justify-start gap-4 text-center sm:text-left sm:max-w-1/3">

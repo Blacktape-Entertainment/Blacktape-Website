@@ -5,7 +5,7 @@ import { ANIMATION_CONFIG } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import { clientLogos } from "../constants";
-const TrustedClients = ({ navbarRef }) => {
+const TrustedClients = () => {
   const sectionRef = useRef(null);
   const rowsContainerRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -37,37 +37,7 @@ const TrustedClients = ({ navbarRef }) => {
         pinSpacing: true,
       },
     });
-
-    // Separate navbar animations with toggleActions
-    if (navbarRef?.current && !isMobile) {
-      // Show navbar at section start
-      gsap.to(navbarRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          toggleActions: "play reverse play reverse",
-        },
-      });
-
-      // Hide navbar at section end
-      gsap.to(navbarRef.current, {
-        opacity: 0,
-        y: -100,
-        duration: 0.3,
-        ease: "power2.in",
-        scrollTrigger: {
-          trigger: section,
-          start: `top+=${totalScrollHeight * 0.9} top`,
-          end: `top+=${totalScrollHeight} top`,
-          toggleActions: "play reverse play reverse",
-        },
-      });
-    }
-  }, [isMobile, navbarRef]);
+  }, [isMobile]);
 
   // Group logos into rows automatically
   const columnsPerRow = isMobile ? 3 : 4;
@@ -97,7 +67,7 @@ const TrustedClients = ({ navbarRef }) => {
 
         <div
           ref={rowsContainerRef}
-          className="absolute inset-0 flex flex-col items-center justify-start pt-24"
+          className="absolute inset-0 flex flex-col items-center justify-start pt-12"
         >
           {clientRows.map((row, rowIdx) => (
             <div

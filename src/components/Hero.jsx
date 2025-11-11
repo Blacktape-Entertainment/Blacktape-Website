@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { ANIMATION_CONFIG } from "../constants";
 
-const Hero = ({ navbarRef }) => {
+const Hero = () => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
   const videoRef = useRef(null);
@@ -12,8 +12,6 @@ const Hero = ({ navbarRef }) => {
 
   useGSAP(
     () => {
-      gsap.set(navbarRef?.current, { y: -100, opacity: 0, zIndex: 0 });
-
       // Hero scroll-based animation
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -48,29 +46,11 @@ const Hero = ({ navbarRef }) => {
       // Animate hero content
       timeline.to(contentRef.current, ANIMATION_CONFIG.entry, 0);
 
-      // Animate navbar if ref exists
-      if (navbarRef?.current) {
-        timeline.to(
-          navbarRef.current,
-          { ...ANIMATION_CONFIG.entry, y: 0, zIndex: 10 },
-          0
-        );
-      }
-
       // Hold hero visible briefly
       timeline.addLabel("hold", ">+=0.5");
 
       // Exit animation
       timeline.to(contentRef.current, ANIMATION_CONFIG.exit, "hold+=0.3");
-
-      // Hide navbar if ref exists
-      if (navbarRef?.current) {
-        timeline.to(
-          navbarRef.current,
-          ANIMATION_CONFIG.navbarHide,
-          "hold+=0.3"
-        );
-      }
     },
     { scope: sectionRef, dependencies: [] }
   );

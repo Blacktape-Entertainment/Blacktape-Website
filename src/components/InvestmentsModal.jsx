@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useMediaQuery } from "react-responsive";
 
-const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
+const InvestmentsModal = ({ isOpen, onClose, bullets, logo }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const modalRef = useRef(null);
   const backdropRef = useRef(null);
@@ -11,16 +11,6 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
     if (isOpen) {
       // Disable body scroll
       document.body.style.overflow = "hidden";
-
-      // Hide navbar
-      if (navbarRef?.current && !isMobile) {
-        gsap.to(navbarRef.current, {
-          opacity: 0,
-          y: -100,
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      }
 
       // Animate modal entrance
       gsap.fromTo(
@@ -36,23 +26,13 @@ const InvestmentsModal = ({ isOpen, onClose, navbarRef, bullets, logo }) => {
     } else {
       // Re-enable body scroll when modal closes
       document.body.style.overflow = "auto";
-
-      // Show navbar again
-      if (navbarRef?.current && !isMobile) {
-        gsap.to(navbarRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      }
     }
 
     // Cleanup function
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isOpen, navbarRef, isMobile]);
+  }, [isOpen, isMobile]);
 
   const handleClose = () => {
     // Animate modal exit

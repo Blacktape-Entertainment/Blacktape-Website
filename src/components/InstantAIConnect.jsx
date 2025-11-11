@@ -169,7 +169,7 @@ const InstantAIConnect = () => {
       className="w-full h-screen bg-white relative overflow-hidden"
     >
       {/* Header */}
-      <div className="absolute top-8 md:top-10 left-0 right-0 text-center px-4 z-10">
+      <div className="absolute top-6 md:top-8 left-0 right-0 text-center px-4 z-10">
         <h2
           ref={headerRef}
           className="font-header font-extrabold text-black leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
