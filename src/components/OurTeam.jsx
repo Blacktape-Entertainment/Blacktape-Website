@@ -74,7 +74,6 @@ const OurTeam = () => {
             pin: true,
             scrub: 1,
             pinSpacing: true,
-            markers: true,
             triggerActions: "play reverse play reverse",
           },
         });

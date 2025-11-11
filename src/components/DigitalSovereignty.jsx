@@ -56,7 +56,7 @@ const DigitalSovereignty = () => {
             });
           } else {
             // Desktop/Tablet: full intro animation
-            gsap.set(header, { scale: 2, opacity: 1 });
+            gsap.set(header, { scale: 2, opacity: 1, marginTop: "2rem" });
             gsap.set([leftPhone, middlePhone, rightPhone], {
               x: 0,
               y: 0,
@@ -101,6 +101,7 @@ const DigitalSovereignty = () => {
             tl.to(
               header,
               {
+                marginTop: "0",
                 scale: 1,
                 duration: 0.5,
                 ease: "power2.inOut",
