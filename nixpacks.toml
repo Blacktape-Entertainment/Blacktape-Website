@@ -8,7 +8,7 @@ nixPkgs = ["nodejs"]
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["npm run build -- --base=/"]
 
 [start]
 cmd = "npx -y serve -s dist -l $PORT"

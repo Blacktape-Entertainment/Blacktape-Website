@@ -68,7 +68,7 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          src="/Blacktape-Website/output.mp4"
+          src="/output.mp4"
           className="absolute inset-0 w-full h-full object-cover"
         />
 

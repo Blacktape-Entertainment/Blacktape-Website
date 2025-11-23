@@ -104,7 +104,7 @@ const imageAssets = [
 
 // Video assets
 const videoAssets = [
-  "/Blacktape-Website/output.mp4", // Hero video
+  "/output.mp4", // Hero video
 ];
 
 const AssetPrefetch = ({ onAssetsReady }) => {
