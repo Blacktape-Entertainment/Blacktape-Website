@@ -4,6 +4,6 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/Blacktape-Website/",
+  base: process.env.VITE_BASE_PATH || "/Blacktape-Website/",
   plugins: [tailwindcss(), react()],
 });
