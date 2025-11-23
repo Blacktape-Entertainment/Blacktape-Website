@@ -207,10 +207,10 @@ const WhoAreWe = () => {
         ref={headerRef}
         className="flex flex-col max-h-[20vh] text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-3"
       >
-        <h1 className="font-header font-bold leading-tight text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
+        <h1 className="font-header font-bold leading-tight text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl">
           So, Who Are We
         </h1>
-        <p className="font-header font-light text-sm lg:text-base xl:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="font-header font-light text-sm md:text-base lg:text-lg xl:text-xl max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
@@ -317,13 +317,13 @@ const WhoAreWe = () => {
         ref={dynamicContentRef}
         className="flex flex-col max-h-[20vh] items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3"
       >
-        <h1 className="header font-header font-bold text-3xl lg:text-4xl xl:text-5xl">
+        <h1 className="header font-header font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
           Blacktape{" "}
-          <span className="span font-light uppercase tracking-wider text-sm md:text-base lg:text-lg">
+          <span className="span font-light uppercase tracking-wider text-sm md:text-base lg:text-xl">
             {current?.span}
           </span>
         </h1>
-        <p className="paragraph font-header font-light text-sm lg:text-base max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="paragraph font-header font-light text-sm md:text-base lg:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
           {current?.text}
         </p>
       </div>

@@ -261,10 +261,10 @@ const OurTeam = () => {
               ref={header1Ref}
               className="absolute left-10 top-20 z-10 flex flex-col items-start gap-3"
             >
-              <h1 className="text-white font-header sm:text-6xl ">
+              <h1 className="text-white font-header text-4xl md:text-5xl lg:text-6xl ">
                 Your Vision is the Blueprint.
               </h1>
-              <p className="text-gray-300 font-text font-light sm:text-base max-w-[16rem]">
+              <p className="text-gray-300 font-text font-light text-sm md:text-base lg:text-lg max-w-[16rem] md:max-w-[20rem]">
                 We believe every great event, film, or album already exists
                 within a core idea. Our role is to provide the international
                 standards and technical excellence required to breathe life into
@@ -309,10 +309,10 @@ const OurTeam = () => {
               ref={header2Ref}
               className="absolute z-40 opacity-0 inset-0 flex flex-col w-full items-center gap-2 pt-4"
             >
-              <h1 className="font-header font-semibold sm:text-5xl ">
+              <h1 className="font-header font-semibold text-3xl md:text-4xl lg:text-5xl ">
                 It's Your Turn.
               </h1>
-              <p className="font-text font-light sm:text-base max-w-[25rem] text-center">
+              <p className="font-text font-light text-sm md:text-base lg:text-lg max-w-[25rem] text-center">
                 From cinematic productions to transformative events, we apply
                 our commitment to artistry and technical excellence to every
                 project.

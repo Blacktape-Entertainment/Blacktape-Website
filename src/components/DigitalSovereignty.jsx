@@ -293,12 +293,12 @@ const DigitalSovereignty = () => {
       {/* Header */}
       <div
         ref={headerRef}
-        className="flex flex-col justify-center items-center text-center px-4 pt-6 pb-3 md:px-[5%] md:pt-[2vh] md:pb-[1.5vh] lg:pt-[2.5vh] lg:pb-[2vh] z-[5] shrink-0"
+        className="flex flex-col justify-center items-center text-center px-4 pt-6 pb-4 md:px-[5%] md:pt-[3vh] md:pb-[2vh] lg:pt-[4vh] lg:pb-[3vh] z-[25] shrink-0 relative"
       >
-        <h1 className="text-[1.5rem] leading-[2rem] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
+        <h1 className="text-[1.5rem] leading-[2rem] sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-header font-bold text-black mb-2 md:mb-[1.5vh] lg:mb-[2vh]">
           Digital Sovereignty
         </h1>
-        <p className="text-[0.5rem] sm:text-xs md:text-sm lg:text-base font-light text-black font-text leading-tight">
+        <p className="text-[0.5rem] sm:text-xs md:text-base lg:text-lg font-light text-black font-text leading-tight">
           All at once, all in one, all in between your hands
         </p>
       </div>
@@ -337,18 +337,18 @@ const DigitalSovereignty = () => {
           >
             {/* Text */}
             <div className="text-block flex flex-col justify-center items-center md:items-start text-center md:text-left gap-2 md:gap-[2vh] w-full md:w-[45%] lg:w-[40%] shrink-0">
-              <p className="text-[0.8rem] md:text-xs lg:text-sm font-header text-[#030706] mb-0">
+              <p className="text-[0.8rem] md:text-sm lg:text-base font-header text-[#030706] mb-0">
                 {sec.subtitle}
               </p>
-              <h2 className="text-[2.5rem] leading-[3rem] sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
+              <h2 className="text-[2.5rem] leading-[3rem] sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-header font-bold text-black mb-1 md:mb-[0.5vh]">
                 {sec.title}
               </h2>
-              <p className="text-[0.8rem] md:text-xs lg:text-sm xl:text-base font-text font-light text-[#686a6a] leading-relaxed px-4 md:px-0 line-clamp-4">
+              <p className="text-[0.8rem] md:text-base lg:text-lg xl:text-xl font-text font-light text-[#686a6a] leading-relaxed px-4 md:px-0 line-clamp-4">
                 {sec.description}
               </p>
               <a
                 href="#instantaiconnect"
-                className="px-8 py-3 md:px-[7%] md:py-[1.5vh] text-[0.813rem] md:text-xs lg:text-sm text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-2 md:mt-[2vh] rounded-none"
+                className="px-8 py-3 md:px-[7%] md:py-[1.5vh] text-[0.813rem] md:text-base lg:text-lg text-[#f6f6f6] bg-[#9a9c9b] font-semibold hover:bg-[#858785] transition-all duration-300 mt-2 md:mt-[2vh] rounded-none"
               >
                 App Coming Soon
               </a>

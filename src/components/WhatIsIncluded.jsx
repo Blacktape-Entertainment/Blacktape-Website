@@ -80,21 +80,21 @@ const WhatIsIncluded = () => {
     <section
       ref={sectionRef}
       id="whatisincluded"
-      className="w-full px-2.5 sm:px-10 md:px-20 py-8 sm:py-12 md:py-16 h-screen flex flex-col sm:flex-row items-center sm:items-start justify-center gap-5 overflow-hidden select-none"
+      className="w-full px-2.5 sm:px-10 md:px-16 lg:px-20 py-8 sm:py-12 md:py-16 h-screen flex flex-col sm:flex-row items-center sm:items-start justify-center gap-5 overflow-hidden select-none"
     >
       {/* Text Section */}
       <div className="flex flex-col items-center w-full sm:items-start justify-start gap-4 text-center sm:text-left sm:max-w-1/3">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-header font-bold leading-snug">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-header font-bold leading-snug">
           What's included in the{" "}
           <span className="max-sm:text-gold">Blacktape</span> experience
         </h1>
-        <p className="text-sm sm:text-base font-light text-black/70 font-text">
+        <p className="text-sm sm:text-base md:text-lg font-light text-black/70 font-text">
           Blacktape is more than an event plan. Access an all-in-one ecosystem
           for seamless proposals, real-time tracking, and expert-led execution
           personalized to your unique vision.
         </p>
         <a
-          className="mt-4 px-6 py-2.5 text-sm sm:text-base text-white bg-gold font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all duration-300 hidden sm:block"
+          className="mt-4 px-6 py-2.5 text-sm sm:text-base md:text-lg text-white bg-gold font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all duration-300 hidden sm:block"
           href="#instantaiconnect"
         >
           Plan Your Event &gt;

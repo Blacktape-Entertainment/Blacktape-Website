@@ -95,7 +95,7 @@ const DevicesMockups = () => {
       ref={sectionRef}
       id="devicesmockups"
       className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-6 py-8 md:py-12 gap-15 md:gap-10"
+             text-center px-3 sm:px-4 md:px-8 lg:px-6 py-8 md:py-12 lg:py-16 gap-8 md:gap-10"
     >
       {/* Company Goals */}
       <div
@@ -113,13 +113,13 @@ const DevicesMockups = () => {
               <img
                 src={icon}
                 alt={alt}
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-7 md:h-7 lg:w-6 lg:h-6"
               />
-              <h1 className="font-header text-xs sm:text-sm md:text-base lg:text-lg">
+              <h1 className="font-header text-xs sm:text-sm md:text-lg lg:text-xl">
                 {title}
               </h1>
             </div>
-            <p className="font-text text-[0.65rem] sm:text-xs md:text-sm lg:text-base text-black/70 leading-relaxed max-w-[90%] md:max-w-[80%]">
+            <p className="font-text text-[0.65rem] sm:text-xs md:text-base lg:text-lg text-black/70 leading-relaxed max-w-[90%] md:max-w-[85%]">
               {desc}
             </p>
           </div>
@@ -132,11 +132,11 @@ const DevicesMockups = () => {
         className="flex flex-col items-center justify-center text-center 
                max-w-3xl gap-2 sm:gap-3 md:gap-4 flex-shrink-0"
       >
-        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-header leading-snug md:leading-tight">
+        <h1 className="text-2xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-header leading-snug md:leading-tight">
           From 2018 to the Forefront of Experience
         </h1>
         <p
-          className="text-[0.7rem] sm:text-xs md:text-sm lg:text-lg font-light text-black/70 font-text 
+          className="text-[0.7rem] sm:text-xs md:text-base lg:text-xl font-light text-black/70 font-text 
                   max-w-xs sm:max-w-md md:max-w-2xl px-2"
         >
           Our journey began with a deep commitment to creativity and technical
@@ -144,7 +144,7 @@ const DevicesMockups = () => {
           entertainment through immersive storytelling and cultural innovation.
         </p>
         <a
-          className="mt-2 px-3 py-1 sm:px-4 sm:py-1.5 md:px-5 md:py-2 text-[0.7rem] sm:text-xs md:text-sm lg:text-base 
+          className="mt-2 px-3 py-1 sm:px-4 sm:py-1.5 md:px-6 md:py-2.5 text-[0.7rem] sm:text-xs md:text-base lg:text-lg 
                  text-black font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all 
                  duration-300 rounded-md"
           href="#instantaiconnect"

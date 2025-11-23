@@ -59,7 +59,7 @@ const Hero = () => {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-2.5 overflow-x-hidden"
+      className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-6 lg:pb-2.5 overflow-x-hidden"
     >
       <div className="relative w-full h-screen overflow-hidden rounded-xl bg-black">
         {/* Video for frame animation */}
@@ -80,13 +80,13 @@ const Hero = () => {
           ref={contentRef}
           className="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-6 mt-15 perspective-distant opacity-0 translate-z-[-2000px] scale-[0.3]"
         >
-          <h1 className="text-4xl md:text-6xl font-header font-bold">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-header font-bold">
             Beyond Entertainment.
           </h1>
-          <h1 className="text-4xl md:text-6xl font-header font-bold">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-header font-bold">
             A Realm of Experience.
           </h1>
-          <p className="max-w-2xl text-base md:text-lg font-light mt-6 font-header leading-relaxed">
+          <p className="max-w-2xl text-base md:text-lg lg:text-xl font-light mt-6 font-header leading-relaxed">
             From cinematic productions to transformative events, we apply our
             commitment to artistry and technical excellence to every project.
           </p>

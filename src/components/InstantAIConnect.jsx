@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import RequestCallModal from "./RequestCallModal";
@@ -32,7 +32,7 @@ const InstantAIConnect = () => {
       // Initial states
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "50vh" });
       gsap.set(text, { opacity: 0, x: -200 });
       gsap.set(antenna, { top: "-2%" });
 
@@ -75,7 +75,6 @@ const InstantAIConnect = () => {
         {
           scale: 1.2,
           x: "30vw",
-          y: "-10vh",
           ease: "power2.out",
           duration: 0.5,
         },
@@ -188,7 +187,7 @@ const InstantAIConnect = () => {
       {/* Phone */}
       <div
         ref={phoneRef}
-        className="absolute top-1/3 md:top-1/7 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute top-1/3 md:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
       >
         <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
@@ -239,21 +238,21 @@ const InstantAIConnect = () => {
         ref={textRef}
         className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
                    top-1/2 left-1/2 right-4 lg:bottom-auto lg:right-auto
-                   max-w-[55%] md:max-w-md z-20 lg:z-30"
+                   max-w-[55%] md:max-w-lg lg:max-w-xl z-20 lg:z-30"
       >
         <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
         </h3>
-        <p className="font-text text-black font-light text-xs sm:text-sm md:text-base  mt-1 pointer-events-none">
+        <p className="font-text text-black font-light text-xs sm:text-sm md:text-lg lg:text-xl mt-1 pointer-events-none">
           Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black text-[10px] sm:text-xs md:text-sm lg:text-base mt-2 md:mt-3 pointer-events-none md:line-clamp-none line-clamp-3">
+        <p className="font-text text-black text-[10px] sm:text-xs md:text-base lg:text-lg mt-2 md:mt-3 pointer-events-none md:line-clamp-none line-clamp-3">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and
           complexities. Simply provide your telephone number in the field below.
         </p>
-        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-sm lg:text-base mt-1.5 md:mt-2">
+        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-base lg:text-lg mt-1.5 md:mt-2">
           Prefer the Human touch?{" "}
           <span
             className="underline text-[#7c680d] cursor-pointer pointer-events-auto"

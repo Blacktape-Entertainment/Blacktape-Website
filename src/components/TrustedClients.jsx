@@ -53,10 +53,10 @@ const TrustedClients = () => {
       className="w-full h-screen flex flex-col items-center justify-center bg-white overflow-hidden relative"
     >
       <div className="text-center max-w-2xl mb-8 px-4 z-10">
-        <h2 className="font-header font-extrabold text-black text-5xl leading-tight mb-2">
+        <h2 className="font-header font-extrabold text-black text-3xl md:text-4xl lg:text-5xl leading-tight mb-2">
           Trusted Clients
         </h2>
-        <p className="font-text text-base text-black font-light">
+        <p className="font-text text-sm md:text-base lg:text-lg text-black font-light">
           All at once, all in one, all in between your hands
         </p>
       </div>
