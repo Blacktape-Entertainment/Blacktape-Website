@@ -91,7 +91,7 @@ const OurTeam = () => {
 
         // Step 3: Move middle card to center-top
         tl.to(middleCard, {
-          top: "18%",
+          top: "16.5%",
           left: "50%",
           right: "auto",
           x: "-50%",
@@ -103,7 +103,7 @@ const OurTeam = () => {
         tl.to(
           leftCard,
           {
-            top: "48%",
+            top: "46.5%",
             left: "50%",
             right: "auto",
             x: "-50%",
@@ -117,7 +117,7 @@ const OurTeam = () => {
         tl.to(
           rightCard,
           {
-            top: "75%",
+            top: "73.5%",
             left: "50%",
             right: "auto",
             x: "-50%",
@@ -155,9 +155,9 @@ const OurTeam = () => {
             />
             <div
               ref={header1Ref}
-              className="absolute p-2 top-0 z-10 flex flex-col w-full items-start gap-1"
+              className="absolute py-5 px-2 top-0 z-10 flex flex-col w-full items-start gap-1"
             >
-              <h1 className="text-white font-header text-3xl">
+              <h1 className="text-white font-header font-semibold text-4xl">
                 Your Vision is the Blueprint.
               </h1>
               <p className="text-gray-300 font-text font-light text-[0.7rem] md:text-[1.063rem] text-right">
@@ -176,19 +176,19 @@ const OurTeam = () => {
 
             <div
               ref={middleCardRef}
-              className="z-50 absolute right-[62%] flex flex-col justify-end translate-x-1/2 top-[16%] border-r-5 border-t-8 border-l-5 border-b-8 border-white w-[56%] h-fit"
+              className="z-50 absolute right-[62%] flex flex-col justify-end translate-x-1/2 top-[15%] border-r-5 border-t-8 border-l-5 border-b-8 border-white w-[56%] h-fit"
             >
               <img
                 src="images/team-ahmed-mobile.png"
                 className="w-full h-full object-contain"
                 alt="Ahmed Samir"
               />
-              <div className="bg-white bg-opacity-90 p-1 flex flex-col gap-0.5 font-text font-light absolute bottom-2 w-[90%] right-1/2 translate-x-1/2 ">
+              <div className="bg-white bg-opacity-90 p-1.5 flex flex-col gap-1 font-text font-light absolute bottom-2 w-[90%] right-1/2 translate-x-1/2 ">
                 <div className="flex gap-1 border-b border-gray-300 pb-0.5">
-                  <h3 className="text-[0.5rem]">Ahmed Samir</h3>
-                  <p className="text-gray-500 text-[0.5rem]">CEO</p>
+                  <h3 className="text-[0.625rem]">Ahmed Samir</h3>
+                  <p className="text-gray-500 text-[0.625rem]">CEO</p>
                 </div>
-                <ul className="list-disc list-inside text-gray-500 font-text font-light text-[0.4rem] p-0.5 leading-tight">
+                <ul className="list-disc list-inside text-gray-500 font-text font-light text-[0.5rem] p-0.5 leading-tight">
                   <li>Guiding the Blacktape Legacy.</li>
                   <li>Architect of Visionary Experiences.</li>
                 </ul>
@@ -202,12 +202,12 @@ const OurTeam = () => {
 
             <div
               ref={header2Ref}
-              className="absolute z-40 opacity-0 inset-0 flex flex-col w-full items-center gap-1 pt-2"
+              className="absolute z-40 opacity-0 inset-0 flex flex-col w-full items-center gap-2 pt-2"
             >
-              <h1 className="font-header font-semibold text-3xl ">
+              <h1 className="font-header font-semibold text-4xl ">
                 It's Your Turn.
               </h1>
-              <p className="font-text font-light text-sm text-center">
+              <p className="font-text font-light text-sm max-w-sm text-center">
                 From cinematic productions to transformative events, we apply
                 our commitment to artistry and technical excellence to every
                 project.
@@ -224,22 +224,22 @@ const OurTeam = () => {
               <div
                 key={index}
                 ref={index === 1 ? rightCardRef : leftCardRef}
-                className="absolute z-40 right-[62%] top-[16%] flex flex-col justify-end translate-x-1/2 bottom-10 w-[56%] h-[25%]"
+                className="absolute z-40 right-[62%] top-[15%] flex flex-col justify-end translate-x-1/2 bottom-10 w-[56%] h-[25%]"
               >
                 <img
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover-top"
                 />
-                <div className=" bg-white bg-opacity-90 p-1 flex flex-col gap-0.5 font-text font-light absolute bottom-2 w-[90%] right-1/2 translate-x-1/2 ">
+                <div className=" bg-white bg-opacity-90 p-1.5 flex flex-col gap-1 font-text font-light absolute bottom-2 w-[90%] h-[25%] right-1/2 translate-x-1/2 ">
                   <div className="flex gap-1 border-b border-gray-300 pb-0.5">
-                    <h3 className="text-[0.5rem]">{member.name}</h3>
-                    <p className="text-gray-500 text-[0.5rem]">
+                    <h3 className="text-[0.625rem]">{member.name}</h3>
+                    <p className="text-gray-500 text-[0.625rem]">
                       {member.position}
                     </p>
                   </div>
 
-                  <ul className="list-disc list-inside text-gray-500 font-text font-light text-[0.4rem] p-0.5 leading-tight">
+                  <ul className="list-disc list-inside text-gray-500 font-text font-light text-[0.5rem] p-0.5 leading-tight">
                     {member.points.map((point, idx) => (
                       <li key={idx}>{point}</li>
                     ))}
@@ -336,7 +336,7 @@ const OurTeam = () => {
                   alt={member.name}
                   className="w-full h-full object-cover-top"
                 />
-                <div className=" bg-white bg-opacity-90 p-3 flex flex-col gap-2 font-text font-light absolute bottom-5 w-[90%] right-1/2 translate-x-1/2">
+                <div className=" bg-white bg-opacity-90 p-3 flex flex-col gap-2 font-text font-light absolute bottom-5 w-[90%] h-[25%] right-1/2 translate-x-1/2">
                   <div className="flex gap-2 border-b-2 border-gray-300 pb-2">
                     <h3>{member.name}</h3>
                     <p className="text-gray-500">{member.position}</p>
