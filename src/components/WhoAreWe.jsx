@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger, SplitText } from "gsap/all";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { VALUES } from "../constants";
 import radioMobile from "/images/radio-mobile.png";
@@ -8,6 +9,8 @@ import radioDesktop from "/images/radio.png";
 import tuner from "/images/tuner.png";
 import value from "/images/value.png";
 import select from "/images/select.png";
+import knowMoreDesktop from "/images/knowMoreDesktop.svg";
+import knowMoreMobile from "/images/knowMoreMobile.svg";
 import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
 import InvestmentsModal from "./InvestmentsModal";
@@ -200,17 +203,16 @@ const WhoAreWe = () => {
     <section
       ref={sectionRef}
       id="whoarewe"
-      className="relative h-screen flex flex-col items-center bg-white overflow-hidden pt-8 md:pt-0"
+      className="relative h-screen flex flex-col items-center justify-evenly md:justify-center bg-white overflow-hidden pt-8 md:pt-0"
     >
-      {/* Header - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={headerRef}
         className="flex flex-col max-h-[20vh] text-center items-center justify-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-3"
       >
-        <h1 className="font-header font-bold leading-tight text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-6xl">
+        <h1 className="font-header font-bold leading-tight text-3xl md:text-5xl 2xl:text-6xl">
           So, Who Are We
         </h1>
-        <p className="font-header font-light text-sm md:text-base lg:text-lg xl:text-xl max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="font-header font-light text-sm md:text-lg xl:text-xl max-w-[90%] sm:max-w-xs md:max-w-lg xl:max-w-2xl mt-0.5 sm:mt-1 md:mt-2">
           From cinematic productions to transformative events, we apply our
           commitment to artistry and technical excellence to every project.
         </p>
@@ -218,7 +220,7 @@ const WhoAreWe = () => {
 
       <div
         ref={radioRef}
-        className="flex-1 relative flex items-center justify-center w-full overflow-hidden"
+        className="relative flex items-center justify-center w-full overflow-hidden"
       >
         {/* Radio Image Container */}
         <div className="relative w-full h-auto flex items-center justify-center">
@@ -293,37 +295,37 @@ const WhoAreWe = () => {
               </ul>
             </div>
 
-            {/* "Know More" Button (Desktop only) */}
+            {/* "Know More" Button */}
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`absolute
-                 rounded flex items-center justify-center 
-                text-black text-[10px] md:text-lg lg:text-xl font-semibold 
-                 transition-colors duration-300 cursor-pointer ${
-                   isMobile
-                     ? "bottom-[38%] right-[35.5%] w-[32.5%] h-[8%] bg-[#B7B5A9] hover:bg-[#c3c2b3]"
-                     : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%] bg-[#DCD9BA] hover:bg-[#e6e3c8]"
-                 }`}
+              className={`absolute cursor-pointer transition-opacity duration-300 hover:opacity-80  ${
+                isMobile
+                  ? "bottom-[38%] right-[35.5%] w-[32.5%] h-[8%]"
+                  : "bottom-[37%] right-[29.5%] w-[39.5%] h-[11%]"
+              }`}
             >
-              Know More
+              <img
+                src={isMobile ? knowMoreMobile : knowMoreDesktop}
+                alt="Know More"
+                className="w-full h-full object-fill"
+              />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Dynamic text - Flex: 1 unit (shrinks/grows as needed) */}
       <div
         ref={dynamicContentRef}
-        className="flex flex-col max-h-[20vh] items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3"
+        className="flex flex-col max-h-[20vh] items-center justify-center text-center w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-3 mb-5"
       >
-        <h1 className="header font-header font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+        <h1 className="header font-header font-bold text-3xl md:text-5xl xl:text-6xl">
           Blacktape{" "}
-          <span className="span font-light uppercase tracking-wider text-sm md:text-base lg:text-xl">
+          <span className="span font-light uppercase tracking-wider text-sm md:text-xl">
             {current?.span}
           </span>
         </h1>
-        <p className="paragraph font-header font-light text-sm md:text-base lg:text-lg max-w-[90%] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="paragraph font-header font-light text-sm md:text-lg max-w-[90%] sm:max-w-xs md:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
           {current?.text}
         </p>
       </div>

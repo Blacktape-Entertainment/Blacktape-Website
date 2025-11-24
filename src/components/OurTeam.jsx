@@ -160,7 +160,7 @@ const OurTeam = () => {
               <h1 className="text-white font-header text-3xl">
                 Your Vision is the Blueprint.
               </h1>
-              <p className="text-gray-300 font-text font-light text-[0.1rem] text-right">
+              <p className="text-gray-300 font-text font-light text-[0.7rem] md:text-[1.063rem] text-right">
                 We believe every great event, film, or album already exists
                 within a core idea. Our role is to provide the international
                 standards and technical excellence required to breathe life into
@@ -168,7 +168,7 @@ const OurTeam = () => {
               </p>
               <a
                 href="#instantaiconnect"
-                className="bg-gold py-2 px-2 font-text text-[0.1rem] self-end"
+                className="bg-gold py-2 px-2 font-text text-[0.7rem] md:text-[1rem] self-end"
               >
                 Explore Our World
               </a>
