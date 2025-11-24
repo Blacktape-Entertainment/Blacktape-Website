@@ -95,31 +95,29 @@ const DevicesMockups = () => {
       ref={sectionRef}
       id="devicesmockups"
       className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden 
-             text-center px-3 sm:px-4 md:px-8 lg:px-6 py-8 md:py-12 lg:py-16 gap-8 md:gap-10"
+             text-center px-3 sm:px-4 md:px-6 lg:px-6 py-8 md:py-8 lg:py-16 gap-8 md:gap-8 lg:gap-10"
     >
       {/* Company Goals */}
       <div
         ref={companyGoalsRef}
         className="w-full flex flex-col md:flex-row items-center justify-between 
-               gap-4 md:gap-4 lg:gap-6 flex-shrink-0"
+               gap-4 md:gap-3 lg:gap-6 flex-shrink-0"
       >
         {items.map(({ id, icon, alt, title, desc }) => (
           <div
             key={id}
             className="flex flex-col items-center justify-center text-center 
-                   w-full md:w-auto flex-1 gap-1 sm:gap-2"
+                   w-full md:w-auto flex-1 gap-1 sm:gap-1.5 md:gap-1"
           >
-            <div className="flex flex-row items-center justify-center gap-1.5 sm:gap-2">
+            <div className="flex flex-row items-center justify-center gap-1.5 sm:gap-2 md:gap-1">
               <img
                 src={icon}
                 alt={alt}
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-7 md:h-7 lg:w-6 lg:h-6"
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-4 md:h-4 lg:w-6 lg:h-6"
               />
-              <h1 className="font-header text-xs sm:text-sm md:text-lg lg:text-xl">
-                {title}
-              </h1>
+              <h1 className="font-header text-xs lg:text-xl">{title}</h1>
             </div>
-            <p className="font-text text-[0.65rem] sm:text-xs md:text-base lg:text-lg text-black/70 leading-relaxed max-w-[90%] md:max-w-[85%]">
+            <p className="font-text text-[0.65rem] sm:text-xs lg:text-lg text-black/70 leading-relaxed max-w-[90%] md:max-w-[85%]">
               {desc}
             </p>
           </div>
@@ -130,21 +128,21 @@ const DevicesMockups = () => {
       <div
         ref={textContentRef}
         className="flex flex-col items-center justify-center text-center 
-               max-w-3xl gap-2 sm:gap-3 md:gap-4 flex-shrink-0"
+               max-w-3xl gap-2 sm:gap-3 md:gap-4 lg:gap-4 flex-shrink-0"
       >
         <h1 className="text-2xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-header leading-snug md:leading-tight">
           From 2018 to the Forefront of Experience
         </h1>
         <p
           className="text-[0.7rem] sm:text-xs md:text-base lg:text-xl font-light text-black/70 font-text 
-                  max-w-xs sm:max-w-md md:max-w-2xl px-2"
+                  max-w-xs sm:max-w-md md:max-w-xl lg:max-w-2xl px-2"
         >
           Our journey began with a deep commitment to creativity and technical
           excellence. Today, we continue to push boundaries and redefine
           entertainment through immersive storytelling and cultural innovation.
         </p>
         <a
-          className="mt-2 px-3 py-1 sm:px-4 sm:py-1.5 md:px-6 md:py-2.5 text-[0.7rem] sm:text-xs md:text-base lg:text-lg 
+          className="mt-2 md:mt-4 px-3 py-1 sm:px-4 sm:py-1.5 md:px-6 md:py-2.5 lg:px-6 lg:py-2.5 text-[0.7rem] sm:text-xs md:text-base lg:text-lg 
                  text-black font-semibold border-gold border-2 hover:bg-[#d6cfab] transition-all 
                  duration-300 rounded-md"
           href="#instantaiconnect"
@@ -161,7 +159,7 @@ const DevicesMockups = () => {
         <img
           src={Mockups}
           alt="Device Mockups"
-          className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[60%] xl:w-[60%] h-auto object-contain"
+          className="w-[90%] sm:w-[80%] md:w-[85%] lg:w-[60%] xl:w-[60%] h-auto object-contain"
         />
       </div>
     </section>
