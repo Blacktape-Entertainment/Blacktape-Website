@@ -1,4 +1,5 @@
-export const ASSETS_URL = "https://assets.blacktape.ai";
+export const USE_LOCAL_ASSETS = true; // Toggle this to true to use local assets
+export const ASSETS_URL = USE_LOCAL_ASSETS ? "/images" : "https://assets.blacktape.ai";
 
 export const VALUES = [
   {
@@ -81,32 +82,32 @@ export const items = [
 
 export const cards = [
   {
-    image: `${ASSETS_URL}/card1.png`,
+    image: `${ASSETS_URL}/card1.webp`,
     title: "All your data in one place",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
   {
-    image: `${ASSETS_URL}/card2.png`,
+    image: `${ASSETS_URL}/card2.webp`,
     title: "Seamless Collaboration",
     text: "Empower your team with real-time visibility and creative tools.",
   },
   {
-    image: `${ASSETS_URL}/card3.png`,
+    image: `${ASSETS_URL}/card3.webp`,
     title: "Smart Performance",
     text: "Track results effortlessly with clear and actionable metrics.",
   },
   {
-    image: `${ASSETS_URL}/card4.png`,
+    image: `${ASSETS_URL}/card4.webp`,
     title: "Client Satisfaction",
     text: "Deliver excellence consistently with intuitive planning tools.",
   },
   {
-    image: `${ASSETS_URL}/card5.png`,
+    image: `${ASSETS_URL}/card5.webp`,
     title: "Engagement Insights",
     text: "Understand and enhance audience connection through data.",
   },
   {
-    image: `${ASSETS_URL}/card6.png`,
+    image: `${ASSETS_URL}/card6.webp`,
     title: "Post-Event Analytics",
     text: "Evaluate every success story with detailed post-event insights.",
   },
@@ -139,7 +140,7 @@ export const sections = [
     title: "From Concept to Contract, All in One Place.",
     description:
       "Move beyond static PDFs and scattered email chains. Our collaborative platform allows you to present your creative concepts through interactive mood boards and dynamic proposals. Clients can easily compare different options side-by-side, whether it's venues, vendors, or design schemes. Transparent, line-item budgets can be reviewed, adjusted, and approved in real-time, ensuring everyone is aligned and confident before moving forward.",
-    image: `${ASSETS_URL}/mockup-1.png`,
+    image: `${ASSETS_URL}/mockup-1.webp`,
     imageAlt: "Pitch & Propose Mockup",
   },
   {
@@ -147,7 +148,7 @@ export const sections = [
     title: "Secure Your Vendors in an Instant.",
     description:
       "Eliminate the paper chase and lock in your top choices without delay. Our integrated system allows for the creation and distribution of legally-binding digital contracts. All parties can review and sign electronically from any device with a single tap. You'll receive instant notifications upon signing, so you can move from agreement to execution in minutes, not days. It's faster, more secure, and completely paperless.",
-    image: `${ASSETS_URL}/mockup-2.png`,
+    image: `${ASSETS_URL}/mockup-2.webp`,
     imageAlt: "Sign & Seal Mockup",
     reverse: true,
   },
@@ -156,7 +157,7 @@ export const sections = [
     title: "Your Event's Live Command Center.",
     description:
       "Maintain a bird's-eye view of every moving part. Our real-time dashboard tracks task progress through shared checklists and dynamic timelines, so you always know what's done and what's next. Collaborate effortlessly by leaving feedback directly on tasks, tagging team members, and attaching relevant files. When plans inevitably change, you can adjust priorities on the fly, ensuring your entire team stays agile and focused on what truly matters.",
-    image: `${ASSETS_URL}/mockup-3.png`,
+    image: `${ASSETS_URL}/mockup-3.webp`,
     imageAlt: "Track & Tweak Mockup",
   },
 ];

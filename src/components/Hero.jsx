@@ -69,7 +69,7 @@ const Hero = () => {
           playsInline
           preload="auto"
           src={`${ASSETS_URL}/output.mp4`}
-          poster={`${ASSETS_URL}/images/hero.png`}
+          poster={`${ASSETS_URL}/hero.webp`}
           className="absolute inset-0 w-full h-full object-cover"
         />
 

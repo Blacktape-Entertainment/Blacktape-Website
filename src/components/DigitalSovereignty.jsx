@@ -4,9 +4,9 @@ import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { sections, ASSETS_URL } from "../constants";
 
-const leftPhone = `${ASSETS_URL}/images/left-phone.png`;
-const middlePhone = `${ASSETS_URL}/images/middle-phone.png`;
-const rightPhone = `${ASSETS_URL}/images/right-phone.png`;
+const leftPhone = `${ASSETS_URL}/left-phone.webp`;
+const middlePhone = `${ASSETS_URL}/middle-phone.webp`;
+const rightPhone = `${ASSETS_URL}/right-phone.webp`;
 
 const DigitalSovereignty = () => {
   const sectionRef = useRef(null);

@@ -13,7 +13,7 @@ const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
-  const logo = `${ASSETS_URL}/images/logo.svg`;
+  const logo = `${ASSETS_URL}/logo.svg`;
 
   useEffect(() => {
     const handleScroll = () => {

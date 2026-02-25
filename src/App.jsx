@@ -14,7 +14,7 @@ import DigitalSovereignty from "./components/DigitalSovereignty";
 import TrustedClients from "./components/TrustedClients";
 import InstantAIConnect from "./components/InstantAIConnect";
 import BlacktapeFooter from "./components/BlacktapeFooter";
-import OurTeam from "./components/OurTeam";
+// import OurTeam from "./components/OurTeam";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -53,7 +53,7 @@ function App() {
           <WhoAreWe />
           <DevicesMockups />
           <WhatIsIncluded />
-          <OurTeam />
+          {/* <OurTeam /> */}
           <DigitalSovereignty />
           <TrustedClients />
           <InstantAIConnect />

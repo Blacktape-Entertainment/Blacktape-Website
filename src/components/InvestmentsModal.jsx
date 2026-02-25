@@ -3,8 +3,8 @@ import { gsap } from "gsap";
 import { useMediaQuery } from "react-responsive";
 import { ASSETS_URL } from "../constants";
 
-const modalKnowMore = `${ASSETS_URL}/images/modal-know-more.png`;
-const xImage = `${ASSETS_URL}/images/x-image.png`;
+const modalKnowMore = `${ASSETS_URL}/modal-know-more.webp`;
+const xImage = `${ASSETS_URL}/x-image.webp`;
 
 const InvestmentsModal = ({ isOpen, onClose, bullets, logo }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });

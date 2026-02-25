@@ -12,7 +12,7 @@ const DevicesMockups = () => {
   const textContentRef = useRef(null);
   const imageRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const mockupsImage = `${ASSETS_URL}/images/Mockups.png`;
+  const mockupsImage = `${ASSETS_URL}/Mockups.webp`;
 
   useGSAP(
     () => {

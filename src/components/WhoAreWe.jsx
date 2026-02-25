@@ -8,13 +8,13 @@ import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
 import InvestmentsModal from "./InvestmentsModal";
 
-const radioMobile = `${ASSETS_URL}/images/radio-mobile.png`;
-const radioDesktop = `${ASSETS_URL}/images/radio.png`;
-const tuner = `${ASSETS_URL}/images/tuner.png`;
-const value = `${ASSETS_URL}/images/value.png`;
-const select = `${ASSETS_URL}/images/select.png`;
-const knowMoreDesktop = `${ASSETS_URL}/images/knowMoreDesktop.svg`;
-const knowMoreMobile = `${ASSETS_URL}/images/knowMoreMobile.svg`;
+const radioMobile = `${ASSETS_URL}/radio-mobile.webp`;
+const radioDesktop = `${ASSETS_URL}/radio.webp`;
+const tuner = `${ASSETS_URL}/tuner.webp`;
+const value = `${ASSETS_URL}/value.webp`;
+const select = `${ASSETS_URL}/select.webp`;
+const knowMoreDesktop = `${ASSETS_URL}/knowMoreDesktop.webp`;
+const knowMoreMobile = `${ASSETS_URL}/knowMoreMobile.webp`;
 
 const WhoAreWe = () => {
   const [activeValue, setActiveValue] = useState("value1");

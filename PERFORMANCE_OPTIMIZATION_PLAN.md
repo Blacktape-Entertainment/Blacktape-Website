@@ -37,7 +37,7 @@ Based on the inspection of `src/components/AssetPrefetch.jsx`, `src/App.jsx`, an
 
 - [ ] **Compress Images:**
     - Convert PNGs to **WebP** or **AVIF**.
-    - Many images in `public/logos` and `public/images` can be significantly smaller.
+    - Many images in `public/logos` and `public` can be significantly smaller.
     - **Tool:** Use [Squoosh.app](https://squoosh.app/) or a batch script.
 
 ### Phase 3: Infrastructure (CDN)
