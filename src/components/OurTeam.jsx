@@ -1,6 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import { teamMembers } from "../constants";
+import { teamMembers, ASSETS_URL } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
@@ -149,7 +149,7 @@ const OurTeam = () => {
         {isMobile ? (
           <>
             <img
-              src="images/team-bg-mobile.jpg"
+              src={`${ASSETS_URL}/images/team-bg-mobile.jpg`}
               alt="Team Background Mobile"
               className="w-full h-full object-cover z-0"
             />
@@ -179,7 +179,7 @@ const OurTeam = () => {
               className="z-50 absolute right-[62%] flex flex-col justify-end translate-x-1/2 top-[15%] border-r-5 border-t-8 border-l-5 border-b-8 border-white w-[56%] h-fit"
             >
               <img
-                src="images/team-ahmed-mobile.png"
+                src={`${ASSETS_URL}/images/team-ahmed-mobile.png`}
                 className="w-full h-full object-contain"
                 alt="Ahmed Samir"
               />
@@ -252,7 +252,7 @@ const OurTeam = () => {
           <>
             <div className="w-full z-0">
               <img
-                src="images/team-bg.jpg"
+                src={`${ASSETS_URL}/images/team-bg.jpg`}
                 alt="Team Background"
                 className="object-cover w-full h-full"
               />
@@ -283,7 +283,7 @@ const OurTeam = () => {
               className="z-50 absolute right-[48%] flex flex-col justify-end translate-x-1/2 bottom-0 border-r-10 border-t-15 border-l-10 border-white w-[34%] h-[70%]"
             >
               <img
-                src="images/team-ahmed.jpg"
+                src={`${ASSETS_URL}/images/team-ahmed.jpg`}
                 className="w-full h-full object-cover"
                 alt="Ahmed Samir"
               />

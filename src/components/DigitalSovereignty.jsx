@@ -2,7 +2,11 @@ import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-import { sections } from "../constants";
+import { sections, ASSETS_URL } from "../constants";
+
+const leftPhone = `${ASSETS_URL}/images/left-phone.png`;
+const middlePhone = `${ASSETS_URL}/images/middle-phone.png`;
+const rightPhone = `${ASSETS_URL}/images/right-phone.png`;
 
 const DigitalSovereignty = () => {
   const sectionRef = useRef(null);
@@ -307,19 +311,19 @@ const DigitalSovereignty = () => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[15] hidden md:flex items-center justify-center">
         <img
           ref={leftPhoneRef}
-          src="images/left-phone.png"
+          src={leftPhone}
           alt="Left Phone"
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -mr-8 sm:-mr-10 md:-mr-12 lg:-mr-16"
         />
         <img
           ref={middlePhoneRef}
-          src="images/middle-phone.png"
+          src={middlePhone}
           alt="Middle Phone"
           className="h-[45vh] sm:h-[55vh] md:h-[65vh] lg:h-[75vh] w-auto object-contain z-10"
         />
         <img
           ref={rightPhoneRef}
-          src="images/right-phone.png"
+          src={rightPhone}
           alt="Right Phone"
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] w-auto object-contain -ml-8 sm:-ml-10 md:-ml-12 lg:-ml-16"
         />

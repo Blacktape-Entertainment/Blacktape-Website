@@ -3,17 +3,18 @@ import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { VALUES } from "../constants";
-import radioMobile from "/images/radio-mobile.png";
-import radioDesktop from "/images/radio.png";
-import tuner from "/images/tuner.png";
-import value from "/images/value.png";
-import select from "/images/select.png";
-import knowMoreDesktop from "/images/knowMoreDesktop.svg";
-import knowMoreMobile from "/images/knowMoreMobile.svg";
+import { VALUES, ASSETS_URL } from "../constants";
 import { useMediaQuery } from "react-responsive";
 import { ANIMATION_CONFIG } from "../constants";
 import InvestmentsModal from "./InvestmentsModal";
+
+const radioMobile = `${ASSETS_URL}/images/radio-mobile.png`;
+const radioDesktop = `${ASSETS_URL}/images/radio.png`;
+const tuner = `${ASSETS_URL}/images/tuner.png`;
+const value = `${ASSETS_URL}/images/value.png`;
+const select = `${ASSETS_URL}/images/select.png`;
+const knowMoreDesktop = `${ASSETS_URL}/images/knowMoreDesktop.svg`;
+const knowMoreMobile = `${ASSETS_URL}/images/knowMoreMobile.svg`;
 
 const WhoAreWe = () => {
   const [activeValue, setActiveValue] = useState("value1");

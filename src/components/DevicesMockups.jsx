@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Mockups from "/images/Mockups.png";
-import { items } from "../constants";
+import { items, ASSETS_URL } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { ANIMATION_CONFIG } from "../constants";
 import { useMediaQuery } from "react-responsive";
@@ -13,6 +12,7 @@ const DevicesMockups = () => {
   const textContentRef = useRef(null);
   const imageRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const mockupsImage = `${ASSETS_URL}/images/Mockups.png`;
 
   useGSAP(
     () => {
@@ -157,7 +157,7 @@ const DevicesMockups = () => {
         className="relative w-full flex justify-center items-center flex-grow-0 flex-shrink-0"
       >
         <img
-          src={Mockups}
+          src={mockupsImage}
           alt="Device Mockups"
           className="w-[90%] sm:w-[80%] md:w-[85%] lg:w-[60%] xl:w-[60%] h-auto object-contain"
         />

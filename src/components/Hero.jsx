@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-import { ANIMATION_CONFIG } from "../constants";
+import { ANIMATION_CONFIG, ASSETS_URL } from "../constants";
 
 const Hero = () => {
   const sectionRef = useRef(null);
@@ -68,7 +68,8 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          src="/output.mp4"
+          src={`${ASSETS_URL}/output.mp4`}
+          poster={`${ASSETS_URL}/images/hero.png`}
           className="absolute inset-0 w-full h-full object-cover"
         />
 

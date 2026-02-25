@@ -1,5 +1,5 @@
 import { useState, useEffect, forwardRef } from "react";
-import logo from "/images/logo.svg";
+import { ASSETS_URL } from "../constants";
 
 const NAV_LINKS = [
   { name: "Home", id: "hero" },
@@ -13,6 +13,7 @@ const Navbar = forwardRef((props, ref) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isScrolled, setIsScrolled] = useState(false);
+  const logo = `${ASSETS_URL}/images/logo.svg`;
 
   useEffect(() => {
     const handleScroll = () => {

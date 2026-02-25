@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useMediaQuery } from "react-responsive";
+import { ASSETS_URL } from "../constants";
+
+const modalKnowMore = `${ASSETS_URL}/images/modal-know-more.png`;
+const xImage = `${ASSETS_URL}/images/x-image.png`;
 
 const InvestmentsModal = ({ isOpen, onClose, bullets, logo }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -68,7 +72,7 @@ const InvestmentsModal = ({ isOpen, onClose, bullets, logo }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src="images/modal-know-more.png"
+          src={modalKnowMore}
           alt="Know More"
           className="w-full md:w-[40%] max-h-[30vh] md:max-h-full object-cover rounded hidden md:block"
         />
@@ -81,7 +85,7 @@ const InvestmentsModal = ({ isOpen, onClose, bullets, logo }) => {
               className="w-24 sm:w-32 md:w-40 lg:w-44 h-auto"
             />
             <img
-              src="images/x-image.png"
+              src={xImage}
               alt="Close"
               className="w-8 sm:w-10 md:w-12 lg:w-16 h-auto cursor-pointer hover:opacity-70 transition-opacity"
               onClick={handleClose}
