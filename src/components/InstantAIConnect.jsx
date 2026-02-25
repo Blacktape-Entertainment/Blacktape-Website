@@ -76,6 +76,7 @@ const InstantAIConnect = () => {
         {
           scale: 1.2,
           x: "30vw",
+          y: "-20vh",
           ease: "power2.out",
           duration: 0.5,
         },
