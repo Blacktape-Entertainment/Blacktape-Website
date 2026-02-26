@@ -7,50 +7,78 @@ import { ANIMATION_CONFIG, ASSETS_URL } from "../constants";
 const Hero = () => {
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
-  const videoRef = useRef(null);
-  const videoTimelineRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const frameCount = 160;
+  const currentFrame = (index) => (
+    `${ASSETS_URL.replace('/images', '')}/hero-video/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+  );
 
   useGSAP(
     () => {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+
+      const images = [];
+      const heroVideo = {
+        frame: 0
+      };
+
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        img.onload = () => {
+          if (Math.round(heroVideo.frame) === i) {
+            render();
+          }
+        };
+        images.push(img);
+      }
+
+      const initCanvas = () => {
+        canvas.width = images[0].width;
+        canvas.height = images[0].height;
+        render();
+      };
+
+      if (images[0].complete) {
+        initCanvas();
+      } else {
+        images[0].onload = initCanvas;
+      }
+
+      function render() {
+        const frameIndex = Math.round(heroVideo.frame);
+        if (!images[frameIndex] || !images[frameIndex].complete) return;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(images[frameIndex], 0, 0);
+      }
+
       // Hero scroll-based animation
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=90%",
+          end: "+=200%", // Increased scroll distance for sequential animations
           pin: sectionRef.current,
           scrub: true,
         },
       });
 
-      // Video scroll-based animation
-      videoTimelineRef.current = gsap.timeline({
-        scrollTrigger: {
-          trigger: videoRef.current,
-          start: "top top",
-          end: "+=90%",
-          scrub: true,
-        },
+      // 1. Video frames scroll-based animation
+      timeline.to(heroVideo, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        onUpdate: render,
+        duration: 2 // Relative duration in the timeline
       });
 
-      // Wait until video metadata is loaded (so we know duration)
-      videoRef.current.onloadedmetadata = () => {
-        if (videoTimelineRef.current && videoRef.current) {
-          videoTimelineRef.current.to(videoRef.current, {
-            currentTime: videoRef.current.duration,
-            ease: "none",
-          });
-        }
-      };
+      // 2. Animate hero content in after video finishes
+      timeline.to(contentRef.current, ANIMATION_CONFIG.entry, ">");
 
-      // Animate hero content
-      timeline.to(contentRef.current, ANIMATION_CONFIG.entry, 0);
-
-      // Hold hero visible briefly
+      // Hold hero visible briefly before unpinning
       timeline.addLabel("hold", ">+=0.5");
-
-      // Exit animation
-      timeline.to(contentRef.current, ANIMATION_CONFIG.exit, "hold+=0.3");
     },
     { scope: sectionRef, dependencies: [] }
   );
@@ -62,14 +90,9 @@ const Hero = () => {
       className="relative w-full px-2.5 pt-1.5 pb-6 md:pb-6 lg:pb-2.5 overflow-x-hidden"
     >
       <div className="relative w-full h-screen overflow-hidden rounded-xl bg-black">
-        {/* Video for frame animation */}
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          preload="auto"
-          src={`${ASSETS_URL}/output.mp4`}
-          poster={`${ASSETS_URL}/hero.webp`}
+        {/* Canvas for frame animation */}
+        <canvas
+          ref={canvasRef}
           className="absolute inset-0 w-full h-full object-cover"
         />
 

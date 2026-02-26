@@ -5,7 +5,7 @@ import { ASSETS_URL } from "../constants";
 // Everything else should be lazy loaded or loaded naturally
 const criticalAssets = [
   `${ASSETS_URL}/logo.svg`,
-  // Add hero poster here if you have one, e.g., "images/hero-poster.jpg"
+  `${ASSETS_URL.replace('/images', '')}/hero-video/ezgif-frame-001.jpg`,
 ];
 
 const AssetPrefetch = ({ onAssetsReady }) => {

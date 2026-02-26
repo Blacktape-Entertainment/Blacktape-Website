@@ -28,12 +28,10 @@ Based on the inspection of `src/components/AssetPrefetch.jsx`, `src/App.jsx`, an
 
 ### Phase 2: Asset Optimization (Reduce Size)
 
-- [ ] **Compress the Hero Video (`output.mp4`):**
-    - The current video is likely too large.
-    - **Action:** Convert it to **WebM** format (better compression for web) and a fallback **MP4**.
-    - **Action:** Reduce the bitrate. For a background video, 720p at 1-2 Mbps is usually sufficient.
-    - **Tool:** Use Handbrake or FFmpeg.
-    - *Target size:* Under 5MB (ideally under 2MB).
+- [x] **Compress the Hero Video (`output.mp4`):**
+    - Done: Switched to frame-based animation using JPEG sequence.
+    - Path: `public/hero-video/ezgif-frame-*.jpg`
+    - Removed: `public/output.mp4` and `public/images/hero.webp`
 
 - [ ] **Compress Images:**
     - Convert PNGs to **WebP** or **AVIF**.

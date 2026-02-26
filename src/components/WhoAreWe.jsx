@@ -10,11 +10,11 @@ import InvestmentsModal from "./InvestmentsModal";
 
 const radioMobile = `${ASSETS_URL}/radio-mobile.webp`;
 const radioDesktop = `${ASSETS_URL}/radio.webp`;
-const tuner = `${ASSETS_URL}/tuner.webp`;
+const tuner = `${ASSETS_URL}/tuner.png`;
 const value = `${ASSETS_URL}/value.webp`;
 const select = `${ASSETS_URL}/select.webp`;
-const knowMoreDesktop = `${ASSETS_URL}/knowMoreDesktop.webp`;
-const knowMoreMobile = `${ASSETS_URL}/knowMoreMobile.webp`;
+const knowMoreDesktop = `${ASSETS_URL}/knowMoreDesktop.svg`;
+const knowMoreMobile = `${ASSETS_URL}/knowMoreMobile.svg`;
 
 const WhoAreWe = () => {
   const [activeValue, setActiveValue] = useState("value1");
@@ -326,7 +326,7 @@ const WhoAreWe = () => {
             {current?.span}
           </span>
         </h1>
-        <p className="paragraph font-header font-light text-sm md:text-lg max-w-[90%] sm:max-w-xs md:max-w-lg xl:max-w-xl mt-0.5 sm:mt-1 md:mt-2">
+        <p className="paragraph font-header font-light text-sm md:text-lg max-w-[95%] sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mt-0.5 sm:mt-1 md:mt-2">
           {current?.text}
         </p>
       </div>
