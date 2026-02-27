@@ -80,8 +80,8 @@ const InstantAIConnect = () => {
     mm.add("(max-width: 767px)", () => {
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: "50vw", y: "65vh", xPercent: -50, yPercent: -50 });
-      gsap.set(text, { opacity: 0, x: "50vw", y: "20vh", xPercent: -50, yPercent: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: "50vw", y: "75vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: "50vw", y: "15vh", xPercent: -50, yPercent: 0 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -94,10 +94,10 @@ const InstantAIConnect = () => {
         },
       });
 
-      tl.to([header, subtitle], { y: -150, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to([header, subtitle], { y: -100, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
       tl.to(antenna, { top: "-21%", ease: "power2.inOut", duration: 0.3 }, 0);
-      tl.to(phone, { scale: 0.75, x: "50vw", y: "75vh", ease: "power2.out", duration: 0.5 }, 0.3);
-      tl.to(text, { opacity: 1, x: "50vw", y: "12vh", ease: "power2.out", duration: 0.4 }, 0.5);
+      tl.to(phone, { scale: 1, x: "50vw", y: "65vh", ease: "power2.out", duration: 0.5 }, 0.3);
+      tl.to(text, { opacity: 1, x: "50vw", y: "8vh", ease: "power2.out", duration: 0.4 }, 0.5);
     });
 
     return () => mm.revert();
@@ -131,7 +131,7 @@ const InstantAIConnect = () => {
         ref={phoneRef}
         className="absolute top-0 left-0 z-10 opacity-0"
       >
-        <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
+        <div className="relative w-[130vw] sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
           <img
             src={`${ASSETS_URL}/ai-antenna-2.webp`}
@@ -155,20 +155,20 @@ const InstantAIConnect = () => {
           />
 
           {/* Phone screen form */}
-          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-1.5 sm:p-2 md:p-3 shadow-lg z-50 flex flex-col rounded-xl sm:rounded-2xl justify-center gap-1 sm:gap-2">
+          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-3 sm:p-2 md:p-3 shadow-lg z-50 flex flex-col rounded-2xl sm:rounded-2xl justify-center gap-2 sm:gap-2">
             <label
               htmlFor="phone-number"
-              className="font-text text-[9px] sm:text-[10px] md:text-xs"
+              className="font-text text-sm sm:text-[10px] md:text-xs font-medium text-gray-700"
             >
               Enter your phone number:
             </label>
             <input
-              type="text"
+              type="tel"
               id="phone-number"
-              className="border rounded border-gray-300 p-1 sm:p-1.5 w-full text-[9px] sm:text-[10px] md:text-xs"
+              className="border rounded-lg sm:rounded border-gray-300 p-2.5 sm:p-1.5 w-full text-base sm:text-[10px] md:text-xs focus:outline-none focus:ring-2 focus:ring-gold"
               placeholder="Phone Number *"
             />
-            <button className="p-1 sm:p-1.5 mt-0.5 bg-gold text-blacktape text-[9px] sm:text-[10px] md:text-xs font-text tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60] rounded">
+            <button className="p-2.5 sm:p-1.5 mt-1 sm:mt-0.5 bg-gold text-blacktape text-sm sm:text-[10px] md:text-xs font-text font-semibold tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60] rounded-lg sm:rounded">
               Request a Call
             </button>
           </div>
@@ -186,11 +186,14 @@ const InstantAIConnect = () => {
         <p className="font-text text-black font-light text-xs sm:text-sm md:text-base lg:text-xl mt-1 pointer-events-none">
           Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black text-[11px] sm:text-xs md:text-sm lg:text-lg mt-2 md:mt-3 pointer-events-none">
+        <p className="font-text text-black text-[11px] sm:text-xs md:text-sm lg:text-lg mt-2 md:mt-3 pointer-events-none hidden sm:block">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and
           complexities. Simply provide your telephone number in the field below.
+        </p>
+        <p className="font-text text-black text-sm mt-2 pointer-events-none sm:hidden">
+          Provide your number below to connect directly without hold times.
         </p>
         <p className="font-text text-black font-light text-[11px] sm:text-xs md:text-sm lg:text-lg mt-1.5 md:mt-2">
           Prefer the Human touch?{" "}
