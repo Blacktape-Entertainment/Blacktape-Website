@@ -6,6 +6,7 @@ import RequestCallModal from "./RequestCallModal";
 import { ASSETS_URL } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 const InstantAIConnect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
