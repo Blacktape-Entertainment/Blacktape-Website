@@ -70,13 +70,13 @@ const InstantAIConnect = () => {
         0
       );
 
-      // Phase 3: Phone scales up and moves to right edge and top edge
+      // Phase 3: Phone scales up and moves to right edge
       tl.to(
         phone,
         {
           scale: 1.2,
           x: "30vw",
-          y: "-20vh",
+          y: "70vh",
           ease: "power2.out",
           duration: 0.5,
         },
@@ -98,9 +98,9 @@ const InstantAIConnect = () => {
       // SMALL SCREENS: Phone at bottom center, scales up in place
 
       // Initial states
-      gsap.set(header, { opacity: 1, y: "15vh" });
-      gsap.set(subtitle, { opacity: 1, y: "15vh" });
-      gsap.set(phone, { opacity: 1, scale: 0.8, x: 0, y: "35vh", xPercent: -50, yPercent: -50 });
+      gsap.set(header, { opacity: 1, y: 0 });
+      gsap.set(subtitle, { opacity: 1, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.8, x: 0, y: "55vh", xPercent: -50, yPercent: -50 });
       gsap.set(text, { opacity: 0, y: 20, xPercent: -50, left: "50%" });
       gsap.set(antenna, { top: "-2%" });
 
@@ -142,7 +142,7 @@ const InstantAIConnect = () => {
         phone,
         {
           scale: 1,
-          y: "20vh",
+          y: "40vh",
           ease: "power2.out",
           duration: 0.5,
         },
@@ -155,7 +155,7 @@ const InstantAIConnect = () => {
         {
           opacity: 1,
           y: 0,
-          top: "10%",
+          top: "15%",
           left: "50%",
           xPercent: -50,
           ease: "power2.out",
