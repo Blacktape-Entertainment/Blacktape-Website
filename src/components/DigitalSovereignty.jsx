@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import  { useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { sections, ASSETS_URL } from "../constants";
 
@@ -192,7 +191,6 @@ const DigitalSovereignty = () => {
           slides.forEach((slide, i) => {
             if (i === slides.length - 1) return;
             const nextSlide = slides[i + 1];
-
             const text = slide.querySelector(".text-block");
             const image = slide.querySelector(".image-block");
             const nextText = nextSlide.querySelector(".text-block");

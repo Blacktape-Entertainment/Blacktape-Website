@@ -2,9 +2,10 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { useMediaQuery } from "react-responsive";
 import RequestCallModal from "./RequestCallModal";
 import { ASSETS_URL } from "../constants";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const InstantAIConnect = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,8 +15,6 @@ const InstantAIConnect = () => {
   const phoneRef = useRef(null);
   const textRef = useRef(null);
   const antennaRef = useRef(null);
-
-  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -27,14 +26,14 @@ const InstantAIConnect = () => {
 
     if (!section || !header || !subtitle || !phone || !text || !antenna) return;
 
-    if (isLargeScreen) {
-      // LARGE SCREENS: Phone moves right, text comes from left
+    let mm = gsap.matchMedia();
 
-      // Initial states
+    // DESKTOP (>= 1024px)
+    mm.add("(min-width: 1024px)", () => {
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "70vh", xPercent: -50, yPercent: -50 });
-      gsap.set(text, { opacity: 0, x: -200, xPercent: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.6, x: "50vw", y: "70vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: "8vw", y: "55vh", xPercent: 0, yPercent: -50 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -47,61 +46,18 @@ const InstantAIConnect = () => {
         },
       });
 
-      // Phase 1: Header + subtitle move up
-      tl.to(
-        [header, subtitle],
-        {
-          y: -150,
-          opacity: 0,
-          ease: "power2.inOut",
-          duration: 0.3,
-        },
-        0
-      );
+      tl.to([header, subtitle], { y: -150, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(antenna, { top: "-21%", ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(phone, { scale: 1.2, x: "75vw", y: "70vh", ease: "power2.out", duration: 0.5 }, 0.3);
+      tl.to(text, { opacity: 1, x: "8vw", y: "50vh", ease: "power2.out", duration: 0.4 }, 0.5);
+    });
 
-      // Phase 2: Antenna moves up at same time
-      tl.to(
-        antenna,
-        {
-          top: "-21%",
-          ease: "power2.inOut",
-          duration: 0.3,
-        },
-        0
-      );
-
-      // Phase 3: Phone scales up and moves to right edge
-      tl.to(
-        phone,
-        {
-          scale: 1.2,
-          x: "30vw",
-          y: "70vh",
-          ease: "power2.out",
-          duration: 0.5,
-        },
-        0.3
-      );
-
-      // Phase 4: Text slides in from left
-      tl.to(
-        text,
-        {
-          opacity: 1,
-          x: 0,
-          ease: "power2.out",
-          duration: 0.4,
-        },
-        0.5
-      );
-    } else {
-      // SMALL SCREENS: Phone at bottom center, scales up in place
-
-      // Initial states
+    // TABLET (768px - 1023px)
+    mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.8, x: 0, y: "55vh", xPercent: -50, yPercent: -50 });
-      gsap.set(text, { opacity: 0, y: 20, xPercent: -50, left: "50%" });
+      gsap.set(phone, { opacity: 1, scale: 0.6, x: "50vw", y: "87vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: "5vw", y: "55vh", xPercent: 0, yPercent: -50 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -114,57 +70,38 @@ const InstantAIConnect = () => {
         },
       });
 
-      // Phase 1: Header + subtitle move up
-      tl.to(
-        [header, subtitle],
-        {
-          y: -150,
-          opacity: 0,
-          ease: "power2.inOut",
-          duration: 0.3,
-        },
-        0
-      );
+      tl.to([header, subtitle], { y: -150, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(antenna, { top: "-21%", ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(phone, { scale: 0.9, x: "75vw", y: "70vh", ease: "power2.out", duration: 0.5 }, 0.3);
+      tl.to(text, { opacity: 1, x: "5vw", y: "50vh", ease: "power2.out", duration: 0.4 }, 0.5);
+    });
 
-      // Phase 2: Antenna moves up at same time
-      tl.to(
-        antenna,
-        {
-          top: "-21%",
-          ease: "power2.inOut",
-          duration: 0.3,
-        },
-        0
-      );
+    // MOBILE (< 768px)
+    mm.add("(max-width: 767px)", () => {
+      gsap.set(header, { opacity: 1, y: 0 });
+      gsap.set(subtitle, { opacity: 1, y: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: "50vw", y: "65vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: "50vw", y: "20vh", xPercent: -50, yPercent: 0 });
+      gsap.set(antenna, { top: "-2%" });
 
-      // Phase 3: Phone moves up slightly and scales
-      tl.to(
-        phone,
-        {
-          scale: 1,
-          y: "40vh",
-          ease: "power2.out",
-          duration: 0.5,
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=200%",
+          pin: true,
+          scrub: 1,
         },
-        0.3
-      );
+      });
 
-      // Phase 4: Text fades in at the top
-      tl.to(
-        text,
-        {
-          opacity: 1,
-          y: 0,
-          top: "15%",
-          left: "50%",
-          xPercent: -50,
-          ease: "power2.out",
-          duration: 0.4,
-        },
-        0.5
-      );
-    }
-  }, [isLargeScreen]);
+      tl.to([header, subtitle], { y: -150, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(antenna, { top: "-21%", ease: "power2.inOut", duration: 0.3 }, 0);
+      tl.to(phone, { scale: 0.75, x: "50vw", y: "75vh", ease: "power2.out", duration: 0.5 }, 0.3);
+      tl.to(text, { opacity: 1, x: "50vw", y: "12vh", ease: "power2.out", duration: 0.4 }, 0.5);
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
     <section
@@ -192,7 +129,7 @@ const InstantAIConnect = () => {
       {/* Phone */}
       <div
         ref={phoneRef}
-        className="absolute top-1/3 md:top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute top-0 left-0 z-10 opacity-0"
       >
         <div className="relative w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
@@ -241,23 +178,21 @@ const InstantAIConnect = () => {
       {/* Text - positioned differently based on screen size */}
       <div
         ref={textRef}
-        className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
-                   top-1/2 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:bottom-auto lg:right-auto
-                   w-[90%] sm:w-[80%] md:max-w-lg lg:max-w-xl z-20 lg:z-30 text-center lg:text-left"
+        className="absolute top-0 left-0 w-[90%] sm:w-[85%] md:w-[45%] lg:w-auto lg:max-w-md xl:max-w-xl z-20 lg:z-30 text-center md:text-left opacity-0"
       >
         <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
         </h3>
-        <p className="font-text text-black font-light text-xs sm:text-sm md:text-lg lg:text-xl mt-1 pointer-events-none">
+        <p className="font-text text-black font-light text-xs sm:text-sm md:text-base lg:text-xl mt-1 pointer-events-none">
           Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black text-[11px] sm:text-xs md:text-base lg:text-lg mt-2 md:mt-3 pointer-events-none">
+        <p className="font-text text-black text-[11px] sm:text-xs md:text-sm lg:text-lg mt-2 md:mt-3 pointer-events-none">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and
           complexities. Simply provide your telephone number in the field below.
         </p>
-        <p className="font-text text-black font-light text-[11px] sm:text-xs md:text-base lg:text-lg mt-1.5 md:mt-2">
+        <p className="font-text text-black font-light text-[11px] sm:text-xs md:text-sm lg:text-lg mt-1.5 md:mt-2">
           Prefer the Human touch?{" "}
           <span
             className="underline text-[#7c680d] cursor-pointer pointer-events-auto"
