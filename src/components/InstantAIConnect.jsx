@@ -32,7 +32,7 @@ const InstantAIConnect = () => {
     mm.add("(min-width: 1024px)", () => {
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.6, x: "50vw", y: "70vh", xPercent: -50, yPercent: -50 });
+      gsap.set(phone, { opacity: 1, scale: 0.6, x: "50vw", y: "107vh", xPercent: -50, yPercent: -50 });
       gsap.set(text, { opacity: 0, x: "8vw", y: "55vh", xPercent: 0, yPercent: -50 });
       gsap.set(antenna, { top: "-2%" });
 
