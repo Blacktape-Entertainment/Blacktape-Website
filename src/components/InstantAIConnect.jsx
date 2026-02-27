@@ -80,8 +80,8 @@ const InstantAIConnect = () => {
     mm.add("(max-width: 767px)", () => {
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: "50vw", y: "75vh", xPercent: -50, yPercent: -50 });
-      gsap.set(text, { opacity: 0, x: "50vw", y: "15vh", xPercent: -50, yPercent: 0 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: "50vw", y: "85vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: "5vw", y: "12vh", xPercent: 0, yPercent: 0 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -96,8 +96,8 @@ const InstantAIConnect = () => {
 
       tl.to([header, subtitle], { y: -100, opacity: 0, ease: "power2.inOut", duration: 0.3 }, 0);
       tl.to(antenna, { top: "-21%", ease: "power2.inOut", duration: 0.3 }, 0);
-      tl.to(phone, { scale: 1, x: "50vw", y: "65vh", ease: "power2.out", duration: 0.5 }, 0.3);
-      tl.to(text, { opacity: 1, x: "50vw", y: "8vh", ease: "power2.out", duration: 0.4 }, 0.5);
+      tl.to(phone, { scale: 1, x: "50vw", y: "75vh", ease: "power2.out", duration: 0.5 }, 0.3);
+      tl.to(text, { opacity: 1, x: "5vw", y: "12vh", ease: "power2.out", duration: 0.4 }, 0.5);
     });
 
     return () => mm.revert();
@@ -131,7 +131,7 @@ const InstantAIConnect = () => {
         ref={phoneRef}
         className="absolute top-0 left-0 z-10 opacity-0"
       >
-        <div className="relative w-[130vw] sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
+        <div className="relative w-[80vw] sm:w-72 md:w-80 lg:w-96 xl:w-[28rem]">
           {/* Phone base */}
           <img
             src={`${ASSETS_URL}/ai-antenna-2.webp`}
@@ -178,7 +178,7 @@ const InstantAIConnect = () => {
       {/* Text - positioned differently based on screen size */}
       <div
         ref={textRef}
-        className="absolute top-0 left-0 w-[90%] sm:w-[85%] md:w-[45%] lg:w-auto lg:max-w-md xl:max-w-xl z-20 lg:z-30 text-center md:text-left opacity-0"
+        className="absolute top-[-7vh] left-0 w-[60%] sm:w-[85%] md:w-[45%] lg:w-auto lg:max-w-md xl:max-w-xl z-20 lg:z-30 text-left opacity-0"
       >
         <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
