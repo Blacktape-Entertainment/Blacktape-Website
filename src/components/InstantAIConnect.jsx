@@ -33,8 +33,8 @@ const InstantAIConnect = () => {
       // Initial states
       gsap.set(header, { opacity: 1, y: 0 });
       gsap.set(subtitle, { opacity: 1, y: 0 });
-      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "50vh" });
-      gsap.set(text, { opacity: 0, x: -200 });
+      gsap.set(phone, { opacity: 1, scale: 0.5, x: 0, y: "70vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, x: -200, xPercent: 0 });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -98,10 +98,10 @@ const InstantAIConnect = () => {
       // SMALL SCREENS: Phone at bottom center, scales up in place
 
       // Initial states
-      gsap.set(header, { opacity: 1, y: "20vh" });
-      gsap.set(subtitle, { opacity: 1, y: "20vh" });
-      gsap.set(phone, { opacity: 1, scale: 0.7, x: 0, y: "50vh" });
-      gsap.set(text, { opacity: 0 });
+      gsap.set(header, { opacity: 1, y: "15vh" });
+      gsap.set(subtitle, { opacity: 1, y: "15vh" });
+      gsap.set(phone, { opacity: 1, scale: 0.8, x: 0, y: "35vh", xPercent: -50, yPercent: -50 });
+      gsap.set(text, { opacity: 0, y: 20, xPercent: -50, left: "50%" });
       gsap.set(antenna, { top: "-2%" });
 
       const tl = gsap.timeline({
@@ -137,24 +137,27 @@ const InstantAIConnect = () => {
         0
       );
 
-      // Phase 3: Phone only scales up, stays in place
+      // Phase 3: Phone moves up slightly and scales
       tl.to(
         phone,
         {
-          scale: 0.9,
+          scale: 1,
+          y: "20vh",
           ease: "power2.out",
           duration: 0.5,
         },
         0.3
       );
 
-      // Phase 4: Text slides up to top edge
+      // Phase 4: Text fades in at the top
       tl.to(
         text,
         {
           opacity: 1,
+          y: 0,
           top: "10%",
-          left: "10%",
+          left: "50%",
+          xPercent: -50,
           ease: "power2.out",
           duration: 0.4,
         },
@@ -215,20 +218,20 @@ const InstantAIConnect = () => {
           />
 
           {/* Phone screen form */}
-          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-2 sm:p-3 md:p-4 shadow-lg z-50 flex flex-col rounded-2xl gap-2">
+          <div className="absolute top-[21%] w-[63%] right-[18%] h-[18%] bg-white p-1.5 sm:p-2 md:p-3 shadow-lg z-50 flex flex-col rounded-xl sm:rounded-2xl justify-center gap-1 sm:gap-2">
             <label
               htmlFor="phone-number"
-              className="font-text text-xs sm:text-sm md:text-base"
+              className="font-text text-[9px] sm:text-[10px] md:text-xs"
             >
               Enter your phone number:
             </label>
             <input
               type="text"
               id="phone-number"
-              className="border rounded border-gray-300 p-1.5 sm:p-2 w-full text-xs sm:text-sm"
+              className="border rounded border-gray-300 p-1 sm:p-1.5 w-full text-[9px] sm:text-[10px] md:text-xs"
               placeholder="Phone Number *"
             />
-            <button className="p-2 mt-0.5 bg-gold text-blacktape text-xs sm:text-sm md:text-base font-text tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60] flex-1">
+            <button className="p-1 sm:p-1.5 mt-0.5 bg-gold text-blacktape text-[9px] sm:text-[10px] md:text-xs font-text tracking-wide hover:bg-[#d6cfab] transition-all duration-300 text-center relative z-[60] rounded">
               Request a Call
             </button>
           </div>
@@ -239,8 +242,8 @@ const InstantAIConnect = () => {
       <div
         ref={textRef}
         className="absolute lg:left-[8%] lg:top-1/2 lg:-translate-y-1/2 
-                   top-1/2 left-1/2 right-4 lg:bottom-auto lg:right-auto
-                   max-w-[55%] md:max-w-lg lg:max-w-xl z-20 lg:z-30"
+                   top-1/2 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:bottom-auto lg:right-auto
+                   w-[90%] sm:w-[80%] md:max-w-lg lg:max-w-xl z-20 lg:z-30 text-center lg:text-left"
       >
         <h3 className="font-header text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl pointer-events-none">
           Instant AI Connect
@@ -248,13 +251,13 @@ const InstantAIConnect = () => {
         <p className="font-text text-black font-light text-xs sm:text-sm md:text-lg lg:text-xl mt-1 pointer-events-none">
           Request a call, and our AI liaison will connect with you momentarily.
         </p>
-        <p className="font-text text-black text-[10px] sm:text-xs md:text-base lg:text-lg mt-2 md:mt-3 pointer-events-none md:line-clamp-none line-clamp-3">
+        <p className="font-text text-black text-[11px] sm:text-xs md:text-base lg:text-lg mt-2 md:mt-3 pointer-events-none">
           In our commitment to providing exceptional and effortless service, we
           invite you to connect with us directly. We understand that your time
           is valuable, which is why we've eliminated hold times and
           complexities. Simply provide your telephone number in the field below.
         </p>
-        <p className="font-text text-black font-light text-[10px] sm:text-xs md:text-base lg:text-lg mt-1.5 md:mt-2">
+        <p className="font-text text-black font-light text-[11px] sm:text-xs md:text-base lg:text-lg mt-1.5 md:mt-2">
           Prefer the Human touch?{" "}
           <span
             className="underline text-[#7c680d] cursor-pointer pointer-events-auto"
